@@ -18,6 +18,7 @@ $defaultState = @{
     remainingToThreshold = 10
     spinsThisGame = 0
     totalSpins = 0
+    totalWagered = 0
     totalBonuses = 0
     highestWinX = 0
     highestWinAmount = 0
