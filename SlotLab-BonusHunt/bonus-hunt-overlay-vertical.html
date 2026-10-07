@@ -12,9 +12,14 @@
 .logo{width:68px;height:68px;border-radius:50%;border:4px solid #fff;background:conic-gradient(#ffbf2a,#a855f7,#ff2b0a,#ffbf2a);animation:spin 18s linear infinite;position:relative}
 .logo:after{content:"";position:absolute;inset:23px;border-radius:50%;background:#1a0a22;border:2px solid #fff}@keyframes spin{to{transform:rotate(360deg)}}
 .brand-title{font-size:34px;font-weight:1000;line-height:1}.brand-sub{font-size:13px;color:var(--gold);text-transform:uppercase;letter-spacing:.22em;font-weight:950;margin-top:6px}
-.top{position:absolute;left:42px;right:42px;top:165px;text-align:center;z-index:12}
+
+.promo-badge{position:absolute;left:42px;right:42px;top:290px;z-index:20;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(20,10,30,.94);border:2px solid rgba(255,191,42,.85);border-left:6px solid #39ff14;border-radius:16px;padding:12px 20px;box-shadow:0 8px 24px rgba(0,0,0,.6),0 0 18px rgba(57,255,20,.25)}
+.promo-icon{font-size:24px}
+.promo-text{font-size:19px;font-weight:1000;letter-spacing:.04em;color:#ffcf48;text-shadow:0 0 10px rgba(255,191,42,.5);text-transform:uppercase}
+
+.top{position:absolute;left:42px;right:42px;top:150px;text-align:center;z-index:12}
 .label{font-size:18px;text-transform:uppercase;letter-spacing:.28em;color:var(--purple);font-weight:1000}
-.game-name{font-size:64px;font-weight:1000;line-height:1.02;text-shadow:0 4px 28px #000,0 0 20px rgba(180,80,255,.35)}
+.game-name{font-size:60px;font-weight:1000;line-height:1.02;text-shadow:0 4px 28px #000,0 0 20px rgba(180,80,255,.35)}
 .booster{font-size:22px;font-weight:800;color:var(--gold);margin-top:8px}
 .mid{position:absolute;left:48px;right:48px;top:380px;background:rgba(16,3,25,.78);border:2px solid rgba(180,80,255,.45);border-radius:26px;padding:22px}
 .mid .val{text-align:center;font-size:32px;font-weight:1000}
@@ -34,8 +39,18 @@
 <body>
 <div class="root" id="root">
   <div class="brand"><div class="logo"></div><div><div class="brand-title">BONUS HUNT<br>SLOT LAB</div><div class="brand-sub">FITH2 ↔ FITH3 • £100 START</div></div></div>
-  <div class="top"><div class="label">Now Hunting</div><div class="game-name" id="game">Fire In The Hole 2</div><div class="booster" id="booster">+30p No Walls + Bonus Icon locked • £0.50 / spin</div></div>
-  <div class="mid"><div class="hlabel" style="text-align:center">Balance</div><div class="val gold mono" id="balance">£100.00</div><div class="hlabel" style="text-align:center;margin-top:12px">Bonuses • Highest Win</div><div class="val" style="text-align:center"><span class="green" id="bonuses">0</span> • <span class="gold" id="highest">—</span></div></div>
+  <div class="top">
+    <div class="label">Now Hunting</div>
+    <div class="game-name" id="game">Fire In The Hole 2</div>
+    <div class="booster" id="booster">+30p No Walls + Bonus Icon locked • £0.50 / spin</div>
+  </div>
+  <div class="promo-badge" id="promo"><span class="promo-icon">🎁</span><span class="promo-text" id="promoText">5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p</span></div>
+  <div class="mid">
+    <div class="hlabel" style="text-align:center">Balance</div>
+    <div class="val gold mono" id="balance">£100.00</div>
+    <div class="hlabel" style="text-align:center;margin-top:12px">Bonuses • Highest Win</div>
+    <div class="val" style="text-align:center"><span class="green" id="bonuses">0</span> • <span class="gold" id="highest">—</span></div>
+  </div>
   <div class="scrim"></div>
   <div class="hud"><div class="grid">
     <div class="item full"><div class="hlabel">Bet / Threshold</div><div class="val mono"><span id="bet">£0.50</span> • <span id="threshold">£90.00</span> (<span id="remaining">£10.00</span> left)</div></div>
@@ -60,6 +75,15 @@ function render(){
   game.textContent = gName;
   const isFITH3 = gName.includes('3') || gName === 'FITH3';
   booster.textContent = st.currentBooster ? st.currentBooster + ' • ' + (st.currentBet || (isFITH3 ? '£0.40' : '£0.50')) + ' / spin' : (isFITH3 ? '+20p 1 Bonus col2 • £0.40 / spin' : '+30p No Walls + Bonus Icon locked • £0.50 / spin');
+
+  // Promo Badge
+  if(st.showPromo !== false) {
+    promo.style.display = 'flex';
+    promoText.textContent = st.promoNote || "5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
+  } else {
+    promo.style.display = 'none';
+  }
+
   balance.textContent = '£' + Number(st.currentBalance || 100).toFixed(2);
   bonuses.textContent = st.totalBonuses || 0;
   highest.textContent = st.highestWinX > 0 ? 'x' + st.highestWinX : '—';

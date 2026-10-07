@@ -32,7 +32,9 @@ DEFAULT_STATE = {
     "gameName": "Fire In The Hole 2",
     "featureName": "Bonus Hunt • £100 Start",
     "betSize": "£0.50",
-    "balanceDisplay": "£100.00"
+    "balanceDisplay": "£100.00",
+    "promoNote": "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p",
+    "showPromo": True
 }
 
 class Handler(SimpleHTTPRequestHandler):

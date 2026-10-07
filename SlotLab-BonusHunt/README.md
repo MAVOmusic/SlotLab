@@ -5,11 +5,45 @@ Dedicated OBS Live Streaming HUD, Compact Controller Dock, and Strategy Engine f
 
 ---
 
-## Quick Start (OBS Streaming)
+## Quick Start & Server Launchers
 
-1. Put the `SlotLab-BonusHunt` folder on your machine (e.g. `C:\SlotLab-BonusHunt\`):
-2. Double click **`start_server.bat`** (keep the black server window open while streaming).
-3. In **OBS Studio**:
+The server runs on **Port 8001** and supports **multiple launch methods** for maximum Windows compatibility:
+
+### Option 1: Double-click `start_server.bat` (Recommended)
+Automatically detects your environment in this order:
+1. Python Launcher (`py -3` / `py`)
+2. Local AppData & Program Files Python paths
+3. Node.js (`server.js`)
+4. Native Windows PowerShell HTTP Server (`server.ps1` — requires zero external installs!)
+
+### Option 2: PowerShell (`start_server.ps1`)
+Right-click `start_server.ps1` → **Run with PowerShell**, or in terminal:
+```powershell
+.\start_server.ps1
+```
+
+### Option 3: Node.js (If you have Node installed)
+```cmd
+node server.js
+```
+
+### Option 4: Direct Python
+```cmd
+python start_server.py
+```
+
+> **Fixing "Python was not found" Windows Store Error:**
+> If Windows tries to open the Microsoft Store when running `python`:
+> 1. Open Windows **Settings** → **Apps** → **Advanced app settings** → **App execution aliases**.
+> 2. Turn **OFF** the toggles for `App Installer (python.exe)` and `App Installer (python3.exe)`.
+> 3. Alternatively, simply use `start_server.bat` or `start_server.ps1` which automatically bypasses the Windows Store stub and launches the built-in PowerShell server!
+
+---
+
+## OBS Setup
+
+1. Keep the server window open while streaming (`http://localhost:8001`).
+2. In **OBS Studio**:
    - **Main Overlay (1920x1080):** Add Browser Source → URL: `http://localhost:8001/bonus-hunt-overlay.html?v=100` (Width: 1920, Height: 1080)
    - **Vertical Overlay (1080x1920):** Add Browser Source → URL: `http://localhost:8001/bonus-hunt-overlay-vertical.html?v=100` (Width: 1080, Height: 1920)
    - **OBS Custom Browser Dock:** OBS → Docks → Custom Browser Docks → Add:
@@ -39,6 +73,14 @@ Dedicated OBS Live Streaming HUD, Compact Controller Dock, and Strategy Engine f
 
 ---
 
+## On-Screen Note & Sub Rewards
+
+- Includes a compact, glowing on-screen banner:
+  **`🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p`**
+- Fully customizable and toggleable directly in the Live Overlay tab of the dock.
+
+---
+
 ## Multiplier Calculations
 
 All win multipliers (X) are calculated against the **£0.20 base bet**:
@@ -52,14 +94,15 @@ $$\text{Multiplier (X)} = \frac{\text{Win Amount}}{£0.20}$$
 ## OBS Overlay HUD Features (1920x1080 & 1080x1920)
 
 1. **Current Game & Booster Subtitle:** Live game name + active booster rules.
-2. **Balance & Profit:** Real-time balance display with profit tracking (+/-) and animated gradient progress bar.
-3. **Bet / Spin:** Current spin cost (£0.50 / £0.40) and base bet reference.
-4. **Threshold / Remaining:** Next exit balance, exact remaining budget, and estimated spins left.
-5. **Spins This Game & Total Spins:** Real-time counters.
-6. **Total Bonuses:** Neon green bonus counter + last bonus timestamp.
-7. **Highest Win:** Peak session multiplier (e.g. `x251` / `£50.20`).
-8. **Last Win:** Most recent win amount & multiplier.
-9. **Bonus Time Flash:** High-impact fullscreen glowing animation + synthesized audio on bonus hit.
+2. **Promo Note Banner:** Compact reward badge (`5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p`).
+3. **Balance & Profit:** Real-time balance display with profit tracking (+/-) and animated gradient progress bar.
+4. **Bet / Spin:** Current spin cost (£0.50 / £0.40) and base bet reference.
+5. **Threshold / Remaining:** Next exit balance, exact remaining budget, and estimated spins left.
+6. **Spins This Game & Total Spins:** Live spin counters.
+7. **Total Bonuses:** Neon green bonus counter + last bonus timestamp.
+8. **Highest Win:** Peak session multiplier (e.g. `x251` / `£50.20`).
+9. **Last Win:** Most recent win amount & multiplier.
+10. **Bonus Time Flash:** High-impact fullscreen glowing animation + synthesized audio on bonus hit.
 
 ---
 
@@ -74,11 +117,4 @@ $$\text{Multiplier (X)} = \frac{\text{Win Amount}}{£0.20}$$
 - **Quick Balance Tweaks:** `+£1`, `-£1`, `+£5`, `-£5`, `+£10`, `-£10` instant adjustment buttons.
 - **Stats & Balance Trajectory Chart:** Canvas graph showing session balance milestones with green bonus markers.
 - **Log / History & CSV Export:** Complete action history with timestamp, amounts, and one-click CSV download.
-- **Live Overrides:** Full manual override of HUD text fields and raw JSON import/export.
-
----
-
-## Port Allocation
-
-- **Port 8000:** SlotLab Classic (v5.22 Spin-The-Wheel)
-- **Port 8001:** SlotLab Bonus Hunt (FITH2 ↔ FITH3)
+- **Live Overrides:** Full manual override of HUD text fields, promo note, and raw JSON import/export.

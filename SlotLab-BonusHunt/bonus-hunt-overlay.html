@@ -13,6 +13,11 @@ body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:
 .wheel-logo{width:52px;height:52px;border-radius:50%;background:conic-gradient(from -30deg,#ffbf2a 0 52deg,#a855f7 52deg 112deg,#ff2b0a 112deg 184deg,#7c3aed 184deg 250deg,#ffcf48 250deg 360deg);border:3px solid #fff;box-shadow:0 0 18px rgba(180,80,255,.55),inset 0 0 12px rgba(0,0,0,.35);position:relative;animation:spinLogo 18s linear infinite;flex:0 0 auto}
 .wheel-logo:after{content:"";position:absolute;inset:17px;border-radius:50%;background:#1a0a22;border:2px solid rgba(255,255,255,.9)}@keyframes spinLogo{to{transform:rotate(360deg)}}
 .brand-title{font-weight:950;font-size:22px;line-height:1.02;letter-spacing:.01em;text-shadow:0 2px 16px rgba(180,70,255,.35)}.brand-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:900;margin-top:3px}
+
+.promo-badge{position:absolute;right:22px;top:18px;z-index:40;display:flex;align-items:center;gap:8px;background:rgba(20,10,30,.94);border:1px solid rgba(255,191,42,.85);border-left:4px solid #39ff14;border-radius:12px;padding:10px 16px;box-shadow:0 8px 24px rgba(0,0,0,.6),0 0 16px rgba(57,255,20,.2);cursor:move;user-select:none}
+.promo-icon{font-size:18px;filter:drop-shadow(0 0 6px rgba(255,191,42,.6))}
+.promo-text{font-size:13.5px;font-weight:950;letter-spacing:.04em;color:#ffcf48;text-shadow:0 0 10px rgba(255,191,42,.5),0 2px 4px #000;text-transform:uppercase}
+
 .game-center{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:1050px;text-align:center;pointer-events:none;z-index:20}
 .game-label{font-size:12px;font-weight:950;letter-spacing:.25em;text-transform:uppercase;color:#a855f7;text-shadow:0 2px 14px #000}
 .game-name{font-size:48px;font-weight:950;letter-spacing:-.025em;line-height:1.02;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 3px 28px rgba(0,0,0,.8),0 0 22px rgba(180,70,255,.38)}
@@ -50,7 +55,7 @@ body.bonus .overlay-root:before{content:"BONUS TIME";position:absolute;inset:0;z
 
 /* OBS Dock Mode & Compact Mode */
 body.dock-mode .overlay-root{width:100%;height:auto;min-height:100vh}
-.dock-mode .brand,.dock-mode .game-center,.dock-mode .scrim,.dock-mode .hud,.dock-mode .edit-hint{display:none!important}
+.dock-mode .brand,.dock-mode .promo-badge,.dock-mode .game-center,.dock-mode .scrim,.dock-mode .hud,.dock-mode .edit-hint{display:none!important}
 .dock-mode .edit-panel{display:block!important;position:static;width:100%;max-height:none;min-height:100vh;border:0;border-radius:0;box-shadow:none;background:#0f0a14}
 body.dock-mode.compact-mode{width:100%!important;min-width:0!important;overflow-x:hidden!important}
 body.dock-mode.compact-mode .edit-panel{width:100vw!important;max-width:100vw!important;padding:6px!important;overflow-x:hidden!important;font-size:12px!important;padding-bottom:70px!important}
@@ -68,6 +73,7 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
 <body>
 <div class="overlay-root">
   <div class="brand" id="brand"><div class="wheel-logo"></div><div><div class="brand-title">BONUS HUNT<br>SLOT LAB</div><div class="brand-sub">FITH2 ↔ FITH3 • £100 START</div></div></div>
+  <div class="promo-badge" id="dPromo"><span class="promo-icon">🎁</span><span class="promo-text" id="dPromoText">5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p</span></div>
   <div class="game-center"><div class="game-label">Now Hunting</div><div class="game-name" id="dGame">Fire In The Hole 2</div><div class="game-sub" id="dBooster">+30p No Walls + Bonus Icon locked • £0.50 / spin</div></div>
   <div class="scrim"></div>
   <div class="hud">
@@ -207,7 +213,15 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
 
     <!-- TAB 3: LIVE OVERLAY OVERRIDES -->
     <div class="tab-panel" id="tab-live">
-      <label>Game Name (Overlay Center)</label><input id="eGameName">
+      <label>On-Screen Promo Note (Sub Reward)</label>
+      <input id="ePromoNote" value="🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p">
+      <div class="row" style="margin-top:4px">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" id="eShowPromo" checked style="width:auto"> Show Promo Note Banner on Overlay
+        </label>
+      </div>
+
+      <label style="margin-top:8px">Game Name (Overlay Center)</label><input id="eGameName">
       <label>Booster Info Subtitle</label><input id="eBooster">
       <div class="row">
         <div><label>Bet Display</label><input id="eBet"></div>
@@ -329,7 +343,9 @@ function defaultState(){
     gameName: "Fire In The Hole 2",
     featureName: "Bonus Hunt • £100 Start",
     betSize: "£0.50",
-    balanceDisplay: "£100.00"
+    balanceDisplay: "£100.00",
+    promoNote: "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p",
+    showPromo: true
   };
 }
 
@@ -364,10 +380,6 @@ function calcNextThreshold(balance){
   if(b <= 0) return 0;
   let lowerTens = Math.floor(b / 10) * 10;
   let diff = Number((b - lowerTens).toFixed(2));
-  // If we are within £0.80 of lowerTens, we consider this £10 tier reached/cleared,
-  // so the next threshold target is lowerTens - 10.
-  // Otherwise, diff is residual from a win above lowerTens (e.g. 96.43 -> 6.43 residual),
-  // so we set the threshold to lowerTens to spin only that residual before moving back!
   if(diff < 0.80) {
     return Math.max(0, lowerTens - 10);
   } else {
@@ -387,6 +399,13 @@ function render(){
   if($('dGame')) $('dGame').textContent = state.gameName || state.currentGame;
   if($('dBooster')) $('dBooster').textContent = state.currentBooster ? state.currentBooster + " • " + cfg.display + " / spin" : cfg.boosterDisplay;
   if($('dBalance')) $('dBalance').textContent = "£" + Number(state.currentBalance).toFixed(2);
+
+  // Promo Note Banner
+  if($('dPromo')) {
+    const show = state.showPromo !== false;
+    $('dPromo').style.display = show ? 'flex' : 'none';
+    if($('dPromoText')) $('dPromoText').textContent = state.promoNote || "5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
+  }
 
   const profit = Number((state.currentBalance - state.startingBalance).toFixed(2));
   const profitSign = profit >= 0 ? "+" : "";
@@ -437,6 +456,9 @@ function render(){
   if($('eHighestAmt') && document.activeElement !== $('eHighestAmt')) $('eHighestAmt').value = state.highestWinAmount;
   if($('eSpinsThis') && document.activeElement !== $('eSpinsThis')) $('eSpinsThis').value = state.spinsThisGame;
   if($('eTotalSpins') && document.activeElement !== $('eTotalSpins')) $('eTotalSpins').value = state.totalSpins;
+
+  if($('ePromoNote') && document.activeElement !== $('ePromoNote')) $('ePromoNote').value = state.promoNote || "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
+  if($('eShowPromo')) $('eShowPromo').checked = state.showPromo !== false;
 
   if($('eGameName') && document.activeElement !== $('eGameName')) $('eGameName').value = state.gameName || state.currentGame;
   if($('eBooster') && document.activeElement !== $('eBooster')) $('eBooster').value = state.currentBooster || cfg.booster;
@@ -498,14 +520,12 @@ function renderStatsAndChart(){
   const rtp = totalIn > 0 ? ((totalOut / totalIn) * 100).toFixed(1) + "%" : "100.0%";
   if($('stRtp')) $('stRtp').textContent = rtp;
 
-  // Draw Mini Chart
   const cvs = $('chartCanvas');
   if(!cvs) return;
   const ctx = cvs.getContext('2d');
   const w = cvs.width, h = cvs.height;
   ctx.clearRect(0, 0, w, h);
 
-  // Collect balance series in chronological order
   const series = [{balance: state.startingBalance, isBonus: false}];
   const revLog = log.slice().reverse();
   revLog.forEach(l => {
@@ -525,7 +545,6 @@ function renderStatsAndChart(){
   const getX = idx => pad + (idx / (series.length - 1)) * (w - pad * 2);
   const getY = val => h - pad - ((val - minB) / (maxB - minB)) * (h - pad * 2);
 
-  // Starting balance line
   ctx.beginPath();
   ctx.strokeStyle = 'rgba(255,255,255,0.18)';
   ctx.setLineDash([4, 4]);
@@ -538,7 +557,6 @@ function renderStatsAndChart(){
   ctx.font = '10px monospace';
   ctx.fillText('£' + state.startingBalance, 4, startY + 3);
 
-  // Gradient fill under curve
   const grad = ctx.createLinearGradient(0, pad, 0, h - pad);
   grad.addColorStop(0, 'rgba(168,85,247,0.35)');
   grad.addColorStop(1, 'rgba(168,85,247,0.0)');
@@ -553,7 +571,6 @@ function renderStatsAndChart(){
   ctx.fillStyle = grad;
   ctx.fill();
 
-  // Line chart
   ctx.beginPath();
   ctx.strokeStyle = '#a855f7';
   ctx.lineWidth = 2.5;
@@ -563,7 +580,6 @@ function renderStatsAndChart(){
   }
   ctx.stroke();
 
-  // Draw Points & Bonus Markers
   for(let i = 0; i < series.length; i++) {
     const pt = series[i];
     const px = getX(i), py = getY(pt.balance);
@@ -608,7 +624,6 @@ function playBonusVoice(){
       speechSynthesis.speak(u);
     }
   } catch(e) {}
-  // Demonic laughter sound
   [180, 135, 95, 120, 80].forEach((f, i) => setTimeout(() => playAudioBeep(f, 0.16, i % 2 ? 'sawtooth' : 'square'), i * 140));
 }
 
@@ -732,7 +747,6 @@ function logBonus(){
 
 function nextGame(){
   state.gameIndex++;
-  // Toggle between Fire In The Hole 2 and Fire In The Hole 3
   const isFITH2 = state.currentGame.includes("2") || state.currentGame === "FITH2";
   state.currentGame = isFITH2 ? "Fire In The Hole 3" : "Fire In The Hole 2";
   state.gameName = state.currentGame;
@@ -742,7 +756,6 @@ function nextGame(){
   state.currentBetValue = cfg.betValue;
   state.currentBooster = cfg.booster;
 
-  // Calculate next threshold using residual strategy rule
   state.threshold = calcNextThreshold(state.currentBalance);
   state.spinsThisGame = 0;
 
@@ -803,9 +816,11 @@ $('eWinAmt').oninput = e => {
 $('saveLive').onclick = () => {
   if($('eGameName').value) state.gameName = $('eGameName').value;
   if($('eBooster').value) state.currentBooster = $('eBooster').value;
+  if($('ePromoNote')) state.promoNote = $('ePromoNote').value;
+  if($('eShowPromo')) state.showPromo = $('eShowPromo').checked;
   persist();
   render();
-  toast('Overlay center & subtitles updated');
+  toast('Overlay settings updated');
 };
 
 $('copyState').onclick = async () => {
