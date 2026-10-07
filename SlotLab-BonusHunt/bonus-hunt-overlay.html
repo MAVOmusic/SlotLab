@@ -7,7 +7,7 @@
 <style>
 :root{--red:#ff2b0a;--orange:#ff6a00;--gold:#ffbf2a;--green:#39ff14;--cyan:#00e5ff;--purple:#a855f7;--bg:#0d0a14;--panel:#150a22;--card:#1f0f33;--line:#5a2a6a;--muted:#b8a0c8;--text:#fff}
 *{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent;color:var(--text);font-family:Inter,Outfit,Arial,sans-serif}
-body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:#0f0a14}
+body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:#0d0814}
 .overlay-root{position:relative;width:1920px;height:1080px}
 
 /* Top-Left Brand Badge */
@@ -23,12 +23,12 @@ body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:
 
 .scrim{position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(to top,rgba(12,5,20,0.95),rgba(12,5,20,0.75) 55%,rgba(12,5,20,0));z-index:5;pointer-events:none}
 
-/* Bottom Stream HUD Bar */
+/* Bottom Stream HUD Bar (Viewer Facing) */
 .hud{position:absolute;left:22px;right:22px;bottom:16px;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 24px;border-radius:16px;background:rgba(18,8,28,0.95);border:1px solid rgba(180,80,255,0.68);border-top:3px solid #a855f7;box-shadow:0 -10px 45px rgba(0,0,0,0.7),0 0 30px rgba(180,80,255,0.25);backdrop-filter:blur(14px)}
 .block{display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;text-align:center;justify-content:center}
 .label{font-size:11px;font-weight:950;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .val{font-size:26px;font-weight:950;line-height:1.1}.mono{font-family:"Consolas","JetBrains Mono",monospace}
-.gold{color:var(--gold)}.green{color:var(--green);text-shadow:0 0 12px rgba(57,255,20,0.6)}.cyan{color:var(--cyan)}.orange{color:var(--orange)}.red{color:#ff5540}.purple{color:var(--purple)}
+span.gold,div.gold{color:var(--gold)}.green{color:var(--green);text-shadow:0 0 12px rgba(57,255,20,0.6)}.cyan{color:var(--cyan)}.orange{color:var(--orange)}.red{color:#ff5540}.purple{color:var(--purple)}
 .sub-val{font-size:12px;color:var(--muted);margin-top:2px;font-family:"Consolas","JetBrains Mono",monospace}
 .divider{width:1px;height:42px;background:rgba(200,180,255,0.22);margin:0 4px}
 
@@ -53,22 +53,29 @@ body.dock-mode .overlay-root{width:100%;height:auto;min-height:100vh}
 .row{display:flex;gap:6px;align-items:center}.row>div{flex:1}
 input,select,textarea{width:100%;background:#13081e;border:1px solid #5a2a6a;border-radius:7px;color:#fff;padding:6px 8px;font:800 13px Inter,Arial,sans-serif}
 button{background:#2a1640;color:#fff;border:1px solid #5a2a6a;border-radius:8px;padding:8px 10px;font-weight:950;cursor:pointer;transition:transform .08s ease,filter .1s ease}button:hover{filter:brightness(1.15)}button:active{transform:scale(0.97)}
-button.primary{background:#8b31d6;border-color:#8b31d6}button.gold{background:var(--gold);border-color:var(--gold);color:#190800}button.green{background:#16a34a;border-color:#16a34a}button.orange{background:#ff6a00;border-color:#ff6a00}button.red{background:#dc2626;border-color:#dc2626}button.cyan{background:#0097a7;border-color:#0097a7}
-.btn-sm{padding:4px 7px;font-size:11px;border-radius:6px}
+
+/* High-Contrast Crisp Button Colors */
+button.primary{background:#8b31d6!important;border-color:#8b31d6!important;color:#fff!important;font-weight:1000!important}
+button.gold{background:#ffbf2a!important;border-color:#ffbf2a!important;color:#000!important;font-weight:1000!important}
+button.green{background:#16a34a!important;border-color:#16a34a!important;color:#fff!important;font-weight:1000!important}
+button.orange{background:#ff7700!important;border-color:#ff7700!important;color:#000!important;font-weight:1000!important}
+button.red{background:#dc2626!important;border-color:#dc2626!important;color:#fff!important;font-weight:1000!important}
+button.cyan{background:#00e5ff!important;border-color:#00e5ff!important;color:#000!important;font-weight:1000!important}
+.btn-sm{padding:5px 8px;font-size:11.5px;border-radius:6px}
 .btn-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:5px}
 
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .stat-box{background:#140822;border:1px solid #4a205a;border-radius:8px;padding:6px 8px;display:flex;align-items:center;justify-content:space-between}
 .stat-box-title{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
 .stat-box-val{font-size:17px;font-weight:1000;font-family:"Consolas",monospace}
-.stepper-btn{width:26px;height:26px;padding:0;font-size:14px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.stepper-btn{width:26px;height:26px;padding:0;font-size:14px;display:flex;align-items:center;justify-content:center;border-radius:6px;color:#fff!important}
 
 /* Compact Mode Scoping */
 body.dock-mode.compact-mode{width:100%!important;min-width:0!important;overflow-x:hidden!important}
 body.dock-mode.compact-mode .edit-panel{width:100vw!important;max-width:100vw!important;padding:6px 6px 70px!important}
 body.dock-mode.compact-mode input,body.dock-mode.compact-mode select{font-size:11.5px!important;padding:5px 6px!important}
 body.dock-mode.compact-mode button{font-size:11.5px!important;padding:6px 6px!important}
-body.dock-mode.compact-mode .btn-sm{padding:4px 3px!important;font-size:10.5px!important}
+body.dock-mode.compact-mode .btn-sm{padding:5px 4px!important;font-size:11px!important}
 html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!important;min-height:100vh!important;overflow-y:auto!important}
 </style>
 </head>
@@ -91,26 +98,26 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
 
   <div class="scrim"></div>
 
-  <!-- Bottom Stream HUD Bar (The Exact 6 Items) -->
+  <!-- Bottom Stream HUD Bar (The Exact 6 Items for Viewers) -->
   <div class="hud">
     <div class="block">
       <div class="label">Spins This Game</div>
       <div class="val mono" id="dSpinsThis">0</div>
-      <div class="sub-val" id="dGameLabel">FITH2 (£0.50)</div>
+      <div class="sub-val" id="dGameLabel">Fire In The Hole 2 (£0.50)</div>
     </div>
     <div class="divider"></div>
 
     <div class="block">
       <div class="label">Total Spins</div>
       <div class="val mono gold" id="dTotalSpins">0</div>
-      <div class="sub-val">Press Spacebar</div>
+      <div class="sub-val" id="dTotalSpinsSub">Session Total</div>
     </div>
     <div class="divider"></div>
 
     <div class="block">
       <div class="label">Wagered</div>
       <div class="val mono cyan" id="dWagered">£0.00</div>
-      <div class="sub-val" id="dWageredSub">Cumulative</div>
+      <div class="sub-val" id="dWageredSub">Session Total</div>
     </div>
     <div class="divider"></div>
 
@@ -124,7 +131,7 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
     <div class="block">
       <div class="label">Last Win</div>
       <div class="val mono" id="dLastWin">—</div>
-      <div class="sub-val" id="dLastWinX">x0</div>
+      <div class="sub-val" id="dLastWinX">x0 vs base</div>
     </div>
     <div class="divider"></div>
 
@@ -135,27 +142,29 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
     </div>
   </div>
 
-  <div class="edit-hint">EDIT MODE — E hide • Spacebar spin</div>
+  <div class="edit-hint">EDIT MODE — Press E to toggle dock</div>
   <div class="toast" id="toast"></div>
 
-  <!-- CLEAN, ESSENTIAL OBS DOCK CONTROLLER -->
+  <!-- CLEAN, ESSENTIAL OBS DOCK CONTROLLER (Streamer View) -->
   <div class="edit-panel">
     <!-- Header Summary Bar -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <div style="font-size:15px;font-weight:1000;color:var(--gold)">🎰 Slot Lab Controller</div>
-      <div style="font-size:11px;color:var(--muted)" id="syncLine">Port 8001</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid rgba(168,85,247,0.3)">
+      <div style="font-size:14px;font-weight:1000;color:var(--gold);display:flex;align-items:center;gap:6px">
+        <span>🎰 Slot Lab Controller</span>
+      </div>
+      <div style="font-size:11px;font-weight:900;color:var(--muted);font-family:monospace" id="syncLine">Port 8001 Connected</div>
     </div>
 
-    <!-- CARD 1: ACTIVE GAME & BET SIZE (Quick Preset Buttons + Custom Input) -->
+    <!-- CARD 1: ACTIVE GAME & BET SIZE (Quick Presets + Dynamic Viewer Call Inputs) -->
     <div class="dock-card">
       <div class="dock-card-title">
         <span>Active Game & Bet Size</span>
-        <span class="gold" id="lblActiveBet">Bet: £0.50</span>
+        <span class="gold" id="lblActiveBet">Bet: £0.50 • Base: £0.20</span>
       </div>
       <div class="row" style="margin-bottom:6px">
-        <button class="btn-sm gold" style="flex:1" onclick="selectPreset('FITH2', 0.50, 0.20)">FITH2 (50p)</button>
-        <button class="btn-sm orange" style="flex:1" onclick="selectPreset('FITH3', 0.40, 0.20)">FITH3 (40p)</button>
-        <button class="btn-sm cyan" style="flex:1" onclick="selectPreset('Viewer Call', 0.20, 0.20)">Viewer 20p</button>
+        <button class="btn-sm gold" style="flex:1" onclick="selectPreset('Fire In The Hole 2', 0.50, 0.20)">FITH2 (50p)</button>
+        <button class="btn-sm orange" style="flex:1" onclick="selectPreset('Fire In The Hole 3', 0.40, 0.20)">FITH3 (40p)</button>
+        <button class="btn-sm cyan" style="flex:1" onclick="selectPreset('Viewer Call', 0.20, 0.20)">Viewer (20p)</button>
       </div>
       <div class="row">
         <div style="flex:1.8">
@@ -173,13 +182,13 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
     <!-- CARD 2: PRIMARY STREAM ACTION BUTTONS -->
     <div class="dock-card" style="border-color:#a855f7;background:#230f3a">
       <div class="row">
-        <button id="logSpin" class="primary" style="flex:1.6;font-size:14px;padding:11px 8px;font-weight:1000">
+        <button id="logSpin" class="primary" style="flex:1.6;font-size:13.5px;padding:10px 6px;font-weight:1000">
           🎰 LOG SPIN +1 (<span id="btnSpinBet">£0.50</span>)
         </button>
-        <button id="logBonus" class="green" style="flex:1.2;font-size:14px;padding:11px 8px">
+        <button id="logBonus" class="green" style="flex:1.1;font-size:13.5px;padding:10px 6px;font-weight:1000">
           ⚡ BONUS
         </button>
-        <button id="nextGame" class="orange" style="flex:1.2;font-size:12px;padding:11px 6px" title="Resets spins this game, keeps total spins and wagered">
+        <button id="nextGame" class="orange" style="flex:1.3;font-size:12.5px;padding:10px 6px;font-weight:1000" title="Resets spins this game, keeps total spins and wagered">
           🔄 NEXT GAME
         </button>
       </div>
@@ -211,160 +220,187 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
       </div>
     </div>
 
-    <!-- CARD 4: LIVE STATS & QUICK ADJUSTERS -->
+    <!-- CARD 4: LIVE STAT ADJUSTERS -->
     <div class="dock-card">
       <div class="dock-card-title">Live Counters & Quick Tweak</div>
       <div class="stat-grid">
-        <!-- Spins This Game -->
         <div class="stat-box">
           <div>
             <div class="stat-box-title">Spins Game</div>
             <div class="stat-box-val" id="lblSpinsThis">0</div>
           </div>
-          <div style="display:flex;gap:3px">
-            <button class="stepper-btn" onclick="stepStat('spinsThisGame', -1)">−</button>
-            <button class="stepper-btn" onclick="stepStat('spinsThisGame', 1)">+</button>
+          <div style="display:flex;gap:4px">
+            <button class="stepper-btn" onclick="tweakStat('spinsThisGame', -1)">−</button>
+            <button class="stepper-btn" onclick="tweakStat('spinsThisGame', 1)">+</button>
           </div>
         </div>
 
-        <!-- Total Spins -->
         <div class="stat-box">
           <div>
             <div class="stat-box-title">Total Spins</div>
             <div class="stat-box-val gold" id="lblTotalSpins">0</div>
           </div>
-          <div style="display:flex;gap:3px">
-            <button class="stepper-btn" onclick="stepStat('totalSpins', -1)">−</button>
-            <button class="stepper-btn" onclick="stepStat('totalSpins', 1)">+</button>
+          <div style="display:flex;gap:4px">
+            <button class="stepper-btn" onclick="tweakStat('totalSpins', -1)">−</button>
+            <button class="stepper-btn" onclick="tweakStat('totalSpins', 1)">+</button>
           </div>
         </div>
 
-        <!-- Total Wagered -->
         <div class="stat-box">
           <div>
             <div class="stat-box-title">Wagered</div>
             <div class="stat-box-val cyan" id="lblWagered">£0.00</div>
           </div>
-          <div style="display:flex;gap:3px">
-            <button class="stepper-btn" onclick="stepWagered(-1)">−</button>
-            <button class="stepper-btn" onclick="stepWagered(1)">+</button>
+          <div style="display:flex;gap:4px">
+            <button class="stepper-btn" onclick="tweakWagered(-1)">−</button>
+            <button class="stepper-btn" onclick="tweakWagered(1)">+</button>
           </div>
         </div>
 
-        <!-- Total Bonuses -->
         <div class="stat-box">
           <div>
             <div class="stat-box-title">Bonuses</div>
             <div class="stat-box-val green" id="lblBonuses">0</div>
           </div>
-          <div style="display:flex;gap:3px">
-            <button class="stepper-btn" onclick="stepStat('totalBonuses', -1)">−</button>
-            <button class="stepper-btn" onclick="stepStat('totalBonuses', 1)">+</button>
+          <div style="display:flex;gap:4px">
+            <button class="stepper-btn" onclick="tweakStat('totalBonuses', -1)">−</button>
+            <button class="stepper-btn" onclick="tweakStat('totalBonuses', 1)">+</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CARD 5: SUB REWARD NOTE & SESSION TOOLS -->
+    <!-- CARD 5: GIFTED SUB NOTE & CONTROLS -->
     <div class="dock-card">
       <div class="dock-card-title">
         <span>Gifted Sub Promo Note</span>
-        <label style="font-size:10px;cursor:pointer;display:flex;align-items:center;gap:4px">
-          <input type="checkbox" id="eShowPromo" checked style="width:auto"> Show on Overlay
+        <label style="font-size:10.5px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:4px">
+          <input type="checkbox" id="eShowPromo" style="width:auto;margin:0"> Show on Overlay
         </label>
       </div>
-      <input id="ePromoNote" value="🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p">
-      <div class="row" style="margin-top:8px">
-        <button class="btn-sm" id="bonusFlash" style="flex:1">⚡ Flash Bonus</button>
-        <button class="btn-sm gold" id="exportCsv" style="flex:1">📥 Export CSV</button>
-        <button class="btn-sm red" id="resetHunt" style="flex:1">🔄 Reset All</button>
+      <input id="ePromoNote" placeholder="Promo banner text..." style="margin-bottom:6px">
+      <div class="row">
+        <button class="btn-sm" style="flex:1" onclick="triggerBonus(true)">⚡ Flash Bonus</button>
+        <button class="btn-sm gold" style="flex:1" onclick="exportCSV()">📥 Export CSV</button>
+        <button class="btn-sm red" style="flex:1" onclick="resetHunt()">🔄 Reset All</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-(()=>{
-const KEY = 'bonus_hunt_state_v1', LOGKEY = 'bonus_hunt_log_v1';
+const KEY = 'bonus_hunt_state_v1';
+const LOGKEY = 'bonus_hunt_log_v1';
+const CHANNEL = 'bonus_hunt_v1';
+let SERVER_SYNC = false;
+
 const qs = new URLSearchParams(location.search);
+const forceEdit = qs.get('edit') === '1' || qs.has('controller');
 const isDock = qs.has('dock');
-const forceEdit = qs.has('edit');
 const isCompact = qs.has('compact');
 
-if(isDock) document.body.classList.add('dock-mode');
 if(isCompact) document.body.classList.add('compact-mode');
+if(isDock) document.body.classList.add('dock-mode');
+if(!isDock) document.body.classList.remove('dock-mode');
 if(forceEdit || isDock) document.body.classList.add('edit-mode');
 
-const $ = id => document.getElementById(id);
+function $(id){ return document.getElementById(id); }
 
-let channel = null;
-try { channel = new BroadcastChannel('bonus_hunt_v1'); } catch(e) {}
-
-const SERVER_SYNC = location.protocol === 'http:' || location.protocol === 'https:';
-let lastStateJson = '';
-let applyingServerState = false;
-
-function serverPush(){
-  if(!SERVER_SYNC || applyingServerState) return;
-  const body = JSON.stringify(state);
-  lastStateJson = body;
-  fetch('state.json', {method:'POST', headers:{'Content-Type':'application/json'}, body}).catch(()=>{});
+function loadJSON(k, def){
+  try {
+    const raw = localStorage.getItem(k);
+    return raw ? JSON.parse(raw) : def;
+  } catch(e) {
+    return def;
+  }
 }
 
-function serverPoll(){
-  if(!SERVER_SYNC) return;
-  fetch('state.json?ts=' + Date.now(), {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(data => {
-    if(!data || typeof data !== 'object' || !Object.keys(data).length) return;
-    const body = JSON.stringify(data);
-    if(body === lastStateJson) return;
-    applyingServerState = true;
-    Object.assign(state, data);
-    saveJSON(KEY, state);
-    lastStateJson = body;
-    render();
-    applyingServerState = false;
-  }).catch(()=>{});
+function saveJSON(k, val){
+  try {
+    localStorage.setItem(k, JSON.stringify(val));
+  } catch(e) {}
 }
 
-function loadJSON(k, f){ try { return JSON.parse(localStorage.getItem(k) || '') || f; } catch(e) { return f; } }
-function saveJSON(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
+const DEFAULT_STATE = {
+  currentGame: 'Fire In The Hole 2',
+  currentBetValue: 0.50,
+  baseBetValue: 0.20,
+  spinsThisGame: 0,
+  totalSpins: 0,
+  totalWagered: 0.00,
+  totalBonuses: 0,
+  lastWinAmount: 0.00,
+  lastWinX: 0,
+  highestWinAmount: 0.00,
+  highestWinX: 0,
+  promoNote: '🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p',
+  showPromo: true,
+  bonusAt: 0
+};
 
-function toast(t){
-  const el = $('toast');
-  if(!el) return;
-  el.textContent = t;
-  el.classList.remove('show');
-  void el.offsetWidth;
-  el.classList.add('show');
-}
-
-function defaultState(){
-  return {
-    currentGame: "Fire In The Hole 2",
-    currentBet: "£0.50",
-    currentBetValue: 0.50,
-    baseBetValue: 0.20,
-    spinsThisGame: 0,
-    totalSpins: 0,
-    totalWagered: 0,
-    totalBonuses: 0,
-    highestWinX: 0,
-    highestWinAmount: 0,
-    lastWinAmount: 0,
-    lastWinX: 0,
-    bonusAt: 0,
-    promoNote: "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p",
-    showPromo: true
-  };
-}
-
-let state = Object.assign(defaultState(), loadJSON(KEY, {}));
+let state = Object.assign({}, DEFAULT_STATE, loadJSON(KEY, {}));
 let log = loadJSON(LOGKEY, []);
 
-function persist(broadcast = true){
+function showToast(msg){
+  const t = $('toast');
+  if(!t) return;
+  t.textContent = msg;
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+}
+
+let bc = null;
+try {
+  bc = new BroadcastChannel(CHANNEL);
+  bc.onmessage = (e) => {
+    if(e.data && e.data.type === 'state') {
+      state = Object.assign({}, DEFAULT_STATE, e.data.state);
+      saveJSON(KEY, state);
+      render();
+    }
+  };
+} catch(e) {}
+
+window.addEventListener('storage', (e) => {
+  if(e.key === KEY) {
+    state = Object.assign({}, DEFAULT_STATE, loadJSON(KEY, {}));
+    render();
+  }
+});
+
+async function pullServerState(){
+  try {
+    const res = await fetch('state.json?ts=' + Date.now(), {cache: 'no-store'});
+    if(res.ok) {
+      const data = await res.json();
+      if(data && typeof data === 'object' && Object.keys(data).length > 0) {
+        SERVER_SYNC = true;
+        state = Object.assign({}, DEFAULT_STATE, data);
+        saveJSON(KEY, state);
+        render();
+        return;
+      }
+    }
+  } catch(e) {}
+}
+
+async function pushServerState(){
+  if(location.protocol === 'file:') return;
+  try {
+    const res = await fetch('state.json', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(state)
+    });
+    if(res.ok) SERVER_SYNC = true;
+  } catch(e) {}
+}
+
+function persist(){
   saveJSON(KEY, state);
-  if(broadcast && channel) channel.postMessage({type: 'state', state});
-  serverPush();
+  if(bc) bc.postMessage({type: 'state', state});
+  pushServerState();
 }
 
 function render(){
@@ -372,14 +408,11 @@ function render(){
   const betVal = Number(state.currentBetValue || 0.50);
   const betStr = "£" + betVal.toFixed(2);
 
-  // 1. Promo Note Banner
-  if($('dPromo')) {
-    const show = state.showPromo !== false;
-    $('dPromo').style.display = show ? 'flex' : 'none';
-    if($('dPromoText')) $('dPromoText').textContent = state.promoNote || "5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
-  }
+  // 1. Promo Note
+  if($('dPromoText')) $('dPromoText').textContent = state.promoNote || "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
+  if($('dPromo')) $('dPromo').style.display = (state.showPromo !== false) ? 'flex' : 'none';
 
-  // 2. HUD Stream Items (Exact 6 Items)
+  // 2. HUD Stream Items (Exact 6 Items for Viewers)
   if($('dSpinsThis')) $('dSpinsThis').textContent = state.spinsThisGame || 0;
   if($('dGameLabel')) $('dGameLabel').textContent = `${gName} (${betStr})`;
 
@@ -395,10 +428,10 @@ function render(){
   if($('dLastWin')) {
     if(state.lastWinAmount > 0) {
       $('dLastWin').textContent = `£${Number(state.lastWinAmount).toFixed(2)}`;
-      if($('dLastWinX')) $('dLastWinX').textContent = `x${state.lastWinX || 0}`;
+      if($('dLastWinX')) $('dLastWinX').textContent = `x${state.lastWinX || 0} vs base`;
     } else {
       $('dLastWin').textContent = "—";
-      if($('dLastWinX')) $('dLastWinX').textContent = "x0";
+      if($('dLastWinX')) $('dLastWinX').textContent = "x0 vs base";
     }
   }
 
@@ -428,7 +461,7 @@ function render(){
   if($('eShowPromo')) $('eShowPromo').checked = state.showPromo !== false;
 
   if($('syncLine')) {
-    $('syncLine').textContent = (SERVER_SYNC ? 'Server: 8001' : 'file://') + ' • Spins: ' + state.totalSpins + ' • Wagered: £' + wagered;
+    $('syncLine').textContent = (SERVER_SYNC ? 'Port 8001 Connected' : 'Local Mode');
   }
 
   if(state.bonusAt && state.bonusAt !== window.lastBonusAt) {
@@ -498,162 +531,187 @@ function logSpin(){
   render();
 }
 
-function logWin(){
-  const amt = Number($('eWinAmt').value);
-  if(!amt || amt <= 0){ toast('Enter a valid win amount'); return; }
-  const base = Number(state.baseBetValue || state.currentBetValue || 0.20);
-  const x = Math.round((amt / base) * 10) / 10;
-  state.lastWinAmount = amt;
-  state.lastWinX = x;
-  if(x > (state.highestWinX || 0)){
-    state.highestWinX = x;
-    state.highestWinAmount = amt;
-  }
-  addLog('WIN', amt, x);
-  $('eWinAmt').value = '';
-  if($('lblWinX')) $('lblWinX').textContent = 'x' + x;
-  playAudioBeep(660, 0.15, 'sine');
-  setTimeout(() => playAudioBeep(880, 0.25, 'sine'), 120);
-  persist();
-  render();
-  toast(`Win logged: £${amt.toFixed(2)} (x${x})`);
-}
-
-window.quickWin = function(amt){
-  if($('eWinAmt')) $('eWinAmt').value = amt;
-  logWin();
-};
-
-function logBonus(){
+function logBonusHit(){
   state.totalBonuses = (state.totalBonuses || 0) + 1;
   state.bonusAt = Date.now();
-  window.lastBonusAt = state.bonusAt;
+  addLog('BONUS HIT! #' + state.totalBonuses, 0, 0);
+
   triggerBonus(true);
-  addLog('BONUS #' + state.totalBonuses, 0, 0);
+
+  // Auto-switch between FITH2 and FITH3 if on defaults
+  if(state.currentGame.includes('Hole 2') || state.currentGame.includes('FITH2')) {
+    selectPreset('Fire In The Hole 3', 0.40, 0.20);
+  } else if(state.currentGame.includes('Hole 3') || state.currentGame.includes('FITH3')) {
+    selectPreset('Fire In The Hole 2', 0.50, 0.20);
+  } else {
+    state.spinsThisGame = 0;
+  }
+
   persist();
   render();
-  toast('BONUS #' + state.totalBonuses + ' Logged!');
+  showToast('⚡ BONUS #' + state.totalBonuses + ' LOGGED!');
 }
 
 function nextGame(){
-  // Reset spins for the current game, but keep total spins and total wagered!
-  state.spinsThisGame = 0;
-  addLog('NEXT GAME (Reset spins this game)', 0, 0);
-  persist();
-  render();
-  toast('Spins this game reset to 0 (Total spins & wagered kept)');
+  if(state.currentGame.includes('Hole 2') || state.currentGame.includes('FITH2')) {
+    selectPreset('Fire In The Hole 3', 0.40, 0.20);
+  } else if(state.currentGame.includes('Hole 3') || state.currentGame.includes('FITH3')) {
+    selectPreset('Fire In The Hole 2', 0.50, 0.20);
+  } else {
+    state.spinsThisGame = 0;
+    persist();
+    render();
+  }
+  showToast('Switched to: ' + state.currentGame);
 }
 
-window.selectPreset = function(presetName, betVal, baseVal){
-  if(presetName === 'FITH2') state.currentGame = "Fire In The Hole 2";
-  else if(presetName === 'FITH3') state.currentGame = "Fire In The Hole 3";
-  else state.currentGame = "Viewer Call";
-
-  state.currentBetValue = betVal;
-  state.currentBet = "£" + betVal.toFixed(2);
-  state.baseBetValue = baseVal;
+function selectPreset(gameName, spinCost, baseBet){
+  state.currentGame = gameName;
+  state.currentBetValue = Number(spinCost);
+  state.baseBetValue = Number(baseBet);
   state.spinsThisGame = 0;
+  persist();
+  render();
+}
+
+function logWinAmount(amount){
+  const win = Number(amount);
+  if(isNaN(win) || win <= 0) return;
+
+  const base = Number(state.baseBetValue || 0.20);
+  const xMult = Math.round(win / base);
+
+  state.lastWinAmount = win;
+  state.lastWinX = xMult;
+
+  if(xMult > (state.highestWinX || 0)) {
+    state.highestWinX = xMult;
+    state.highestWinAmount = win;
+  }
+
+  addLog('WIN £' + win.toFixed(2) + ' (x' + xMult + ')', win, xMult);
+  playAudioBeep(660, 0.12, 'sine');
+
+  if($('eWinAmt')) $('eWinAmt').value = '';
+  if($('lblWinX')) $('lblWinX').textContent = 'x' + xMult;
 
   persist();
   render();
-  toast(`Switched to ${state.currentGame} (${state.currentBet})`);
-};
+  showToast('Logged Win: £' + win.toFixed(2) + ' (x' + xMult + ')');
+}
 
-window.stepStat = function(field, delta){
-  state[field] = Math.max(0, (state[field] || 0) + delta);
+function quickWin(amount){
+  logWinAmount(amount);
+}
+
+function tweakStat(prop, delta){
+  state[prop] = Math.max(0, (state[prop] || 0) + delta);
   persist();
   render();
-};
+}
 
-window.stepWagered = function(delta){
+function tweakWagered(delta){
   state.totalWagered = Math.max(0, Number(((state.totalWagered || 0) + delta).toFixed(2)));
   persist();
   render();
-};
+}
 
-// Event Listeners
-$('logSpin').onclick = logSpin;
-$('logWin').onclick = logWin;
-$('logBonus').onclick = logBonus;
-$('nextGame').onclick = nextGame;
-$('bonusFlash').onclick = () => {
-  state.bonusAt = Date.now();
-  persist();
-  triggerBonus(true);
-};
-
-$('eGameName').onchange = e => {
-  state.currentGame = e.target.value.trim() || 'Custom Slot';
+function resetHunt(){
+  if(!confirm('Reset entire bonus hunt stats? (Spins, Wagered, Bonuses, Wins will reset to 0)')) return;
+  state = Object.assign({}, DEFAULT_STATE);
+  log = [];
+  saveJSON(LOGKEY, log);
   persist();
   render();
-};
+  showToast('Bonus Hunt Reset Clean.');
+}
 
-$('eBetValue').onchange = e => {
-  const v = Math.max(0.01, Number(e.target.value) || 0.20);
-  state.currentBetValue = v;
-  state.currentBet = "£" + v.toFixed(2);
-  persist();
-  render();
-};
+function exportCSV(){
+  let csv = 'Timestamp,Game,Action,Amount,MultiplierX,Wagered,Bonuses\n';
+  log.forEach(r => {
+    csv += `"${r.time}","${r.game}","${r.action}","${r.amount}","${r.x}","${r.wagered}","${r.bonuses}"\n`;
+  });
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `bonus-hunt-log-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
 
-$('eBaseBet').onchange = e => {
-  state.baseBetValue = Math.max(0.01, Number(e.target.value) || 0.20);
-  persist();
-  render();
-};
+// Event Listeners & Binding
+window.addEventListener('DOMContentLoaded', () => {
+  $('logSpin')?.addEventListener('click', logSpin);
+  $('logBonus')?.addEventListener('click', logBonusHit);
+  $('nextGame')?.addEventListener('click', nextGame);
 
-$('ePromoNote').oninput = e => {
-  state.promoNote = e.target.value;
-  persist();
-  render();
-};
+  $('logWin')?.addEventListener('click', () => {
+    const val = parseFloat($('eWinAmt')?.value);
+    if(!isNaN(val) && val > 0) logWinAmount(val);
+  });
 
-$('eShowPromo').onchange = e => {
-  state.showPromo = e.target.checked;
-  persist();
-  render();
-};
+  $('eWinAmt')?.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    const base = Number(state.baseBetValue || 0.20);
+    if(!isNaN(val) && val > 0) {
+      $('lblWinX').textContent = 'x' + Math.round(val / base);
+    } else {
+      $('lblWinX').textContent = 'x0';
+    }
+  });
 
-$('eWinAmt').oninput = e => {
-  const v = Number(e.target.value);
-  const base = Number(state.baseBetValue || 0.20);
-  if(v > 0) $('lblWinX').textContent = 'x' + (v / base).toFixed(1);
-  else $('lblWinX').textContent = 'x0';
-};
-
-$('resetHunt').onclick = () => {
-  if(confirm('Reset all session counters (Spins, Wagered, Bonuses, Wins)?')){
-    localStorage.removeItem(KEY);
-    localStorage.removeItem(LOGKEY);
-    state = defaultState();
-    log = [];
+  $('eGameName')?.addEventListener('change', (e) => {
+    state.currentGame = e.target.value.trim() || 'Custom Game';
     persist();
     render();
-    toast('Session reset to 0');
-  }
-};
+  });
 
-$('exportCsv').onclick = () => {
-  const csv = 'Time,Game,Action,Amount,X,Wagered,Bonuses\n' + log.map(r =>
-    [r.time, r.game, r.action, r.amount, r.x, r.wagered, r.bonuses].map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')
-  ).join('\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([csv], {type: 'text/plain;charset=utf-8'}));
-  a.download = `slotlab-log-${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-};
+  $('eBetValue')?.addEventListener('change', (e) => {
+    const v = parseFloat(e.target.value);
+    if(!isNaN(v) && v > 0) {
+      state.currentBetValue = v;
+      persist();
+      render();
+    }
+  });
+
+  $('eBaseBet')?.addEventListener('change', (e) => {
+    const v = parseFloat(e.target.value);
+    if(!isNaN(v) && v > 0) {
+      state.baseBetValue = v;
+      persist();
+      render();
+    }
+  });
+
+  $('ePromoNote')?.addEventListener('input', (e) => {
+    state.promoNote = e.target.value;
+    persist();
+    render();
+  });
+
+  $('eShowPromo')?.addEventListener('change', (e) => {
+    state.showPromo = e.target.checked;
+    persist();
+    render();
+  });
+
+  pullServerState();
+  render();
+  setInterval(pullServerState, 700);
+});
 
 // Spacebar anywhere on the dock/controller logs +1 spin!
-window.addEventListener('keydown', e => {
-  if(document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT')) {
-    return;
-  }
+window.addEventListener('keydown', (e) => {
+  const tag = (e.target.tagName || '').toLowerCase();
+  if(tag === 'input' || tag === 'textarea') return;
+
   if(e.code === 'Space' || e.key === ' ' || e.key === 's' || e.key === 'S') {
     e.preventDefault();
     logSpin();
   } else if(e.key === 'b' || e.key === 'B') {
     e.preventDefault();
-    logBonus();
+    logBonusHit();
   } else if(e.key === 'n' || e.key === 'N') {
     e.preventDefault();
     nextGame();
@@ -661,32 +719,6 @@ window.addEventListener('keydown', e => {
     if(!isDock) document.body.classList.toggle('edit-mode');
   }
 });
-
-// Multi-tab BroadcastChannel & LocalStorage sync
-if(channel) {
-  channel.onmessage = e => {
-    if(e.data?.type === 'state') {
-      Object.assign(state, e.data.state);
-      saveJSON(KEY, state);
-      lastStateJson = JSON.stringify(state);
-      render();
-    }
-  };
-}
-
-window.addEventListener('storage', e => {
-  if(e.key === KEY) {
-    Object.assign(state, loadJSON(KEY, {}));
-    lastStateJson = JSON.stringify(state);
-    render();
-  }
-});
-
-setInterval(serverPoll, 700);
-setTimeout(serverPoll, 150);
-
-render();
-})();
 </script>
 </body>
 </html>

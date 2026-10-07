@@ -42,23 +42,23 @@
 
   <div class="scrim"></div>
 
-  <!-- Bottom Stream HUD -->
+  <!-- Bottom Stream HUD (Viewer-Facing 6 Metrics) -->
   <div class="hud">
     <div class="grid">
       <div class="item">
         <div class="hlabel">Spins This Game</div>
         <div class="val mono" id="spinsThis">0</div>
-        <div class="sub-val" id="gameLabel">Fire In The Hole 2</div>
+        <div class="sub-val" id="gameLabel">Fire In The Hole 2 (£0.50)</div>
       </div>
       <div class="item">
         <div class="hlabel">Total Spins</div>
         <div class="val gold mono" id="totalSpins">0</div>
-        <div class="sub-val">Session</div>
+        <div class="sub-val">Session Total</div>
       </div>
       <div class="item">
         <div class="hlabel">Wagered</div>
         <div class="val cyan mono" id="wagered">£0.00</div>
-        <div class="sub-val">Cumulative</div>
+        <div class="sub-val">Session Total</div>
       </div>
       <div class="item">
         <div class="hlabel">Total Bonuses</div>
@@ -68,7 +68,7 @@
       <div class="item">
         <div class="hlabel">Last Win</div>
         <div class="val mono" id="lastWin">—</div>
-        <div class="sub-val" id="lastWinX">x0</div>
+        <div class="sub-val" id="lastWinX">x0 vs base</div>
       </div>
       <div class="item">
         <div class="hlabel">Highest Win</div>
@@ -101,10 +101,10 @@ function render(){
 
   if(st.lastWinAmount > 0) {
     lastWin.textContent = '£' + Number(st.lastWinAmount).toFixed(2);
-    lastWinX.textContent = 'x' + (st.lastWinX || 0);
+    lastWinX.textContent = 'x' + (st.lastWinX || 0) + ' vs base';
   } else {
     lastWin.textContent = '—';
-    lastWinX.textContent = 'x0';
+    lastWinX.textContent = 'x0 vs base';
   }
 
   if(st.highestWinX > 0) {
