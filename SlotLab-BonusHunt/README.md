@@ -1,7 +1,7 @@
 # Slot Lab Bonus Hunt — v1.0
-## Fire In The Hole 2 (FITH2) ↔ Fire In The Hole 3 (FITH3) Strategy & Overlay System
+## Fire In The Hole 2 ↔ Fire In The Hole 3 ↔ Viewer Calls & Live Overlay System
 
-Dedicated OBS Live Streaming HUD, Compact Controller Dock, and Strategy Engine for the alternating Fire In The Hole 2 & 3 bonus hunt strategy.
+Dedicated OBS Live Streaming HUD, Streamlined OBS Dock Controller, and Dynamic Strategy Engine for bonus hunting and live viewer game calls.
 
 ---
 
@@ -53,68 +53,49 @@ python start_server.py
 
 ---
 
-## Strategy & Rulebook
+## Streamlined Stream Overlay Layout
 
-- **Starting Balance:** £100.00
-- **Game 1 — Fire In The Hole 2 (FITH2):**
-  - **Bet:** £0.50 per spin (20p base bet + 30p booster)
-  - **Booster:** No Walls + guaranteed at least one bonus icon in locked zones
-  - **Stop Rule:** Spin until **Bonus** OR **£10+ Win** OR balance drops to threshold **~£90.00** (e.g. 90.43 stop).
-- **Game 2 — Fire In The Hole 3 (FITH3):**
-  - **Bet:** £0.40 per spin (20p base bet + 20p booster)
-  - **Booster:** Guaranteed 1 bonus icon on column 2
-  - **Stop Rule:** Spin until **Bonus** OR **£10+ Win** OR balance drops to threshold **~£80.00** (e.g. 80.33 stop).
-- **Alternating Sequence:** FITH2 (Thresh 90) → FITH3 (Thresh 80) → FITH2 (Thresh 70) → FITH3 (Thresh 60)...
-- **Residual Win Strategy:**
-  - If a win occurs (e.g. +£16 win bringing balance to £96.43):
-  - Switch to the other game, but **only spin the residual £6.43** down to £90.00 before switching back.
-  - This strictly maintains the £10 ladder jumps across all balance variations.
-  - *Example session trajectory:* `100 → 90 → 80 → 92 → 90 → 80 → 70 → 100` (6 bonuses collected in 1 hour).
+The on-screen overlays (1920x1080 horizontal and 1080x1920 vertical) display a clean, high-impact HUD without screen clutter:
+
+- **Top Area:**
+  - **1920x1080:** Small top-left logo + Enlaraged glowing sub reward line:
+    `🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p`
+  - **1080x1920 (Vertical):** Top area kept completely clear for streamer facecam (corner logo badge only).
+- **Bottom HUD (6 Exact Streamlined Metrics):**
+  1. **Spins This Game:** Shows live spin count for current game + active game name & spin bet size.
+  2. **Total Spins:** Session total spins (accumulates across all games).
+  3. **Wagered:** Total money wagered (£) across all spins.
+  4. **Total Bonuses:** Number of bonus rounds hit + time of last bonus.
+  5. **Last Win:** Most recent win (£) + multiplier (X vs base bet).
+  6. **Highest Win:** Session peak win multiplier (X) + cash value (£).
+- **Bonus Time Flash:** High-impact glowing fullscreen celebration animation and sound effect whenever a bonus is hit.
 
 ---
 
-## On-Screen Note & Sub Rewards
+## Streamlined OBS Dock Controller
 
-- Includes a compact, glowing on-screen banner:
-  **`🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p`**
-- Fully customizable and toggleable directly in the Live Overlay tab of the dock.
+The dock controller is focused on rapid live stream operation:
+
+- **Active Game & Bet Size Selector:**
+  - One-click presets: **FITH2 (£0.50)**, **FITH3 (£0.40)**, **Viewer Call (£0.20)**.
+  - Custom game input field: type any viewer game request on the fly.
+  - Custom Spin Cost (£) & Base Bet (£) inputs for exact multiplier calculations.
+- **Big Action Buttons:**
+  - **Log Spin (Spacebar / S):** Increments spins and adds bet to Wagered.
+  - **Bonus Hit! (B):** Increments Total Bonuses, triggers fullscreen celebration, and switches game.
+  - **Next Game (N):** Resets spins this game and advances sequence.
+- **Log Win (£):**
+  - Instant quick-win buttons: `+£2`, `+£5`, `+£10`, `+£16`, `+£20`, `+£50`.
+  - Manual win input with instant multiplier calculation against base bet.
+- **Live Stat Adjusters:**
+  - Compact `+` / `-` steppers for Spins This Game, Total Spins, Wagered, and Total Bonuses.
 
 ---
 
 ## Multiplier Calculations
 
-All win multipliers (X) are calculated against the **£0.20 base bet**:
-$$\text{Multiplier (X)} = \frac{\text{Win Amount}}{£0.20}$$
-- £16.00 win = **x80**
-- £50.20 win = **x251**
-- £10.00 win = **x50**
-
----
-
-## OBS Overlay HUD Features (1920x1080 & 1080x1920)
-
-1. **Current Game & Booster Subtitle:** Live game name + active booster rules.
-2. **Promo Note Banner:** Compact reward badge (`5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p`).
-3. **Balance & Profit:** Real-time balance display with profit tracking (+/-) and animated gradient progress bar.
-4. **Bet / Spin:** Current spin cost (£0.50 / £0.40) and base bet reference.
-5. **Threshold / Remaining:** Next exit balance, exact remaining budget, and estimated spins left.
-6. **Spins This Game & Total Spins:** Live spin counters.
-7. **Total Bonuses:** Neon green bonus counter + last bonus timestamp.
-8. **Highest Win:** Peak session multiplier (e.g. `x251` / `£50.20`).
-9. **Last Win:** Most recent win amount & multiplier.
-10. **Bonus Time Flash:** High-impact fullscreen glowing animation + synthesized audio on bonus hit.
-
----
-
-## OBS Dock Controller Features
-
-- **One-Click Primary Buttons:**
-  - `Log Spin (-£0.50 / -£0.40)` (Keyboard shortcut: `Spacebar` / `S`)
-  - `Log BONUS + Next` (Keyboard shortcut: `B`) — triggers bonus animation, logs bonus, advances game.
-  - `Next Game →` (Keyboard shortcut: `N`) — toggles game and auto-computes residual threshold.
-  - `Bonus Flash` — manually preview/trigger the visual bonus alert.
-- **Quick Win Buttons:** Fast 1-click win logging for `+£2`, `+£5`, `+£10`, `+£16`, `+£20`, `+£50`, plus manual numeric entry.
-- **Quick Balance Tweaks:** `+£1`, `-£1`, `+£5`, `-£5`, `+£10`, `-£10` instant adjustment buttons.
-- **Stats & Balance Trajectory Chart:** Canvas graph showing session balance milestones with green bonus markers.
-- **Log / History & CSV Export:** Complete action history with timestamp, amounts, and one-click CSV download.
-- **Live Overrides:** Full manual override of HUD text fields, promo note, and raw JSON import/export.
+Multiplier (X) is calculated against the active base bet (default £0.20):
+$$\text{Multiplier (X)} = \frac{\text{Win Amount}}{\text{Base Bet}}$$
+- £16.00 win @ £0.20 base = **x80**
+- £50.20 win @ £0.20 base = **x251**
+- £10.00 win @ £0.20 base = **x50**

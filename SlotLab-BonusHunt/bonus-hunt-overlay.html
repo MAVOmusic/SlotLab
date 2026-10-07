@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Slot Lab Bonus Hunt v1</title>
+<title>Slot Lab Bonus Hunt</title>
 <style>
-:root{--red:#ff2b0a;--orange:#ff6a00;--gold:#ffbf2a;--green:#39ff14;--cyan:#00e5ff;--purple:#a855f7;--bg:#0d0a14;--panel:#1a0f1f;--line:#5a2a6a;--muted:#b8a0c8;--text:#fff}
+:root{--red:#ff2b0a;--orange:#ff6a00;--gold:#ffbf2a;--green:#39ff14;--cyan:#00e5ff;--purple:#a855f7;--bg:#0d0a14;--panel:#150a22;--card:#1f0f33;--line:#5a2a6a;--muted:#b8a0c8;--text:#fff}
 *{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent;color:var(--text);font-family:Inter,Outfit,Arial,sans-serif}
 body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:#0f0a14}
 .overlay-root{position:relative;width:1920px;height:1080px}
@@ -16,7 +16,7 @@ body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:
 .wheel-logo:after{content:"";position:absolute;inset:15px;border-radius:50%;background:#1a0a22;border:2px solid rgba(255,255,255,0.9)}@keyframes spinLogo{to{transform:rotate(360deg)}}
 .brand-title{font-weight:950;font-size:19px;line-height:1.05;letter-spacing:.02em;text-shadow:0 2px 14px rgba(180,70,255,0.4)}.brand-sub{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:900;margin-top:2px}
 
-/* Top-Right Gifted Sub Reward Note (Larger & High Visibility) */
+/* Top-Right Gifted Sub Reward Note */
 .promo-badge{position:absolute;right:22px;top:18px;z-index:40;display:flex;align-items:center;gap:12px;background:rgba(18,7,28,0.94);border:2px solid rgba(255,191,42,0.9);border-left:5px solid #39ff14;border-radius:14px;padding:12px 22px;box-shadow:0 10px 32px rgba(0,0,0,0.7),0 0 24px rgba(57,255,20,0.25);cursor:move;user-select:none;backdrop-filter:blur(8px)}
 .promo-icon{font-size:24px;filter:drop-shadow(0 0 8px rgba(255,191,42,0.7))}
 .promo-text{font-size:18px;font-weight:1000;letter-spacing:.035em;color:#ffcf48;text-shadow:0 0 14px rgba(255,191,42,0.6),0 2px 4px #000;text-transform:uppercase}
@@ -33,42 +33,43 @@ body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:
 .divider{width:1px;height:42px;background:rgba(200,180,255,0.22);margin:0 4px}
 
 .edit-hint{display:none;position:absolute;top:102px;left:50%;transform:translateX(-50%);z-index:90;background:rgba(0,0,0,.76);border:1px solid rgba(180,120,255,.35);border-radius:999px;padding:8px 15px;font-size:13px;font-weight:850}
-.edit-panel{display:none;position:absolute;left:22px;top:96px;width:600px;max-height:860px;overflow:auto;z-index:100;background:rgba(22,10,32,.98);border:1px solid var(--line);border-radius:15px;box-shadow:0 18px 60px rgba(0,0,0,.72);padding:14px}
-.edit-panel h2{font-size:18px;color:var(--gold);margin:0 0 8px}
-.tabs{display:flex;gap:6px;margin:8px 0 12px;flex-wrap:wrap}.tab{background:#2a1640;border:1px solid #5a2a6a;color:#fff;border-radius:9px;padding:8px 11px;font-weight:900;cursor:pointer;transition:transform .08s ease,filter .1s ease}.tab.active{background:var(--gold);border-color:var(--gold);color:#1b0700}
-.tab-panel{display:none}.tab-panel.active{display:block}
-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:950;margin:8px 0 4px}
-input,select,textarea{width:100%;background:#1a0f25;border:1px solid #5a2a6a;border-radius:8px;color:#fff;padding:8px 9px;font:800 14px Inter,Arial,sans-serif}
-textarea{min-height:90px;font-family:Consolas,monospace;font-weight:600}
-.row{display:flex;gap:8px;align-items:center}.row>div{flex:1}
-button{background:#2a1640;color:#fff;border:1px solid #5a2a6a;border-radius:9px;padding:8px 11px;font-weight:950;cursor:pointer;transition:transform .08s ease,filter .1s ease}button:hover{filter:brightness(1.15)}button:active{transform:scale(0.97)}button.primary{background:#a855f7;border-color:#a855f7}button.gold{background:var(--gold);border-color:var(--gold);color:#190800}button.green{background:#16a34a;border-color:#16a34a}button.orange{background:#ff6a00;border-color:#ff6a00}button.red{background:#dc2626;border-color:#dc2626}button:disabled{opacity:.45;cursor:not-allowed}
-.btn-sm{padding:4px 8px;font-size:11px;border-radius:6px}
-.btn-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:4px}
-.small{font-size:12px;color:var(--muted);line-height:1.35}
-.pill{display:inline-block;border:1px solid #5a2a6a;background:#2a1640;border-radius:999px;padding:4px 8px;margin:2px;color:#ffcf8b;font-size:12px;font-weight:850}
-table{width:100%;border-collapse:collapse;font-size:12px}td,th{border-bottom:1px solid #3a2050;padding:5px;text-align:left}
 .toast{position:absolute;right:24px;bottom:120px;z-index:200;background:rgba(0,0,0,.85);border:1px solid #a855f7;border-radius:10px;padding:10px 14px;font-weight:900;display:none;box-shadow:0 0 20px rgba(168,85,247,0.4)}.toast.show{display:block;animation:fadeToast 2.1s ease forwards}@keyframes fadeToast{0%,75%{opacity:1}100%{opacity:0}}
-body.edit-mode .edit-panel{display:block}body.edit-mode .edit-hint{display:block}
+
+/* Fullscreen Bonus Flash */
 body.bonus .overlay-root:after{content:"";position:absolute;inset:0;z-index:80;pointer-events:none;background:radial-gradient(circle at 50% 55%,rgba(255,191,42,.25),rgba(168,85,247,.18) 32%,rgba(40,0,40,.05) 55%,rgba(0,0,0,0) 70%),repeating-conic-gradient(from 0deg,rgba(168,85,247,.18) 0 8deg,rgba(255,191,42,.08) 8deg 15deg,rgba(0,0,0,0) 15deg 25deg);box-shadow:inset 0 0 220px 70px rgba(168,85,247,.5);animation:emberFlash 1.05s ease 3}
 body.bonus .overlay-root:before{content:"BONUS TIME";position:absolute;inset:0;z-index:82;display:flex;align-items:center;justify-content:center;font-size:110px;font-weight:1000;letter-spacing:.04em;color:#ffcf48;text-shadow:0 0 18px #a855f7,0 0 42px #ff6a00,0 0 80px #000;pointer-events:none;animation:bonusText 3.2s ease forwards}
 @keyframes emberFlash{0%,100%{opacity:0;filter:hue-rotate(0deg)}50%{opacity:1;filter:hue-rotate(-18deg)}}
 @keyframes bonusText{0%,100%{opacity:0;transform:scale(.8)}15%,82%{opacity:1;transform:scale(1)}}
 
-/* OBS Dock Mode & Compact Mode */
+/* OBS Dock Mode & Compact Clean Layout */
+.edit-panel{display:none;position:absolute;left:22px;top:96px;width:600px;max-height:860px;overflow:auto;z-index:100;background:rgba(22,10,32,.98);border:1px solid var(--line);border-radius:15px;box-shadow:0 18px 60px rgba(0,0,0,.72);padding:14px}
 body.dock-mode .overlay-root{width:100%;height:auto;min-height:100vh}
 .dock-mode .brand,.dock-mode .promo-badge,.dock-mode .scrim,.dock-mode .hud,.dock-mode .edit-hint{display:none!important}
-.dock-mode .edit-panel{display:block!important;position:static;width:100%;max-height:none;min-height:100vh;border:0;border-radius:0;box-shadow:none;background:#0f0a14}
+.dock-mode .edit-panel{display:block!important;position:static;width:100%;max-height:none;min-height:100vh;border:0;border-radius:0;box-shadow:none;background:#0d0814;padding:10px 12px 60px}
+
+/* Clean Dock Cards */
+.dock-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:8px}
+.dock-card-title{font-size:10.5px;font-weight:950;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.row{display:flex;gap:6px;align-items:center}.row>div{flex:1}
+input,select,textarea{width:100%;background:#13081e;border:1px solid #5a2a6a;border-radius:7px;color:#fff;padding:6px 8px;font:800 13px Inter,Arial,sans-serif}
+button{background:#2a1640;color:#fff;border:1px solid #5a2a6a;border-radius:8px;padding:8px 10px;font-weight:950;cursor:pointer;transition:transform .08s ease,filter .1s ease}button:hover{filter:brightness(1.15)}button:active{transform:scale(0.97)}
+button.primary{background:#8b31d6;border-color:#8b31d6}button.gold{background:var(--gold);border-color:var(--gold);color:#190800}button.green{background:#16a34a;border-color:#16a34a}button.orange{background:#ff6a00;border-color:#ff6a00}button.red{background:#dc2626;border-color:#dc2626}button.cyan{background:#0097a7;border-color:#0097a7}
+.btn-sm{padding:4px 7px;font-size:11px;border-radius:6px}
+.btn-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:5px}
+
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.stat-box{background:#140822;border:1px solid #4a205a;border-radius:8px;padding:6px 8px;display:flex;align-items:center;justify-content:space-between}
+.stat-box-title{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.stat-box-val{font-size:17px;font-weight:1000;font-family:"Consolas",monospace}
+.stepper-btn{width:26px;height:26px;padding:0;font-size:14px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+
+/* Compact Mode Scoping */
 body.dock-mode.compact-mode{width:100%!important;min-width:0!important;overflow-x:hidden!important}
-body.dock-mode.compact-mode .edit-panel{width:100vw!important;max-width:100vw!important;padding:6px!important;overflow-x:hidden!important;font-size:12px!important;padding-bottom:70px!important}
-body.dock-mode.compact-mode .tabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:3px!important;margin:4px 0 8px!important}
-body.dock-mode.compact-mode .tab{font-size:10px!important;padding:6px 2px!important;text-align:center!important;white-space:nowrap!important}
-body.dock-mode.compact-mode input,body.dock-mode.compact-mode select,body.dock-mode.compact-mode textarea{font-size:11px!important;padding:5px 6px!important}
-body.dock-mode.compact-mode button{font-size:11px!important;padding:6px 6px!important}
-body.dock-mode.compact-mode .row{flex-wrap:wrap!important;gap:4px!important}
-body.dock-mode.compact-mode .btn-grid{grid-template-columns:repeat(6,1fr)!important;gap:2px!important}
-body.dock-mode.compact-mode .btn-sm{padding:4px 2px!important;font-size:10px!important}
+body.dock-mode.compact-mode .edit-panel{width:100vw!important;max-width:100vw!important;padding:6px 6px 70px!important}
+body.dock-mode.compact-mode input,body.dock-mode.compact-mode select{font-size:11.5px!important;padding:5px 6px!important}
+body.dock-mode.compact-mode button{font-size:11.5px!important;padding:6px 6px!important}
+body.dock-mode.compact-mode .btn-sm{padding:4px 3px!important;font-size:10.5px!important}
 html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!important;min-height:100vh!important;overflow-y:auto!important}
-#chartCanvas{width:100%;height:140px;background:#140a1e;border:1px solid #5a2a6a;border-radius:8px}
 </style>
 </head>
 <body>
@@ -90,7 +91,7 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
 
   <div class="scrim"></div>
 
-  <!-- Bottom Stream HUD Bar (Only Requested Fields) -->
+  <!-- Bottom Stream HUD Bar (The Exact 6 Items) -->
   <div class="hud">
     <div class="block">
       <div class="label">Spins This Game</div>
@@ -130,171 +131,153 @@ html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!i
     <div class="block">
       <div class="label">Highest Win</div>
       <div class="val mono gold" id="dHighest">—</div>
-      <div class="sub-val" id="dHighestAmt">x0 vs 20p</div>
+      <div class="sub-val" id="dHighestAmt">x0 vs base</div>
     </div>
   </div>
 
   <div class="edit-hint">EDIT MODE — E hide • Spacebar spin</div>
   <div class="toast" id="toast"></div>
 
-  <!-- OBS Dock & Live Controller Panel -->
+  <!-- CLEAN, ESSENTIAL OBS DOCK CONTROLLER -->
   <div class="edit-panel">
-    <h2>Bonus Hunt Lab Controller</h2>
-    <div class="small" id="syncLine">Loading…</div>
-
-    <!-- Active Hunt Strategy Status Card in Dock -->
-    <div style="background:#140a1e;border:1px solid #5a2a6a;border-radius:10px;padding:8px 10px;margin:8px 0">
-      <div class="row">
-        <div><span class="label">Hunting:</span> <b class="gold" id="stDockGame">Fire In The Hole 2</b> (<span id="stDockBet">£0.50</span>)</div>
-        <div><span class="label">Threshold:</span> <b class="orange" id="stDockThresh">£90.00</b> (<span id="stDockRem">£10.00</span> left)</div>
-      </div>
-      <div class="row" style="margin-top:4px">
-        <div><span class="label">Internal Balance:</span> <b class="mono" id="stDockBal">£100.00</b></div>
-        <div><span class="label">Total Wagered:</span> <b class="cyan mono" id="stDockWagered">£0.00</b></div>
-      </div>
+    <!-- Header Summary Bar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:15px;font-weight:1000;color:var(--gold)">🎰 Slot Lab Controller</div>
+      <div style="font-size:11px;color:var(--muted)" id="syncLine">Port 8001</div>
     </div>
 
-    <div class="tabs">
-      <button class="tab active" data-tab="hunt">Bonus Hunt</button>
-      <button class="tab" data-tab="stats">Stats / Graph</button>
-      <button class="tab" data-tab="live">Live Overlay</button>
-      <button class="tab" data-tab="log">Log / History</button>
-    </div>
-
-    <!-- TAB 1: BONUS HUNT -->
-    <div class="tab-panel active" id="tab-hunt">
+    <!-- CARD 1: ACTIVE GAME & BET SIZE (Quick Preset Buttons + Custom Input) -->
+    <div class="dock-card">
+      <div class="dock-card-title">
+        <span>Active Game & Bet Size</span>
+        <span class="gold" id="lblActiveBet">Bet: £0.50</span>
+      </div>
+      <div class="row" style="margin-bottom:6px">
+        <button class="btn-sm gold" style="flex:1" onclick="selectPreset('FITH2', 0.50, 0.20)">FITH2 (50p)</button>
+        <button class="btn-sm orange" style="flex:1" onclick="selectPreset('FITH3', 0.40, 0.20)">FITH3 (40p)</button>
+        <button class="btn-sm cyan" style="flex:1" onclick="selectPreset('Viewer Call', 0.20, 0.20)">Viewer 20p</button>
+      </div>
       <div class="row">
-        <button class="gold" id="startHunt">Start New Hunt (£100)</button>
-        <button class="red" id="resetHunt">Reset</button>
-        <button id="bonusFlash">Bonus Flash</button>
-      </div>
-
-      <label style="margin-top:10px">Primary Action Buttons (Spacebar = Spin)</label>
-      <div class="row">
-        <button id="logSpin" class="primary" style="flex:1.4;font-size:13px;padding:10px 8px">Log Spin +1 (<span id="btnSpinBet">£0.50</span>)</button>
-        <button id="logBonus" class="green" style="flex:1.3;font-size:13px;padding:10px 8px">Log BONUS + Next</button>
-        <button id="nextGame" class="orange" style="flex:1;font-size:13px;padding:10px 8px">Next Game →</button>
-      </div>
-
-      <label style="margin-top:10px">Log Win Amount (£) — Auto Multiplier vs £0.20 base</label>
-      <div class="row">
-        <div style="flex:1.2"><input type="number" step="0.01" id="eWinAmt" placeholder="Win £ e.g. 16.00"></div>
-        <div style="flex:0.8"><input id="eWinX" placeholder="x0" disabled></div>
-        <div><button id="logWin" class="gold" style="width:100%">Log Win</button></div>
-      </div>
-      <div class="small" style="margin-top:4px;color:var(--muted)">Quick Win Buttons:</div>
-      <div class="btn-grid">
-        <button class="btn-sm" onclick="quickWin(2)">+£2 (x10)</button>
-        <button class="btn-sm" onclick="quickWin(5)">+£5 (x25)</button>
-        <button class="btn-sm" onclick="quickWin(10)">+£10 (x50)</button>
-        <button class="btn-sm" onclick="quickWin(16)">+£16 (x80)</button>
-        <button class="btn-sm" onclick="quickWin(20)">+£20 (x100)</button>
-        <button class="btn-sm" onclick="quickWin(50)">+£50 (x250)</button>
-      </div>
-
-      <div class="row" style="margin-top:8px">
-        <div>
-          <label>Is £10+ Win? (auto next game)</label>
-          <select id="eIsBigWin">
-            <option value="auto">Auto (≥£10 Next Game)</option>
-            <option value="yes">Always Next Game</option>
-            <option value="no">Stay on Game</option>
-          </select>
+        <div style="flex:1.8">
+          <input id="eGameName" placeholder="Game Name (e.g. Sugar Rush)" title="Game Name">
+        </div>
+        <div style="flex:1">
+          <input type="number" id="eBetValue" step="0.05" placeholder="Bet £" title="Spin Cost (£)">
+        </div>
+        <div style="flex:1">
+          <input type="number" id="eBaseBet" step="0.05" placeholder="Base £" title="Base Bet for X Mult (£)">
         </div>
       </div>
+    </div>
 
-      <label style="margin-top:10px">Strategy Balance & Threshold Tracker</label>
+    <!-- CARD 2: PRIMARY STREAM ACTION BUTTONS -->
+    <div class="dock-card" style="border-color:#a855f7;background:#230f3a">
       <div class="row">
-        <div><label>Current Balance (£)</label><input type="number" step="0.01" id="eBalance"></div>
-        <div><label>Threshold (£)</label><input type="number" step="1" id="eThreshold"></div>
-        <div><label>Start Balance</label><input type="number" step="1" id="eStartBalance" value="100"></div>
+        <button id="logSpin" class="primary" style="flex:1.6;font-size:14px;padding:11px 8px;font-weight:1000">
+          🎰 LOG SPIN +1 (<span id="btnSpinBet">£0.50</span>)
+        </button>
+        <button id="logBonus" class="green" style="flex:1.2;font-size:14px;padding:11px 8px">
+          ⚡ BONUS
+        </button>
+        <button id="nextGame" class="orange" style="flex:1.2;font-size:12px;padding:11px 6px" title="Resets spins this game, keeps total spins and wagered">
+          🔄 NEXT GAME
+        </button>
       </div>
-      <div class="small" style="margin-top:4px;color:var(--muted)">Quick Balance Tweak:</div>
-      <div class="btn-grid">
-        <button class="btn-sm" onclick="adjustBalance(-10)">-£10</button>
-        <button class="btn-sm" onclick="adjustBalance(-5)">-£5</button>
-        <button class="btn-sm" onclick="adjustBalance(-1)">-£1</button>
-        <button class="btn-sm" onclick="adjustBalance(1)">+£1</button>
-        <button class="btn-sm" onclick="adjustBalance(5)">+£5</button>
-        <button class="btn-sm" onclick="adjustBalance(10)">+£10</button>
+      <div style="text-align:center;font-size:10.5px;color:var(--muted);margin-top:5px">
+        💡 Hotkeys: <b>Spacebar</b> = Log Spin • <b>B</b> = Bonus • <b>N</b> = Next Game
       </div>
+    </div>
 
-      <div class="row" style="margin-top:8px">
-        <div>
-          <label>Current Game</label>
-          <select id="eGame">
-            <option value="Fire In The Hole 2">Fire In The Hole 2 (+30p = £0.50)</option>
-            <option value="Fire In The Hole 3">Fire In The Hole 3 (+20p = £0.40)</option>
-          </select>
+    <!-- CARD 3: LOG WIN AMOUNT -->
+    <div class="dock-card">
+      <div class="dock-card-title">
+        <span>Log Win (£) & Multiplier</span>
+        <span class="gold" id="lblWinX">x0</span>
+      </div>
+      <div class="row">
+        <div style="flex:1.4">
+          <input type="number" step="0.01" id="eWinAmt" placeholder="Win Amount (£)">
+        </div>
+        <div style="flex:0.8">
+          <button id="logWin" class="gold" style="width:100%">Log Win</button>
         </div>
       </div>
-
-      <div class="row" style="margin-top:8px">
-        <div><label>Spins This Game</label><input type="number" id="eSpinsThis"></div>
-        <div><label>Total Spins</label><input type="number" id="eTotalSpins"></div>
-        <div><label>Total Wagered (£)</label><input type="number" step="0.10" id="eTotalWagered"></div>
-      </div>
-
-      <div class="row" style="margin-top:8px">
-        <div><label>Total Bonuses</label><input type="number" id="eTotalBonuses"></div>
-        <div><label>Highest Win X</label><input type="number" id="eHighestX"></div>
-        <div><label>Highest Win £</label><input type="number" step="0.01" id="eHighestAmt"></div>
+      <div class="btn-grid">
+        <button class="btn-sm" onclick="quickWin(2)">+£2</button>
+        <button class="btn-sm" onclick="quickWin(5)">+£5</button>
+        <button class="btn-sm" onclick="quickWin(10)">+£10</button>
+        <button class="btn-sm" onclick="quickWin(20)">+£20</button>
+        <button class="btn-sm" onclick="quickWin(50)">+£50</button>
       </div>
     </div>
 
-    <!-- TAB 2: STATS & GRAPH -->
-    <div class="tab-panel" id="tab-stats">
-      <label>Balance Trajectory Chart</label>
-      <canvas id="chartCanvas" width="560" height="150"></canvas>
-      <div class="row" style="margin-top:10px">
-        <div class="pill">Total Spins: <span id="stSpins">0</span></div>
-        <div class="pill">Total Wagered: <span id="stWagered">£0.00</span></div>
-        <div class="pill">Bonuses: <span id="stBonuses">0</span></div>
-      </div>
-      <div class="row" style="margin-top:6px">
-        <div class="pill">Highest Win: <span id="stHigh">x0 (£0.00)</span></div>
-        <div class="pill">Avg Spins/Bonus: <span id="stAvgSpins">—</span></div>
-        <div class="pill">Session Profit: <span id="stProfit">£0.00</span></div>
+    <!-- CARD 4: LIVE STATS & QUICK ADJUSTERS -->
+    <div class="dock-card">
+      <div class="dock-card-title">Live Counters & Quick Tweak</div>
+      <div class="stat-grid">
+        <!-- Spins This Game -->
+        <div class="stat-box">
+          <div>
+            <div class="stat-box-title">Spins Game</div>
+            <div class="stat-box-val" id="lblSpinsThis">0</div>
+          </div>
+          <div style="display:flex;gap:3px">
+            <button class="stepper-btn" onclick="stepStat('spinsThisGame', -1)">−</button>
+            <button class="stepper-btn" onclick="stepStat('spinsThisGame', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Total Spins -->
+        <div class="stat-box">
+          <div>
+            <div class="stat-box-title">Total Spins</div>
+            <div class="stat-box-val gold" id="lblTotalSpins">0</div>
+          </div>
+          <div style="display:flex;gap:3px">
+            <button class="stepper-btn" onclick="stepStat('totalSpins', -1)">−</button>
+            <button class="stepper-btn" onclick="stepStat('totalSpins', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Total Wagered -->
+        <div class="stat-box">
+          <div>
+            <div class="stat-box-title">Wagered</div>
+            <div class="stat-box-val cyan" id="lblWagered">£0.00</div>
+          </div>
+          <div style="display:flex;gap:3px">
+            <button class="stepper-btn" onclick="stepWagered(-1)">−</button>
+            <button class="stepper-btn" onclick="stepWagered(1)">+</button>
+          </div>
+        </div>
+
+        <!-- Total Bonuses -->
+        <div class="stat-box">
+          <div>
+            <div class="stat-box-title">Bonuses</div>
+            <div class="stat-box-val green" id="lblBonuses">0</div>
+          </div>
+          <div style="display:flex;gap:3px">
+            <button class="stepper-btn" onclick="stepStat('totalBonuses', -1)">−</button>
+            <button class="stepper-btn" onclick="stepStat('totalBonuses', 1)">+</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- TAB 3: LIVE OVERLAY OVERRIDES -->
-    <div class="tab-panel" id="tab-live">
-      <label>On-Screen Promo Note (Gifted Sub Reward)</label>
-      <input id="ePromoNote" value="🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p">
-      <div class="row" style="margin-top:4px">
-        <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-          <input type="checkbox" id="eShowPromo" checked style="width:auto"> Show Promo Note Banner on Overlay
+    <!-- CARD 5: SUB REWARD NOTE & SESSION TOOLS -->
+    <div class="dock-card">
+      <div class="dock-card-title">
+        <span>Gifted Sub Promo Note</span>
+        <label style="font-size:10px;cursor:pointer;display:flex;align-items:center;gap:4px">
+          <input type="checkbox" id="eShowPromo" checked style="width:auto"> Show on Overlay
         </label>
       </div>
-
-      <div class="row" style="margin-top:10px">
-        <button class="primary" id="saveLive">Save / Push Live</button>
-      </div>
-
-      <label style="margin-top:12px">Raw State JSON</label>
-      <textarea id="stateBox"></textarea>
+      <input id="ePromoNote" value="🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p">
       <div class="row" style="margin-top:8px">
-        <button id="copyState">Copy JSON</button>
-        <button id="applyState">Apply JSON</button>
-      </div>
-    </div>
-
-    <!-- TAB 4: LOG / HISTORY -->
-    <div class="tab-panel" id="tab-log">
-      <div class="row">
-        <button id="exportCsv" class="gold">Export CSV</button>
-        <button id="clearLog" class="red">Clear Log</button>
-      </div>
-      <div style="max-height:280px;overflow:auto;margin-top:8px;border:1px solid #5a2a6a;border-radius:8px">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th><th>Time</th><th>Game</th><th>Action</th><th>Amount</th><th>X</th><th>Wagered</th><th>Bonuses</th>
-            </tr>
-          </thead>
-          <tbody id="logBody"></tbody>
-        </table>
+        <button class="btn-sm" id="bonusFlash" style="flex:1">⚡ Flash Bonus</button>
+        <button class="btn-sm gold" id="exportCsv" style="flex:1">📥 Export CSV</button>
+        <button class="btn-sm red" id="resetHunt" style="flex:1">🔄 Reset All</button>
       </div>
     </div>
   </div>
@@ -313,7 +296,6 @@ if(isCompact) document.body.classList.add('compact-mode');
 if(forceEdit || isDock) document.body.classList.add('edit-mode');
 
 const $ = id => document.getElementById(id);
-const qa = s => Array.from(document.querySelectorAll(s));
 
 let channel = null;
 try { channel = new BroadcastChannel('bonus_hunt_v1'); } catch(e) {}
@@ -358,15 +340,10 @@ function toast(t){
 
 function defaultState(){
   return {
-    startingBalance: 100,
-    currentBalance: 100,
     currentGame: "Fire In The Hole 2",
-    currentBooster: "+30p No Walls + Bonus Icon locked",
     currentBet: "£0.50",
     currentBetValue: 0.50,
     baseBetValue: 0.20,
-    threshold: 90,
-    remainingToThreshold: 10,
     spinsThisGame: 0,
     totalSpins: 0,
     totalWagered: 0,
@@ -375,14 +352,7 @@ function defaultState(){
     highestWinAmount: 0,
     lastWinAmount: 0,
     lastWinX: 0,
-    sessionProfit: 0,
-    gameIndex: 0,
     bonusAt: 0,
-    spinNo: "1",
-    gameName: "Fire In The Hole 2",
-    featureName: "Bonus Hunt • £100 Start",
-    betSize: "£0.50",
-    balanceDisplay: "£100.00",
     promoNote: "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p",
     showPromo: true
   };
@@ -391,48 +361,16 @@ function defaultState(){
 let state = Object.assign(defaultState(), loadJSON(KEY, {}));
 let log = loadJSON(LOGKEY, []);
 
-function getGameConfig(game){
-  if(game === "Fire In The Hole 3" || game === "FITH3") {
-    return {
-      name: "Fire In The Hole 3",
-      shortName: "FITH3",
-      betValue: 0.40,
-      baseBet: 0.20,
-      display: "£0.40",
-      booster: "+20p 1 Bonus col2"
-    };
-  }
-  return {
-    name: "Fire In The Hole 2",
-    shortName: "FITH2",
-    betValue: 0.50,
-    baseBet: 0.20,
-    display: "£0.50",
-    booster: "+30p No Walls + Bonus Icon locked"
-  };
-}
-
-function calcNextThreshold(balance){
-  let b = Number(balance) || 0;
-  if(b <= 0) return 0;
-  let lowerTens = Math.floor(b / 10) * 10;
-  let diff = Number((b - lowerTens).toFixed(2));
-  if(diff < 0.80) {
-    return Math.max(0, lowerTens - 10);
-  } else {
-    return Math.max(0, lowerTens);
-  }
-}
-
 function persist(broadcast = true){
   saveJSON(KEY, state);
-  if($('stateBox')) $('stateBox').value = JSON.stringify(state, null, 2);
   if(broadcast && channel) channel.postMessage({type: 'state', state});
   serverPush();
 }
 
 function render(){
-  const cfg = getGameConfig(state.currentGame);
+  const gName = state.currentGame || 'Fire In The Hole 2';
+  const betVal = Number(state.currentBetValue || 0.50);
+  const betStr = "£" + betVal.toFixed(2);
 
   // 1. Promo Note Banner
   if($('dPromo')) {
@@ -441,9 +379,9 @@ function render(){
     if($('dPromoText')) $('dPromoText').textContent = state.promoNote || "5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
   }
 
-  // 2. HUD Stream Items (Exact 6 Items Requested)
+  // 2. HUD Stream Items (Exact 6 Items)
   if($('dSpinsThis')) $('dSpinsThis').textContent = state.spinsThisGame || 0;
-  if($('dGameLabel')) $('dGameLabel').textContent = `${cfg.shortName} (${cfg.display})`;
+  if($('dGameLabel')) $('dGameLabel').textContent = `${gName} (${betStr})`;
 
   if($('dTotalSpins')) $('dTotalSpins').textContent = state.totalSpins || 0;
 
@@ -451,7 +389,7 @@ function render(){
   if($('dWagered')) $('dWagered').textContent = "£" + wagered;
 
   if($('dBonuses')) $('dBonuses').textContent = state.totalBonuses || 0;
-  const lastBonusEntry = log.filter(l => l.action && l.action.includes('BONUS')).slice(0, 1)[0];
+  const lastBonusEntry = log.filter(l => l.action && l.action.includes('BONUS'))[0];
   if($('dLastBonusTime')) $('dLastBonusTime').textContent = lastBonusEntry ? `Last: ${lastBonusEntry.time}` : "Last: —";
 
   if($('dLastWin')) {
@@ -470,148 +408,32 @@ function render(){
       if($('dHighestAmt')) $('dHighestAmt').textContent = `£${Number(state.highestWinAmount || 0).toFixed(2)}`;
     } else {
       $('dHighest').textContent = "—";
-      if($('dHighestAmt')) $('dHighestAmt').textContent = "x0 vs 20p";
+      if($('dHighestAmt')) $('dHighestAmt').textContent = "x0 vs base";
     }
   }
 
-  // 3. Dock Quick Status & Inputs Sync
-  if($('stDockGame')) $('stDockGame').textContent = state.currentGame;
-  if($('stDockBet')) $('stDockBet').textContent = cfg.display;
-  if($('stDockThresh')) $('stDockThresh').textContent = "£" + Number(state.threshold || 90).toFixed(2);
-  const rem = Number((state.currentBalance - state.threshold).toFixed(2));
-  if($('stDockRem')) $('stDockRem').textContent = `£${rem.toFixed(2)}`;
-  if($('stDockBal')) $('stDockBal').textContent = "£" + Number(state.currentBalance || 100).toFixed(2);
-  if($('stDockWagered')) $('stDockWagered').textContent = "£" + wagered;
-  if($('btnSpinBet')) $('btnSpinBet').textContent = cfg.display;
+  // 3. Dock Controls Sync
+  if($('btnSpinBet')) $('btnSpinBet').textContent = betStr;
+  if($('lblActiveBet')) $('lblActiveBet').textContent = `Bet: ${betStr} • Base: £${Number(state.baseBetValue||0.20).toFixed(2)}`;
 
-  if($('eBalance') && document.activeElement !== $('eBalance')) $('eBalance').value = state.currentBalance;
-  if($('eStartBalance') && document.activeElement !== $('eStartBalance')) $('eStartBalance').value = state.startingBalance;
-  if($('eGame') && document.activeElement !== $('eGame')) $('eGame').value = state.currentGame.includes("3") ? "Fire In The Hole 3" : "Fire In The Hole 2";
-  if($('eThreshold') && document.activeElement !== $('eThreshold')) $('eThreshold').value = state.threshold;
-  if($('eSpinsThis') && document.activeElement !== $('eSpinsThis')) $('eSpinsThis').value = state.spinsThisGame;
-  if($('eTotalSpins') && document.activeElement !== $('eTotalSpins')) $('eTotalSpins').value = state.totalSpins;
-  if($('eTotalWagered') && document.activeElement !== $('eTotalWagered')) $('eTotalWagered').value = state.totalWagered;
-  if($('eTotalBonuses') && document.activeElement !== $('eTotalBonuses')) $('eTotalBonuses').value = state.totalBonuses;
-  if($('eHighestX') && document.activeElement !== $('eHighestX')) $('eHighestX').value = state.highestWinX;
-  if($('eHighestAmt') && document.activeElement !== $('eHighestAmt')) $('eHighestAmt').value = state.highestWinAmount;
+  if($('lblSpinsThis')) $('lblSpinsThis').textContent = state.spinsThisGame || 0;
+  if($('lblTotalSpins')) $('lblTotalSpins').textContent = state.totalSpins || 0;
+  if($('lblWagered')) $('lblWagered').textContent = "£" + wagered;
+  if($('lblBonuses')) $('lblBonuses').textContent = state.totalBonuses || 0;
+
+  if($('eGameName') && document.activeElement !== $('eGameName')) $('eGameName').value = state.currentGame;
+  if($('eBetValue') && document.activeElement !== $('eBetValue')) $('eBetValue').value = betVal;
+  if($('eBaseBet') && document.activeElement !== $('eBaseBet')) $('eBaseBet').value = Number(state.baseBetValue || 0.20);
   if($('ePromoNote') && document.activeElement !== $('ePromoNote')) $('ePromoNote').value = state.promoNote || "🎁 5 GIFTED SUBS = 100 SPINS ON YOUR GAME CALL @ 20p";
   if($('eShowPromo')) $('eShowPromo').checked = state.showPromo !== false;
 
   if($('syncLine')) {
-    $('syncLine').textContent = (SERVER_SYNC ? 'Server: http://localhost:8001/' : 'file:// mode') + ' • Spins ' + state.totalSpins + ' • Wagered £' + wagered + ' • Bonuses ' + state.totalBonuses;
+    $('syncLine').textContent = (SERVER_SYNC ? 'Server: 8001' : 'file://') + ' • Spins: ' + state.totalSpins + ' • Wagered: £' + wagered;
   }
 
   if(state.bonusAt && state.bonusAt !== window.lastBonusAt) {
     window.lastBonusAt = state.bonusAt;
     triggerBonus(false);
-  }
-
-  renderLog();
-  renderStatsAndChart();
-  if($('stateBox')) $('stateBox').value = JSON.stringify(state, null, 2);
-}
-
-function renderLog(){
-  if(!$('logBody')) return;
-  $('logBody').innerHTML = log.length ? log.map((r, i) => `
-    <tr>
-      <td>${i + 1}</td>
-      <td>${r.time}</td>
-      <td>${r.game}</td>
-      <td>${r.action}</td>
-      <td style="color:${r.amount > 0 ? '#39ff14' : r.amount < 0 ? '#ff5540' : '#fff'}">£${Number(r.amount || 0).toFixed(2)}</td>
-      <td class="gold">${r.x ? 'x' + r.x : '—'}</td>
-      <td class="cyan mono">£${Number(r.wagered || 0).toFixed(2)}</td>
-      <td class="green">${r.bonuses}</td>
-    </tr>
-  `).join('') : '<tr><td colspan="8" style="text-align:center">— No actions logged yet —</td></tr>';
-  saveJSON(LOGKEY, log);
-}
-
-function renderStatsAndChart(){
-  const profit = Number((state.currentBalance - state.startingBalance).toFixed(2));
-  if($('stProfit')) $('stProfit').textContent = (profit >= 0 ? "+" : "") + "£" + profit.toFixed(2);
-  if($('stBonuses')) $('stBonuses').textContent = state.totalBonuses;
-  if($('stSpins')) $('stSpins').textContent = state.totalSpins;
-  if($('stWagered')) $('stWagered').textContent = "£" + Number(state.totalWagered || 0).toFixed(2);
-  if($('stHigh')) $('stHigh').textContent = `x${state.highestWinX} (£${Number(state.highestWinAmount || 0).toFixed(2)})`;
-  if($('stAvgSpins')) $('stAvgSpins').textContent = state.totalBonuses > 0 ? Math.round(state.totalSpins / state.totalBonuses) + " spins" : "—";
-
-  const cvs = $('chartCanvas');
-  if(!cvs) return;
-  const ctx = cvs.getContext('2d');
-  const w = cvs.width, h = cvs.height;
-  ctx.clearRect(0, 0, w, h);
-
-  const series = [{balance: state.startingBalance, isBonus: false}];
-  const revLog = log.slice().reverse();
-  revLog.forEach(l => {
-    if(typeof l.balance === 'number') {
-      series.push({balance: l.balance, isBonus: String(l.action).includes('BONUS')});
-    }
-  });
-  if(series.length < 2) {
-    series.push({balance: state.currentBalance, isBonus: false});
-  }
-
-  let minB = Math.min(...series.map(s => s.balance), state.startingBalance * 0.5);
-  let maxB = Math.max(...series.map(s => s.balance), state.startingBalance * 1.2);
-  if(maxB === minB) maxB += 10;
-
-  const pad = 24;
-  const getX = idx => pad + (idx / (series.length - 1)) * (w - pad * 2);
-  const getY = val => h - pad - ((val - minB) / (maxB - minB)) * (h - pad * 2);
-
-  ctx.beginPath();
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-  ctx.setLineDash([4, 4]);
-  const startY = getY(state.startingBalance);
-  ctx.moveTo(pad, startY);
-  ctx.lineTo(w - pad, startY);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = 'rgba(255,255,255,0.4)';
-  ctx.font = '10px monospace';
-  ctx.fillText('£' + state.startingBalance, 4, startY + 3);
-
-  const grad = ctx.createLinearGradient(0, pad, 0, h - pad);
-  grad.addColorStop(0, 'rgba(168,85,247,0.35)');
-  grad.addColorStop(1, 'rgba(168,85,247,0.0)');
-  ctx.beginPath();
-  ctx.moveTo(getX(0), getY(series[0].balance));
-  for(let i = 1; i < series.length; i++) {
-    ctx.lineTo(getX(i), getY(series[i].balance));
-  }
-  ctx.lineTo(getX(series.length - 1), h - pad);
-  ctx.lineTo(getX(0), h - pad);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.strokeStyle = '#a855f7';
-  ctx.lineWidth = 2.5;
-  ctx.moveTo(getX(0), getY(series[0].balance));
-  for(let i = 1; i < series.length; i++) {
-    ctx.lineTo(getX(i), getY(series[i].balance));
-  }
-  ctx.stroke();
-
-  for(let i = 0; i < series.length; i++) {
-    const pt = series[i];
-    const px = getX(i), py = getY(pt.balance);
-    if(pt.isBonus) {
-      ctx.beginPath();
-      ctx.arc(px, py, 6, 0, Math.PI * 2);
-      ctx.fillStyle = '#39ff14';
-      ctx.shadowColor = '#39ff14';
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-    }
   }
 }
 
@@ -657,102 +479,49 @@ function addLog(action, amount, x){
     action,
     amount: amount || 0,
     x: x || 0,
-    balance: state.currentBalance,
     wagered: state.totalWagered,
     bonuses: state.totalBonuses
   });
   log = log.slice(0, 500);
-  renderLog();
-}
-
-function startNewHunt(){
-  const start = Number($('eStartBalance')?.value) || 100;
-  state = Object.assign(defaultState(), {
-    startingBalance: start,
-    currentBalance: start,
-    threshold: 90,
-    gameIndex: 0,
-    currentGame: "Fire In The Hole 2",
-    gameName: "Fire In The Hole 2",
-    currentBooster: "+30p No Walls + Bonus Icon locked",
-    spinsThisGame: 0,
-    totalSpins: 0,
-    totalWagered: 0,
-    totalBonuses: 0,
-    highestWinX: 0,
-    highestWinAmount: 0,
-    lastWinAmount: 0,
-    lastWinX: 0
-  });
-  const cfg = getGameConfig(state.currentGame);
-  state.currentBet = cfg.display;
-  state.currentBetValue = cfg.betValue;
-  log = [];
-  persist();
-  render();
-  toast('New Hunt Started: £' + start + ' • Threshold £90');
+  saveJSON(LOGKEY, log);
 }
 
 function logSpin(){
-  const cfg = getGameConfig(state.currentGame);
-  state.currentBalance = Number((state.currentBalance - cfg.betValue).toFixed(2));
+  const betVal = Number(state.currentBetValue || 0.50);
   state.spinsThisGame = (state.spinsThisGame || 0) + 1;
   state.totalSpins = (state.totalSpins || 0) + 1;
-  state.totalWagered = Number(((state.totalWagered || 0) + cfg.betValue).toFixed(2));
-  state.remainingToThreshold = Number((state.currentBalance - state.threshold).toFixed(2));
+  state.totalWagered = Number(((state.totalWagered || 0) + betVal).toFixed(2));
 
-  addLog('SPIN +1 (' + cfg.display + ')', -cfg.betValue, 0);
+  addLog('SPIN +1 (£' + betVal.toFixed(2) + ')', -betVal, 0);
   playAudioBeep(440, 0.04, 'triangle');
   persist();
   render();
-
-  const rem = state.currentBalance - state.threshold;
-  if(rem < cfg.betValue){
-    toast('Threshold £' + state.threshold + ' hit! Stop & Next Game →');
-  }
 }
 
 function logWin(){
   const amt = Number($('eWinAmt').value);
   if(!amt || amt <= 0){ toast('Enter a valid win amount'); return; }
-  const cfg = getGameConfig(state.currentGame);
-  state.currentBalance = Number((state.currentBalance + amt).toFixed(2));
-  const x = Math.round((amt / cfg.baseBet) * 10) / 10;
+  const base = Number(state.baseBetValue || state.currentBetValue || 0.20);
+  const x = Math.round((amt / base) * 10) / 10;
   state.lastWinAmount = amt;
   state.lastWinX = x;
-  if(x > state.highestWinX){
+  if(x > (state.highestWinX || 0)){
     state.highestWinX = x;
     state.highestWinAmount = amt;
   }
-  const isBig = $('eIsBigWin').value === 'yes' || ($('eIsBigWin').value === 'auto' && amt >= 10);
-  addLog(isBig ? 'BIG WIN ≥£10' : 'WIN', amt, x);
+  addLog('WIN', amt, x);
   $('eWinAmt').value = '';
-  $('eWinX').value = 'x' + x;
+  if($('lblWinX')) $('lblWinX').textContent = 'x' + x;
   playAudioBeep(660, 0.15, 'sine');
   setTimeout(() => playAudioBeep(880, 0.25, 'sine'), 120);
   persist();
   render();
-  if(isBig){
-    toast(`£10+ Win: £${amt.toFixed(2)} (x${x}) • Auto Next Game`);
-    setTimeout(() => nextGame(), 900);
-  } else {
-    toast(`Win: £${amt.toFixed(2)} (x${x})`);
-  }
+  toast(`Win logged: £${amt.toFixed(2)} (x${x})`);
 }
 
 window.quickWin = function(amt){
   if($('eWinAmt')) $('eWinAmt').value = amt;
-  const cfg = getGameConfig(state.currentGame);
-  if($('eWinX')) $('eWinX').value = 'x' + (amt / cfg.baseBet).toFixed(1);
   logWin();
-};
-
-window.adjustBalance = function(delta){
-  state.currentBalance = Number((state.currentBalance + delta).toFixed(2));
-  addLog((delta > 0 ? '+£' : '-£') + Math.abs(delta) + ' Adj', delta, 0);
-  persist();
-  render();
-  toast('Balance adjusted: £' + state.currentBalance.toFixed(2));
 };
 
 function logBonus(){
@@ -763,44 +532,46 @@ function logBonus(){
   addLog('BONUS #' + state.totalBonuses, 0, 0);
   persist();
   render();
-  toast('BONUS #' + state.totalBonuses + ' logged! Next Game →');
-  setTimeout(() => nextGame(), 1000);
+  toast('BONUS #' + state.totalBonuses + ' Logged!');
 }
 
 function nextGame(){
-  state.gameIndex = (state.gameIndex || 0) + 1;
-  const isFITH2 = state.currentGame.includes("2") || state.currentGame === "FITH2";
-  state.currentGame = isFITH2 ? "Fire In The Hole 3" : "Fire In The Hole 2";
-  state.gameName = state.currentGame;
-
-  const cfg = getGameConfig(state.currentGame);
-  state.currentBet = cfg.display;
-  state.currentBetValue = cfg.betValue;
-  state.currentBooster = cfg.booster;
-
-  // Spins this game resets, but totalSpins and totalWagered stay and keep accumulating!
+  // Reset spins for the current game, but keep total spins and total wagered!
   state.spinsThisGame = 0;
-  state.threshold = calcNextThreshold(state.currentBalance);
-
-  addLog('NEXT GAME → ' + state.currentGame + ' (Thresh £' + state.threshold + ')', 0, 0);
+  addLog('NEXT GAME (Reset spins this game)', 0, 0);
   persist();
   render();
-  toast(`Switched to ${state.currentGame} • Next threshold £${state.threshold}`);
+  toast('Spins this game reset to 0 (Total spins & wagered kept)');
 }
 
-// Event Listeners
-$('startHunt').onclick = startNewHunt;
-$('resetHunt').onclick = () => {
-  if(confirm('Reset current bonus hunt session?')){
-    localStorage.removeItem(KEY);
-    localStorage.removeItem(LOGKEY);
-    state = defaultState();
-    log = [];
-    persist();
-    location.reload();
-  }
+window.selectPreset = function(presetName, betVal, baseVal){
+  if(presetName === 'FITH2') state.currentGame = "Fire In The Hole 2";
+  else if(presetName === 'FITH3') state.currentGame = "Fire In The Hole 3";
+  else state.currentGame = "Viewer Call";
+
+  state.currentBetValue = betVal;
+  state.currentBet = "£" + betVal.toFixed(2);
+  state.baseBetValue = baseVal;
+  state.spinsThisGame = 0;
+
+  persist();
+  render();
+  toast(`Switched to ${state.currentGame} (${state.currentBet})`);
 };
 
+window.stepStat = function(field, delta){
+  state[field] = Math.max(0, (state[field] || 0) + delta);
+  persist();
+  render();
+};
+
+window.stepWagered = function(delta){
+  state.totalWagered = Math.max(0, Number(((state.totalWagered || 0) + delta).toFixed(2)));
+  persist();
+  render();
+};
+
+// Event Listeners
 $('logSpin').onclick = logSpin;
 $('logWin').onclick = logWin;
 $('logBonus').onclick = logBonus;
@@ -811,56 +582,54 @@ $('bonusFlash').onclick = () => {
   triggerBonus(true);
 };
 
-$('eBalance').onchange = e => { state.currentBalance = Number(e.target.value); persist(); render(); };
-$('eStartBalance').onchange = e => { state.startingBalance = Number(e.target.value); persist(); render(); };
-$('eGame').onchange = e => {
-  state.currentGame = e.target.value;
-  state.gameName = state.currentGame;
-  const cfg = getGameConfig(state.currentGame);
-  state.currentBet = cfg.display;
-  state.currentBetValue = cfg.betValue;
-  state.currentBooster = cfg.booster;
+$('eGameName').onchange = e => {
+  state.currentGame = e.target.value.trim() || 'Custom Slot';
   persist();
   render();
 };
-$('eThreshold').onchange = e => { state.threshold = Number(e.target.value); persist(); render(); };
-$('eSpinsThis').onchange = e => { state.spinsThisGame = Number(e.target.value); persist(); render(); };
-$('eTotalSpins').onchange = e => { state.totalSpins = Number(e.target.value); persist(); render(); };
-$('eTotalWagered').onchange = e => { state.totalWagered = Number(e.target.value); persist(); render(); };
-$('eTotalBonuses').onchange = e => { state.totalBonuses = Number(e.target.value); persist(); render(); };
-$('eHighestX').onchange = e => { state.highestWinX = Number(e.target.value); persist(); render(); };
-$('eHighestAmt').onchange = e => { state.highestWinAmount = Number(e.target.value); persist(); render(); };
+
+$('eBetValue').onchange = e => {
+  const v = Math.max(0.01, Number(e.target.value) || 0.20);
+  state.currentBetValue = v;
+  state.currentBet = "£" + v.toFixed(2);
+  persist();
+  render();
+};
+
+$('eBaseBet').onchange = e => {
+  state.baseBetValue = Math.max(0.01, Number(e.target.value) || 0.20);
+  persist();
+  render();
+};
+
+$('ePromoNote').oninput = e => {
+  state.promoNote = e.target.value;
+  persist();
+  render();
+};
+
+$('eShowPromo').onchange = e => {
+  state.showPromo = e.target.checked;
+  persist();
+  render();
+};
+
 $('eWinAmt').oninput = e => {
   const v = Number(e.target.value);
-  const cfg = getGameConfig(state.currentGame);
-  if(v > 0) $('eWinX').value = 'x' + (v / cfg.baseBet).toFixed(1);
-  else $('eWinX').value = '';
+  const base = Number(state.baseBetValue || 0.20);
+  if(v > 0) $('lblWinX').textContent = 'x' + (v / base).toFixed(1);
+  else $('lblWinX').textContent = 'x0';
 };
 
-$('saveLive').onclick = () => {
-  if($('ePromoNote')) state.promoNote = $('ePromoNote').value;
-  if($('eShowPromo')) state.showPromo = $('eShowPromo').checked;
-  persist();
-  render();
-  toast('Overlay settings updated');
-};
-
-$('copyState').onclick = async () => {
-  try {
-    await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
-    toast('JSON state copied to clipboard');
-  } catch(e) {}
-};
-
-$('applyState').onclick = () => {
-  try {
-    const obj = JSON.parse($('stateBox').value);
-    Object.assign(state, obj);
+$('resetHunt').onclick = () => {
+  if(confirm('Reset all session counters (Spins, Wagered, Bonuses, Wins)?')){
+    localStorage.removeItem(KEY);
+    localStorage.removeItem(LOGKEY);
+    state = defaultState();
+    log = [];
     persist();
     render();
-    toast('State applied successfully');
-  } catch(e) {
-    alert('Invalid JSON: ' + e.message);
+    toast('Session reset to 0');
   }
 };
 
@@ -870,33 +639,11 @@ $('exportCsv').onclick = () => {
   ).join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv], {type: 'text/plain;charset=utf-8'}));
-  a.download = `bonus-hunt-log-${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `slotlab-log-${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
 };
 
-$('clearLog').onclick = () => {
-  if(confirm('Clear all log entries?')){
-    log = [];
-    saveJSON(LOGKEY, log);
-    renderLog();
-    renderStatsAndChart();
-    toast('Log cleared');
-  }
-};
-
-// Tabs navigation
-qa('.tab').forEach(btn => {
-  btn.onclick = () => {
-    qa('.tab').forEach(b => b.classList.remove('active'));
-    qa('.tab-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    const target = $('tab-' + btn.dataset.tab);
-    if(target) target.classList.add('active');
-    if(btn.dataset.tab === 'stats') renderStatsAndChart();
-  };
-});
-
-// Spacebar anywhere on the dock/page adds +1 spin!
+// Spacebar anywhere on the dock/controller logs +1 spin!
 window.addEventListener('keydown', e => {
   if(document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT')) {
     return;

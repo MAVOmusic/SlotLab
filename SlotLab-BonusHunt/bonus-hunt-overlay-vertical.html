@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bonus Hunt Vertical</title>
+<title>Slot Lab Vertical Overlay</title>
 <style>
 :root{--gold:#ffbf2a;--purple:#a855f7;--green:#39ff14;--cyan:#00e5ff;--muted:#b8a0c8;--red:#ff5540}
 *{box-sizing:border-box}html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:transparent;color:#fff;font-family:Inter,Arial,sans-serif}
@@ -48,7 +48,7 @@
       <div class="item">
         <div class="hlabel">Spins This Game</div>
         <div class="val mono" id="spinsThis">0</div>
-        <div class="sub-val" id="gameLabel">FITH2</div>
+        <div class="sub-val" id="gameLabel">Fire In The Hole 2</div>
       </div>
       <div class="item">
         <div class="hlabel">Total Spins</div>
@@ -58,7 +58,7 @@
       <div class="item">
         <div class="hlabel">Wagered</div>
         <div class="val cyan mono" id="wagered">£0.00</div>
-        <div class="sub-val">Total Spent</div>
+        <div class="sub-val">Cumulative</div>
       </div>
       <div class="item">
         <div class="hlabel">Total Bonuses</div>
@@ -73,7 +73,7 @@
       <div class="item">
         <div class="hlabel">Highest Win</div>
         <div class="val gold mono" id="highest">—</div>
-        <div class="sub-val" id="highestAmt">x0 vs 20p</div>
+        <div class="sub-val" id="highestAmt">x0 vs base</div>
       </div>
     </div>
   </div>
@@ -89,9 +89,12 @@ function load(){
 }
 
 function render(){
-  const isFITH3 = (st.currentGame || '').includes('3') || st.currentGame === 'FITH3';
+  const gName = st.currentGame || 'Fire In The Hole 2';
+  const betVal = Number(st.currentBetValue || 0.50);
+  const betStr = "£" + betVal.toFixed(2);
+
   spinsThis.textContent = st.spinsThisGame || 0;
-  gameLabel.textContent = isFITH3 ? 'FITH3 (£0.40)' : 'FITH2 (£0.50)';
+  gameLabel.textContent = `${gName} (${betStr})`;
   totalSpins.textContent = st.totalSpins || 0;
   wagered.textContent = '£' + Number(st.totalWagered || 0).toFixed(2);
   bonuses.textContent = st.totalBonuses || 0;
@@ -109,7 +112,7 @@ function render(){
     highestAmt.textContent = '£' + Number(st.highestWinAmount || 0).toFixed(2);
   } else {
     highest.textContent = '—';
-    highestAmt.textContent = 'x0 vs 20p';
+    highestAmt.textContent = 'x0 vs base';
   }
 
   if(st.bonusAt && st.bonusAt !== lastBonusAt){
