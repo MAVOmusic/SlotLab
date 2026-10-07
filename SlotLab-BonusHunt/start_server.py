@@ -114,4 +114,4 @@ if __name__ == "__main__":
         webbrowser.open(f"http://localhost:{PORT}/bonus-hunt-controller.html")
     except Exception:
         pass
-    ThreadingHTTPServer(("localhost", PORT), Handler).serve_forever()
+    ThreadingHTTPServer(("0.0.0.0", PORT), Handler).serve_forever()
