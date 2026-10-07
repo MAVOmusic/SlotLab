@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Slot Lab Passive Transparent Spin Bar</title><style>
+html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hidden;color:#fff;font-family:Inter,Arial,sans-serif}*{box-sizing:border-box}.wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none}.promo{font-weight:1000;font-size:42px;color:#39ff14;text-shadow:0 0 10px #39ff14,0 0 30px #39ff14;margin-bottom:16px}.machine{width:780px;background:linear-gradient(180deg,rgba(20,2,2,.78),rgba(55,8,4,.78));border:3px solid #ffbf2a;border-radius:28px;padding:22px;box-shadow:0 0 45px rgba(255,80,15,.45),inset 0 0 35px #000}.window{height:360px;overflow:hidden;position:relative;border-radius:20px;background:rgba(5,1,1,.7);border:1px solid #ff6a00}.window:before,.window:after{content:"";position:absolute;left:0;right:0;height:120px;z-index:3;pointer-events:none}.window:before{top:0;background:linear-gradient(to bottom,#050101,transparent)}.window:after{bottom:0;background:linear-gradient(to top,#050101,transparent)}.pointer{position:absolute;left:0;right:0;top:50%;height:64px;transform:translateY(-50%);z-index:4;border-top:3px solid #39ff14;border-bottom:3px solid #39ff14;box-shadow:0 0 24px #39ff14}.reel{position:absolute;left:0;right:0;top:0;will-change:transform}.item{height:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 26px;font-size:23px;font-weight:1000;text-shadow:0 3px 10px #000;box-shadow:inset 0 -1px 0 rgba(255,255,255,.12);background:linear-gradient(90deg,#220303,#8b1808,#220303)}.item:nth-child(3n+2){background:linear-gradient(90deg,#351100,#9b4600,#351100)}.item:nth-child(3n){background:linear-gradient(90deg,#180331,#7020b8,#180331)}.result{font-size:36px;font-weight:1000;margin-top:16px;text-shadow:0 0 18px #ff6a00;min-height:44px}.step{color:#ffbf2a;font-weight:950;font-size:20px;margin-top:8px}
+.hidden-all .wrap{display:none!important}/* v5.22 no gift promo override */
+.promo{display:none!important}
+</style></head><body><div class="wrap"><div class="promo"></div><div class="machine"><div class="window"><div class="pointer"></div><div class="reel" id="reel"></div></div></div><div class="result" id="result">Waiting for dock spin...</div><div class="step" id="stepText">Passive transparent spin bar</div></div><script>
+const $=id=>document.getElementById(id);
+let lastId=null,segs=[],animating=false;
+const ITEM_H=64;
+const POINTER_TOP=148;
+const POINTER_CENTER=180;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function renderVisual(values){
+  $('reel').innerHTML=values.map(v=>`<div class="item">${esc(v)}</div>`).join('');
+}
+function setY(y){$('reel').style.transform=`translateY(${y}px)`}
+function selectedIndexForY(y){
+  // Which item is centered inside the green selector window right now?
+  const absoluteIndex=Math.floor((POINTER_CENTER-y)/ITEM_H);
+  const n=segs.length||1;
+  return ((absoluteIndex%n)+n)%n;
+}
+function animate(ev){
+  segs=(ev.segs||[]).map(x=>({v:String(x.v),w:+x.w||1}));
+  if(!segs.length)return;
+  animating=true;
+  $('stepText').textContent=['','1. Letter','2. Game','3. Spins','4. Bet'][ev.step]||'Spin bar';
+
+  const targetIndex=Number(ev.targetIndex)||0;
+  const result=segs[targetIndex]?.v||'';
+  const loops=Number(ev.loops)||7;
+  const finalIndex=loops*segs.length+targetIndex;
+
+  // Build ONE continuous reel that already contains the final target at finalIndex.
+  // No end-of-spin rebuild/swap is needed, so there is no visible jump.
+  const visual=[];
+  for(let r=0;r<loops+6;r++)segs.forEach(x=>visual.push(x.v));
+  renderVisual(visual);
+
+  const startY=0;
+  // Center the final target row exactly inside the green selector.
+  const endY=POINTER_CENTER - (finalIndex*ITEM_H + ITEM_H/2);
+  setY(startY);
+
+  let t0=performance.now();
+  const duration=Number(ev.duration)||6500;
+  let lastShown=-1;
+
+  function an(t){
+    const p=Math.min(1,(t-t0)/duration);
+    // Casino-style strong ease-out: fast at the start, crawls into the final row.
+    const ease=1-Math.pow(1-p,4.4);
+    const y=startY+(endY-startY)*ease;
+    setY(y);
+
+    const cur=selectedIndexForY(y);
+    const pv=segs[cur]?.v||result;
+    if(cur!==lastShown){
+      $('result').textContent=pv;
+      lastShown=cur;
+    }
+
+    if(p<1){
+      requestAnimationFrame(an);
+    }else{
+      // Final exact pixel alignment only. No reel rebuild, no visual jump.
+      setY(endY);
+      $('result').textContent=result;
+      animating=false;
+    }
+  }
+  requestAnimationFrame(an);
+}
+function resetView(){document.body.classList.remove('hidden-all');segs=[];$('reel').innerHTML='';$('reel').style.transform='translateY(0)';$('result').textContent='Waiting for dock spin...';$('stepText').textContent='Passive transparent spin bar';}
+function hideView(){document.body.classList.add('hidden-all');}
+async function poll(){
+  try{
+    let ev=await fetch('spin-event.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json());
+    if(ev&&ev.id&&ev.id!==lastId){
+      lastId=ev.id;
+      if(ev.mode==='reset') resetView();
+      else if(ev.mode==='hide') hideView();
+      else if(ev.mode==='bar'){document.body.classList.remove('hidden-all'); animate(ev);}
+    }
+  }catch(e){}
+}
+setInterval(poll,200);poll();
+</script></body></html>

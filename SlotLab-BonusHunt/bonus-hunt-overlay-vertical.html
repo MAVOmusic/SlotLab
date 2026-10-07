@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bonus Hunt Vertical</title>
+<style>
+:root{--gold:#ffbf2a;--purple:#a855f7;--green:#39ff14;--muted:#b8a0c8}
+*{box-sizing:border-box}html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:transparent;color:#fff;font-family:Inter,Arial,sans-serif}
+.root{position:relative;width:1080px;height:1920px}
+.brand{position:absolute;left:34px;top:34px;display:flex;gap:14px;align-items:center;background:#140a1e;border:2px solid rgba(180,80,255,.9);border-radius:22px;padding:16px 22px;z-index:20}
+.logo{width:68px;height:68px;border-radius:50%;border:4px solid #fff;background:conic-gradient(#ffbf2a,#a855f7,#ff2b0a,#ffbf2a);animation:spin 18s linear infinite;position:relative}
+.logo:after{content:"";position:absolute;inset:23px;border-radius:50%;background:#1a0a22;border:2px solid #fff}@keyframes spin{to{transform:rotate(360deg)}}
+.brand-title{font-size:34px;font-weight:1000;line-height:1}.brand-sub{font-size:13px;color:var(--gold);text-transform:uppercase;letter-spacing:.22em;font-weight:950;margin-top:6px}
+.top{position:absolute;left:42px;right:42px;top:165px;text-align:center;z-index:12}
+.label{font-size:18px;text-transform:uppercase;letter-spacing:.28em;color:var(--purple);font-weight:1000}
+.game-name{font-size:64px;font-weight:1000;line-height:1.02;text-shadow:0 4px 28px #000,0 0 20px rgba(180,80,255,.35)}
+.booster{font-size:22px;font-weight:800;color:var(--gold);margin-top:8px}
+.mid{position:absolute;left:48px;right:48px;top:380px;background:rgba(16,3,25,.72);border:2px solid rgba(180,80,255,.45);border-radius:26px;padding:22px}
+.mid .val{text-align:center;font-size:32px;font-weight:1000}
+.scrim{position:absolute;left:0;right:0;bottom:0;height:750px;background:linear-gradient(to top,rgba(12,5,20,.98),rgba(12,5,20,.90) 56%,rgba(12,5,20,0))}
+.hud{position:absolute;left:34px;right:34px;bottom:42px;background:rgba(20,10,30,.97);border:2px solid rgba(180,80,255,.75);border-top:6px solid #a855f7;border-radius:28px;padding:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.item.full{grid-column:1/-1}
+.hlabel{font-size:16px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);font-weight:1000}
+.val{font-size:38px;font-weight:1000}.gold{color:var(--gold)}.green{color:var(--green)}.mono{font-family:Consolas,monospace}
+.bar-bg{height:17px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#ffbf2a);border-radius:99px}
+.bonusText{position:absolute;inset:0;z-index:90;display:none;align-items:center;justify-content:center;text-align:center;font-size:105px;font-weight:1000;color:#ffcf48;text-shadow:0 0 18px #a855f7,0 0 46px #ff6a00,0 0 80px #000}
+.bonus .bonusText{display:flex;animation:bonusText 3.2s ease forwards}
+.bonus:after{content:"";position:absolute;inset:0;z-index:85;pointer-events:none;background:radial-gradient(circle at 50% 55%,rgba(255,191,42,.25),rgba(180,80,255,.12) 30%,rgba(0,0,0,0) 70%);box-shadow:inset 0 0 220px 70px rgba(180,80,255,.45);animation:ember 1.05s ease 3}
+@keyframes ember{0%,100%{opacity:0}50%{opacity:1}}@keyframes bonusText{0%,100%{opacity:0;transform:scale(.82)}15%,82%{opacity:1;transform:scale(1)}}
+</style>
+</head>
+<body>
+<div class="root" id="root">
+  <div class="brand"><div class="logo"></div><div><div class="brand-title">BONUS HUNT<br>SLOT LAB</div><div class="brand-sub">FITH2 ↔ FITH3</div></div></div>
+  <div class="top"><div class="label">Now Hunting</div><div class="game-name" id="game">Fire In The Hole 2</div><div class="booster" id="booster">+30p No Walls + Bonus</div></div>
+  <div class="mid"><div class="hlabel" style="text-align:center">Balance</div><div class="val gold mono" id="balance">£100.00</div><div class="hlabel" style="text-align:center;margin-top:12px">Bonuses • Highest</div><div class="val" style="text-align:center"><span class="green" id="bonuses">0</span> • <span class="gold" id="highest">x0</span></div></div>
+  <div class="scrim"></div>
+  <div class="hud"><div class="grid">
+    <div class="item full"><div class="hlabel">Bet / Threshold</div><div class="val mono"><span id="bet">£0.50</span> • <span id="threshold">£90.00</span> (<span id="remaining">£10.00</span> left)</div></div>
+    <div><div class="hlabel">Spins This Game</div><div class="val mono" id="spinsThis">0</div></div>
+    <div><div class="hlabel">Total Spins</div><div class="val mono" id="totalSpins">0</div></div>
+    <div><div class="hlabel">Last Win</div><div class="val mono" id="lastWin">—</div></div>
+    <div><div class="hlabel">Profit</div><div class="val mono" id="profit">£0.00</div></div>
+    <div class="item full"><div class="bar-bg"><div class="bar" id="bar"></div></div></div>
+  </div></div>
+  <div class="bonusText">BONUS<br>TIME</div>
+</div>
+<script>
+const KEY='bonus_hunt_state_v1'; let st={}, lastBonusAt=0;
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function render(){
+  game.textContent=st.currentGame||'Fire In The Hole 2';
+  booster.textContent=st.currentBooster||'';
+  balance.textContent='£'+Number(st.currentBalance||100).toFixed(2);
+  bonuses.textContent=st.totalBonuses||0;
+  highest.textContent='x'+(st.highestWinX||0);
+  bet.textContent=st.currentBet||'£0.50';
+  threshold.textContent='£'+Number(st.threshold||90).toFixed(2);
+  remaining.textContent='£'+(Number(st.currentBalance||0)-Number(st.threshold||0)).toFixed(2);
+  spinsThis.textContent=st.spinsThisGame||0;
+  totalSpins.textContent=st.totalSpins||0;
+  lastWin.textContent=st.lastWinAmount?'£'+Number(st.lastWinAmount).toFixed(2)+' x'+st.lastWinX:'—';
+  profit.textContent='£'+(Number(st.currentBalance||0)-Number(st.startingBalance||100)).toFixed(2);
+  const pct = st.startingBalance ? Math.max(0,Math.min(100,(st.currentBalance/st.startingBalance)*100)) : 0;
+  bar.style.width=pct+'%';
+  if(st.bonusAt && st.bonusAt!==lastBonusAt){lastBonusAt=st.bonusAt; document.body.classList.add('bonus'); setTimeout(()=>document.body.classList.remove('bonus'),3400);}
+}
+async function serverLoad(){try{const d=await fetch('state.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()); if(d&&typeof d==='object'){st=d; localStorage.setItem(KEY,JSON.stringify(st)); render(); return;}}catch(e){} st=load(); render();}
+try{new BroadcastChannel('bonus_hunt_v1').onmessage=e=>{ if(e.data?.type==='state'){ st=e.data.state; localStorage.setItem(KEY,JSON.stringify(st)); render(); } }}catch(e){}
+window.addEventListener('storage',e=>{ if(e.key===KEY){ st=load(); render(); } });
+serverLoad(); setInterval(serverLoad,700);
+</script>
+</body>
+</html>

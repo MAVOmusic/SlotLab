@@ -1,0 +1,44 @@
+Spin-The-Wheel Slot Lab — RTP / Volatility editing guide
+
+You have two good options.
+
+OPTION 1 — Send batches to ChatGPT/Arena
+Send 50 lines at a time like this:
+
+Game Name        96.23        High
+Another Game     94.50        Medium
+
+I can update slots.js for you and send back the fixed file/zip.
+
+OPTION 2 — Edit slots.js yourself
+Open slots.js in Notepad++, VS Code, Sublime Text, etc.
+It is now formatted one slot per line instead of one massive line.
+
+Example line:
+
+  {"name": "1 Million Fortunes Megaways", "rtp": "94.21%", "vol": "High"},
+
+Only edit the values after "rtp" and "vol".
+Keep the quotes and comma.
+
+Good:
+  {"name": "10 Cash Bisons", "rtp": "94.37%", "vol": "Medium"},
+
+Bad:
+  {"name": "10 Cash Bisons", "rtp": 94.37, "vol": Medium},
+
+Recommended volatility words:
+Low
+Medium
+Medium-High
+High
+Very High
+Unknown
+
+After editing slots.js:
+1. Save the file.
+2. If the server is running, restart start_server.bat or refresh the browser/OBS source.
+3. If your browser previously saved an old local DB, go to DB / Session and Export DB JSON as backup before clearing anything.
+
+Important:
+The app can also save RTP/Vol in browser storage when you click Save to DB. New v5.1 code now avoids blank browser entries overwriting non-empty slots.js values.

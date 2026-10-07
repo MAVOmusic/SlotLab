@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spin-The-Wheel Slot Lab — Vertical Overlay</title>
+<style>
+:root{--red:#ff2b0a;--orange:#ff6a00;--gold:#ffbf2a;--muted:#d7a391;--green:#39ff14}
+*{box-sizing:border-box}html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:transparent;color:#fff;font-family:Inter,Arial,sans-serif}.root{position:relative;width:1080px;height:1920px}.brand{position:absolute;left:34px;top:34px;display:flex;gap:14px;align-items:center;background:#130404;border:2px solid rgba(255,80,25,.9);border-radius:22px;padding:16px 22px;box-shadow:0 12px 42px rgba(0,0,0,.65),0 0 24px rgba(255,60,20,.25);z-index:20}.logo{width:68px;height:68px;border-radius:50%;border:4px solid #fff;background:conic-gradient(#ffbf2a,#ff6a00,#ff2b0a,#ffbf2a);position:relative;animation:spin 18s linear infinite}.logo:after{content:"";position:absolute;inset:23px;border-radius:50%;background:#220604;border:2px solid #fff}@keyframes spin{to{transform:rotate(360deg)}}.brand-title{font-size:34px;line-height:1;font-weight:1000}.brand-sub{font-size:13px;color:var(--gold);text-transform:uppercase;letter-spacing:.22em;font-weight:950;margin-top:6px}.cam-safe{position:absolute;right:36px;top:32px;width:350px;height:350px;border:4px dashed rgba(255,190,80,.18);border-radius:50%;opacity:.45}.top-game{position:absolute;left:42px;right:42px;top:165px;text-align:center;z-index:12}.label{font-size:18px;text-transform:uppercase;letter-spacing:.28em;color:var(--orange);font-weight:1000;text-shadow:0 2px 12px #000}.game-name{font-size:72px;font-weight:1000;line-height:1.02;white-space:normal;text-shadow:0 4px 28px #000,0 0 20px rgba(255,90,20,.35)}.promo{position:absolute;left:30px;right:30px;top:335px;text-align:center;font-size:38px;font-weight:1000;letter-spacing:.04em;color:var(--green);text-shadow:0 0 10px rgba(57,255,20,.95),0 0 28px rgba(57,255,20,.75),0 0 52px rgba(57,255,20,.4);display:none}.show-promo .promo{display:block}.mid-card{position:absolute;left:48px;right:48px;top:470px;background:rgba(16,3,3,.72);border:2px solid rgba(255,80,25,.45);border-radius:26px;padding:22px;box-shadow:0 12px 50px rgba(0,0,0,.55),inset 0 0 30px rgba(255,70,20,.06)}.wheelpick{font-size:26px;font-weight:1000;color:#ffcf48;text-align:center;text-shadow:0 0 18px rgba(255,120,20,.45)}.session{margin-top:8px;text-align:center;font-size:22px;color:#fff;font-weight:900}.scrim{position:absolute;left:0;right:0;bottom:0;height:650px;background:linear-gradient(to top,rgba(8,1,1,.98),rgba(8,1,1,.90) 56%,rgba(8,1,1,0))}.hud{position:absolute;left:34px;right:34px;bottom:42px;background:rgba(22,5,4,.97);border:2px solid rgba(255,70,20,.75);border-top:6px solid #ff4a0a;border-radius:28px;padding:24px;box-shadow:0 -12px 50px rgba(0,0,0,.72),0 0 30px rgba(255,70,20,.18)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.item.full{grid-column:1/-1}.hlabel{font-size:16px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);font-weight:1000}.val{font-size:38px;font-weight:1000;line-height:1.05}.feature{color:var(--gold);font-size:41px}.mono{font-family:Consolas,monospace}.rtp{color:var(--orange)}.vol{color:#ff5540}.bar-bg{height:17px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:linear-gradient(90deg,#ffcf48,#ff6a00);border-radius:99px}.bonusText{position:absolute;inset:0;z-index:90;display:none;align-items:center;justify-content:center;text-align:center;font-size:105px;line-height:1;font-weight:1000;color:#ffcf48;text-shadow:0 0 18px #ff2b0a,0 0 46px #ff6a00,0 0 80px #000;pointer-events:none}.bonus .bonusText{display:flex;animation:bonusText 3.2s ease forwards}.bonus:after{content:"";position:absolute;inset:0;z-index:85;pointer-events:none;background:radial-gradient(circle at 50% 55%,rgba(255,191,42,.25),rgba(255,43,10,.12) 30%,rgba(0,0,0,0) 70%);box-shadow:inset 0 0 220px 70px rgba(255,58,0,.45);animation:ember 1.05s ease 3}@keyframes ember{0%,100%{opacity:0}50%{opacity:1}}@keyframes bonusText{0%,100%{opacity:0;transform:scale(.82)}15%,82%{opacity:1;transform:scale(1)}}
+/* v5.22 no gift promo override */
+.promo{display:none!important}
+</style>
+</head>
+<body>
+<div class="root" id="root">
+  <div class="brand"><div class="logo"></div><div><div class="brand-title">SPIN-THE-WHEEL<br>SLOT LAB</div><div class="brand-sub">Shorts Edition</div></div></div>
+  <div class="cam-safe"></div>
+  <div class="top-game"><div class="label">Now Testing</div><div class="game-name" id="game">Waiting to pick a game...</div></div>
+  <div class="promo" id="promo"></div>
+  <div class="mid-card"><div class="hlabel" style="text-align:center">Wheel Pick</div><div class="wheelpick" id="wheel">N/A</div><div class="session" id="session">Session #1</div></div>
+  <div class="scrim"></div>
+  <div class="hud"><div class="grid">
+    <div class="item full"><div class="hlabel">Feature / Stop Rule</div><div class="val feature" id="feature">N/A</div></div>
+    <div><div class="hlabel">Spins Remaining</div><div class="val mono"><span id="remain">N/A</span> / <span id="total">N/A</span></div><div class="bar-bg"><div class="bar" id="bar"></div></div></div>
+    <div><div class="hlabel">Bet Size</div><div class="val mono" id="bet">N/A</div></div>
+    <div><div class="hlabel">RTP</div><div class="val mono rtp" id="rtp">N/A</div></div>
+    <div><div class="hlabel">Volatility</div><div class="val vol" id="vol">N/A</div></div>
+  </div></div>
+  <div class="bonusText">BONUS<br>TIME</div>
+</div>
+<script>
+const KEY='slotlab_state_v5';let st={},lastBonusAt=0;
+function localLoad(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function render(){
+  const g=st.gameName||'Waiting to pick a game...';
+  game.textContent=g;
+  feature.textContent=st.featureName||'N/A';
+  remain.textContent=st.spinsRemaining??'N/A';
+  total.textContent=st.spinsTotal??'N/A';
+  bet.textContent=st.betSize||'N/A';
+  rtp.textContent=st.rtp||'N/A';
+  vol.textContent=st.vol||'N/A';
+  const hasPick=g && g!=='Waiting to pick a game...' && st.wheelLetter && st.wheelLetter!=='N/A';
+  wheel.textContent=hasPick ? `${st.wheelLetter} → ${g}` : 'N/A';
+  session.textContent='Session #'+(st.spinNo||'1');
+  document.body.classList.toggle('show-promo',!!st.promoMain);
+  const t=Number(st.spinsTotal)||0,r=Number(st.spinsRemaining)||0;bar.style.width=t?Math.max(0,Math.min(100,r/t*100))+'%':'0%';
+  if(st.bonusAt && st.bonusAt!==lastBonusAt){lastBonusAt=st.bonusAt;triggerBonus()}
+}
+async function serverLoad(){try{const data=await fetch('state.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json());if(data&&typeof data==='object'){st=data;localStorage.setItem(KEY,JSON.stringify(st));render();return}}catch(e){}st=localLoad();render()}
+function triggerBonus(){document.body.classList.add('bonus');setTimeout(()=>document.body.classList.remove('bonus'),3400)}
+try{new BroadcastChannel('slotlab_v5').onmessage=e=>{if(e.data?.type==='state'){st=e.data.state;localStorage.setItem(KEY,JSON.stringify(st));render()}}}catch(e){}
+window.addEventListener('storage',e=>{if(e.key===KEY){st=localLoad();render()}});
+serverLoad();setInterval(serverLoad,700);
+</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spin-The-Wheel Slot Lab v5 Unified</title>
+<script src="slots.js"></script>
+<style>
+:root{--red:#ff2b0a;--orange:#ff6a00;--gold:#ffbf2a;--amber:#ffdd7a;--bg:#160303;--panel:#250906;--line:#74301f;--muted:#d7a391;--text:#fff;--ok:#7cff9b}
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent;color:var(--text);font-family:Inter,Outfit,Arial,sans-serif}body.dock-mode{width:100%;height:auto;min-height:100vh;overflow:auto;background:#130303}.overlay-root{position:relative;width:1920px;height:1080px}.brand,.cover,.hud,.edit-panel,.game-center{font-family:Inter,Outfit,Arial,sans-serif}.brand{position:absolute;left:18px;top:18px;z-index:40;display:flex;align-items:center;gap:13px;background:#130404;border:1px solid rgba(255,80,25,.95);border-radius:14px;padding:11px 18px 11px 12px;box-shadow:0 8px 30px rgba(0,0,0,.6),0 0 28px rgba(255,60,20,.22);cursor:move;user-select:none;touch-action:none}.wheel-logo{width:52px;height:52px;border-radius:50%;background:conic-gradient(from -30deg,#ffbf2a 0 52deg,#ff6a00 52deg 112deg,#ff2b0a 112deg 184deg,#ff7a00 184deg 250deg,#ffcf48 250deg 360deg);border:3px solid #fff;box-shadow:0 0 18px rgba(255,80,20,.55),inset 0 0 12px rgba(0,0,0,.35);position:relative;animation:spinLogo 18s linear infinite;flex:0 0 auto}.wheel-logo:after{content:"";position:absolute;inset:17px;border-radius:50%;background:#250705;border:2px solid rgba(255,255,255,.9)}@keyframes spinLogo{to{transform:rotate(360deg)}}.brand-title{font-weight:950;font-size:22px;line-height:1.02;letter-spacing:.01em;text-shadow:0 2px 16px rgba(255,70,20,.35)}.brand-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:900;margin-top:3px}.game-center{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:930px;text-align:center;pointer-events:none;z-index:20}.game-label{font-size:12px;font-weight:950;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);text-shadow:0 2px 14px #000}.game-name{font-size:50px;font-weight:950;letter-spacing:-.025em;line-height:1.02;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 3px 28px rgba(0,0,0,.8),0 0 22px rgba(255,70,20,.38)}.cam-safe{position:absolute;right:22px;top:18px;width:470px;height:285px;border:2px dashed transparent;border-radius:22px;z-index:6;pointer-events:none}.cover{position:absolute;left:22px;top:95px;width:204px;height:52px;z-index:35;display:flex;align-items:center;justify-content:center;gap:10px;background:#140404;border:1px solid rgba(255,80,25,.95);border-radius:11px;box-shadow:0 10px 30px rgba(0,0,0,.64);cursor:move;user-select:none;touch-action:none}.cover .dot{width:27px;height:27px;border-radius:50%;background:conic-gradient(#ffbf2a,#ff6a00,#ff2b0a,#ffbf2a);border:2px solid #fff}.cover span{font-size:12px;font-weight:950;color:#ffd8ad;letter-spacing:.04em}.scrim{position:absolute;left:0;right:0;bottom:0;height:180px;background:linear-gradient(to top,rgba(8,1,1,.97),rgba(8,1,1,.82) 58%,rgba(8,1,1,0));z-index:5;pointer-events:none}.hud{position:absolute;left:22px;right:22px;bottom:18px;z-index:10;display:flex;align-items:center;gap:20px;padding:15px 20px;border-radius:17px;background:rgba(22,5,4,.965);border:1px solid rgba(255,70,20,.68);border-top:3px solid #ff4a0a;box-shadow:0 -10px 45px rgba(0,0,0,.65),0 0 30px rgba(255,70,20,.22);backdrop-filter:blur(12px)}.block{display:flex;flex-direction:column;gap:3px;min-width:105px}.label{font-size:10.5px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}.val{font-size:22px;font-weight:950}.big{font-size:27px}.mono{font-family:"Consolas","JetBrains Mono",monospace}.feature{flex:1;min-width:340px}.feature .val,.spins .val{color:var(--gold)}.rtp .val{color:var(--orange)}.vol .val{color:#ff5540}.divider{width:1px;height:46px;background:rgba(255,210,180,.22)}.progress{width:176px;height:9px;margin-top:5px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden}.bar{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,#ffcf48,#ff6a00);transition:width .25s}.edit-hint{display:none;position:absolute;top:102px;left:50%;transform:translateX(-50%);z-index:90;background:rgba(0,0,0,.76);border:1px solid rgba(255,190,80,.35);border-radius:999px;padding:8px 15px;font-size:13px;font-weight:850}.edit-panel{display:none;position:absolute;left:22px;top:96px;width:520px;max-height:850px;overflow:auto;z-index:100;background:rgba(23,6,5,.98);border:1px solid var(--line);border-radius:15px;box-shadow:0 18px 60px rgba(0,0,0,.72);padding:13px}.edit-panel h2{font-size:18px;color:var(--gold);margin:0 0 8px}.tabs{display:flex;gap:6px;margin:8px 0 12px;flex-wrap:wrap}.tab{background:#38120d;border:1px solid #6b2416;color:#fff;border-radius:9px;padding:8px 11px;font-weight:900;cursor:pointer}.tab.active{background:var(--gold);border-color:var(--gold);color:#1b0700}.tab-panel{display:none}.tab-panel.active{display:block}label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:950;margin:8px 0 4px}input,select,textarea{width:100%;background:#1c0705;border:1px solid #5a1e14;border-radius:8px;color:#fff;padding:8px 9px;font:800 14px Inter,Arial,sans-serif}textarea{min-height:120px;font-family:Consolas,monospace;font-weight:600}.row{display:flex;gap:8px;align-items:center}.row>div{flex:1}button{background:#3a130e;color:#fff;border:1px solid #6b2416;border-radius:9px;padding:8px 11px;font-weight:950;cursor:pointer}button:hover{filter:brightness(1.12)}button.primary{background:var(--red);border-color:var(--red)}button.gold{background:var(--gold);border-color:var(--gold);color:#190800}button:disabled{opacity:.45;cursor:not-allowed}.small{font-size:12px;color:var(--muted);line-height:1.35}.pill{display:inline-block;border:1px solid #74301f;background:#2a0d09;border-radius:999px;padding:4px 8px;margin:2px;color:#ffd49b;font-size:12px;font-weight:850}.wheel-layout{display:grid;grid-template-columns:1fr;gap:10px}.wheel-box{position:relative;margin:auto;width:390px;height:390px}.pointer{position:absolute;left:50%;top:-6px;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid #fff;filter:drop-shadow(0 4px 4px #000)}#wheelCanvas{width:390px;height:390px;display:block}.wheel-result{text-align:center;font-size:27px;font-weight:950;margin:8px 0;color:#fff;min-height:34px}.steps{display:flex;gap:5px;flex-wrap:wrap}.step{padding:5px 8px;border-radius:999px;border:1px solid #6b2416;background:#2a0d09;color:#cda;font-size:12px;font-weight:950}.step.active{background:#ffbf2a;color:#1b0700}.step.done{border-color:#ff8a1a;color:#ffbf2a}.list{max-height:210px;overflow:auto;border:1px solid #5a1e14;border-radius:9px;background:#160504;padding:5px}.list div{padding:5px 7px;border-radius:6px;font:700 13px Consolas,monospace;cursor:pointer}.list div:hover{background:#44140f;color:#ffbf2a}table{width:100%;border-collapse:collapse;font-size:12px}td,th{border-bottom:1px solid #4b1a12;padding:5px;text-align:left}.toast{position:absolute;right:24px;bottom:130px;z-index:200;background:rgba(0,0,0,.82);border:1px solid #ffbf2a;border-radius:10px;padding:10px 13px;font-weight:900;display:none}.toast.show{display:block;animation:fadeToast 2.1s ease forwards}@keyframes fadeToast{0%,75%{opacity:1}100%{opacity:0}}body.edit-mode .edit-panel{display:block}body.edit-mode .edit-hint{display:block}body.edit-mode .brand,body.edit-mode .cover{outline:2px dashed var(--gold)}body.edit-mode .cam-safe{border-color:rgba(255,190,80,.32)}body.edit-mode .cam-safe:after{content:"WEBCAM SAFE 470×285";position:absolute;right:8px;bottom:-20px;color:rgba(255,220,190,.65);font-size:11px;font-weight:900}body.bonus .overlay-root:after{content:"";position:absolute;inset:0;z-index:80;pointer-events:none;box-shadow:inset 0 0 150px 40px rgba(255,116,20,.35);animation:flash 1s ease 3}@keyframes flash{0%,100%{opacity:0}50%{opacity:1}}body.dock-mode .overlay-root{width:100%;height:auto;min-height:100vh}.dock-mode .brand,.dock-mode .game-center,.dock-mode .cam-safe,.dock-mode .cover,.dock-mode .scrim,.dock-mode .hud,.dock-mode .edit-hint{display:none!important}.dock-mode .edit-panel{display:block!important;position:static;width:100%;max-height:none;min-height:100vh;border:0;border-radius:0;box-shadow:none;background:#130303}.dock-mode .tab-panel{max-width:1180px}.dock-mode .wheel-layout{grid-template-columns:430px minmax(320px,1fr);align-items:start}.dock-mode .wheel-box{width:420px;height:420px}.dock-mode #wheelCanvas{width:420px;height:420px}
+
+/* Compact OBS dock: never scale the real overlay source, only the dock editor UI */
+@media (max-width:700px){
+  .dock-mode .edit-panel{padding:8px;font-size:12px;overflow-x:hidden}
+  .dock-mode h2{font-size:15px;margin-bottom:4px}
+  .dock-mode .tabs{gap:4px;margin:6px 0 8px}
+  .dock-mode .tab{padding:7px 8px;font-size:12px}
+  .dock-mode .steps{gap:4px}.dock-mode .step{font-size:11px;padding:4px 7px}
+  .dock-mode .wheel-layout{display:block}
+  .dock-mode .wheel-box{width:min(310px, calc(100vw - 34px));height:min(310px, calc(100vw - 34px));margin:2px auto 4px}
+  .dock-mode #wheelCanvas{width:100%;height:100%}
+  .dock-mode .pointer{border-left-width:14px;border-right-width:14px;border-top-width:26px;top:-4px}
+  .dock-mode .wheel-result{font-size:22px;min-height:28px;margin:5px 0}
+  .dock-mode .row{gap:5px;flex-wrap:wrap}.dock-mode button{padding:7px 8px;font-size:12px}
+  .dock-mode input,.dock-mode select,.dock-mode textarea{padding:7px;font-size:12px}
+  .dock-mode label{font-size:9px;margin:6px 0 3px}
+  .dock-mode .list{max-height:160px}.dock-mode .list div{font-size:12px;padding:4px 6px}
+}
+
+.promo-neon{text-align:center;margin:7px 0 6px;font-weight:1000;letter-spacing:.06em;color:#39ff14;text-shadow:0 0 8px rgba(57,255,20,.95),0 0 18px rgba(57,255,20,.65),0 0 32px rgba(57,255,20,.35);font-size:18px}.spin-preview{text-align:center;min-height:24px;margin:0 0 8px;color:#d8fff0;font-weight:950;font-size:14px;text-shadow:0 0 10px rgba(0,255,170,.55)}.bar-machine{margin:12px auto;max-width:560px;background:linear-gradient(180deg,#090102,#230604);border:2px solid #ffbf2a;border-radius:18px;padding:14px;box-shadow:0 0 30px rgba(255,120,20,.28),inset 0 0 30px rgba(0,0,0,.8)}.bar-window{height:260px;overflow:hidden;position:relative;border-radius:14px;background:#080204;border:1px solid #6b2416}.bar-window:before,.bar-window:after{content:"";position:absolute;left:0;right:0;height:92px;z-index:3;pointer-events:none}.bar-window:before{top:0;background:linear-gradient(to bottom,#080204,rgba(8,2,4,0))}.bar-window:after{bottom:0;background:linear-gradient(to top,#080204,rgba(8,2,4,0))}.bar-pointer{position:absolute;left:0;right:0;top:50%;height:54px;transform:translateY(-50%);z-index:4;border-top:2px solid #39ff14;border-bottom:2px solid #39ff14;box-shadow:0 0 22px rgba(57,255,20,.8);pointer-events:none}.bar-reel{position:absolute;left:0;right:0;top:0;will-change:transform}.bar-item{height:54px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 18px;font-weight:1000;font-size:18px;color:#fff;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(90deg,#230604,#5b1208,#230604);text-shadow:0 2px 8px #000}.bar-item:nth-child(3n+2){background:linear-gradient(90deg,#351100,#8d3b00,#351100)}.bar-item:nth-child(3n){background:linear-gradient(90deg,#1b0635,#6a1fb3,#1b0635)}body.bonus .overlay-root:before{content:"BONUS TIME";position:absolute;inset:0;z-index:82;display:flex;align-items:center;justify-content:center;font-size:110px;font-weight:1000;letter-spacing:.04em;color:#ffcf48;text-shadow:0 0 18px #ff2b0a,0 0 42px #ff6a00,0 0 80px #000;pointer-events:none;animation:bonusText 3.2s ease forwards}body.bonus .overlay-root:after{content:"";position:absolute;inset:0;z-index:80;pointer-events:none;background:radial-gradient(circle at 50% 55%,rgba(255,191,42,.25),rgba(255,43,10,.12) 28%,rgba(40,0,0,.05) 55%,rgba(0,0,0,0) 70%),repeating-conic-gradient(from 0deg,rgba(255,85,0,.16) 0 8deg,rgba(255,191,42,.06) 8deg 15deg,rgba(0,0,0,0) 15deg 25deg);box-shadow:inset 0 0 220px 70px rgba(255,58,0,.45);animation:emberFlash 1.05s ease 3}@keyframes emberFlash{0%,100%{opacity:0;filter:hue-rotate(0deg)}50%{opacity:1;filter:hue-rotate(-18deg)}}@keyframes bonusText{0%,100%{opacity:0;transform:scale(.8)}15%,82%{opacity:1;transform:scale(1)}}
+.main-promo{position:absolute;top:92px;left:50%;transform:translateX(-50%);z-index:18;display:none;font-size:34px;font-weight:1000;letter-spacing:.06em;color:#39ff14;text-shadow:0 0 10px rgba(57,255,20,.95),0 0 26px rgba(57,255,20,.7),0 0 48px rgba(57,255,20,.35);pointer-events:none;text-align:center;white-space:nowrap}body.show-main-promo .main-promo{display:block}.dock-mode .main-promo{display:none!important}
+/* v5.15 OBS dock compact/responsive overrides */
+body.dock-mode.compact-mode{width:100%!important;min-width:0!important;overflow-x:hidden!important}
+body.dock-mode.compact-mode .edit-panel{width:100vw!important;max-width:100vw!important;min-width:0!important;padding:6px!important;overflow-x:hidden!important;font-size:12px!important}
+body.dock-mode.compact-mode .edit-panel h2{font-size:14px!important;margin:0 0 4px!important;line-height:1.15!important}
+body.dock-mode.compact-mode .small{font-size:10px!important;line-height:1.25!important}
+body.dock-mode.compact-mode .tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:4px!important;margin:6px 0!important}
+body.dock-mode.compact-mode .tab{font-size:11px!important;padding:7px 5px!important;min-width:0!important;white-space:nowrap!important}
+body.dock-mode.compact-mode .steps{gap:3px!important;margin:5px 0!important}.dock-mode.compact-mode .step{font-size:10px!important;padding:4px 5px!important}
+body.dock-mode.compact-mode label{font-size:8.5px!important;margin:5px 0 2px!important;letter-spacing:.11em!important}
+body.dock-mode.compact-mode input,body.dock-mode.compact-mode select,body.dock-mode.compact-mode textarea{font-size:11px!important;padding:6px!important;min-width:0!important}
+body.dock-mode.compact-mode button{font-size:11px!important;padding:7px 8px!important;min-width:0!important}
+body.dock-mode.compact-mode .row{display:flex!important;flex-wrap:wrap!important;gap:5px!important}.dock-mode.compact-mode .row>div{min-width:0!important;flex:1 1 110px!important}
+body.dock-mode.compact-mode .promo-neon{font-size:13px!important;margin:5px 0!important;line-height:1.12!important;white-space:normal!important}.dock-mode.compact-mode .spin-preview{font-size:11px!important;min-height:18px!important;margin-bottom:4px!important}
+body.dock-mode.compact-mode .wheel-layout{display:block!important;max-width:100%!important;grid-template-columns:none!important}.dock-mode.compact-mode .wheel-box{width:min(245px,calc(100vw - 24px))!important;height:min(245px,calc(100vw - 24px))!important;margin:4px auto!important}.dock-mode.compact-mode #wheelCanvas{width:100%!important;height:100%!important}.dock-mode.compact-mode .pointer{border-left-width:13px!important;border-right-width:13px!important;border-top-width:25px!important;top:-4px!important}.dock-mode.compact-mode .wheel-result{font-size:22px!important;min-height:26px!important;margin:4px 0!important}.dock-mode.compact-mode .list{max-height:125px!important}.dock-mode.compact-mode .list div{font-size:11px!important;padding:4px!important}
+body.dock-mode.compact-mode .bar-machine{width:100%!important;max-width:calc(100vw - 18px)!important;padding:7px!important;margin:6px auto!important;border-radius:12px!important}.dock-mode.compact-mode .bar-window{height:178px!important;border-radius:10px!important}.dock-mode.compact-mode .bar-window:before,.dock-mode.compact-mode .bar-window:after{height:62px!important}.dock-mode.compact-mode .bar-pointer{height:42px!important}.dock-mode.compact-mode .bar-item{height:42px!important;font-size:13px!important;padding:0 8px!important}.dock-mode.compact-mode #barResult{font-size:20px!important;min-height:24px!important;margin:4px 0!important}
+@media (max-width:360px){body.dock-mode.compact-mode .tabs{grid-template-columns:1fr!important}.dock-mode.compact-mode .tab{font-size:11px!important}.dock-mode.compact-mode .wheel-box{width:min(220px,calc(100vw - 18px))!important;height:min(220px,calc(100vw - 18px))!important}.dock-mode.compact-mode .bar-window{height:150px!important}.dock-mode.compact-mode .bar-item{height:38px!important;font-size:12px!important}}
+
+/* v5.17 compact dock scroll/bottom visibility */
+html:has(body.dock-mode.compact-mode), body.dock-mode.compact-mode{height:auto!important;min-height:100vh!important;overflow-y:auto!important;}
+body.dock-mode.compact-mode .overlay-root{height:auto!important;min-height:100vh!important;overflow:visible!important;}
+body.dock-mode.compact-mode .edit-panel{height:auto!important;min-height:0!important;overflow:visible!important;padding-bottom:70px!important;}
+body.dock-mode.compact-mode textarea{max-height:150px!important;}
+/* v5.22 no gift promo override */
+.promo-neon,.main-promo{display:none!important}
+</style>
+</head>
+<body>
+<div class="overlay-root">
+  <div class="brand" id="brand"><div class="wheel-logo"></div><div><div class="brand-title">SPIN-THE-WHEEL<br>SLOT LAB</div><div class="brand-sub">live slot testing</div></div></div>
+  <div class="game-center"><div class="game-label">Now Testing</div><div class="game-name" id="dGame">Nitropolis 5</div></div>
+  <div class="main-promo" id="mainPromo"></div>
+  <div class="cam-safe"></div>
+  <div class="cover" id="cover"><div class="dot"></div><span>SLOT LAB</span></div>
+  <div class="scrim"></div>
+  <div class="hud">
+    <div class="block" style="min-width:175px"><div class="label">Wheel Pick</div><div class="val" id="dWheel">N → Nitropolis 5</div><div class="small" id="dSpinNo">Spin #12</div></div><div class="divider"></div>
+    <div class="block feature"><div class="label">Feature / Stop Rule</div><div class="val big" id="dFeature">50 Spins • Stop on Bonus / +£5</div></div><div class="divider"></div>
+    <div class="block spins"><div class="label">Spins Remaining</div><div class="val mono big"><span id="dRemain">34</span> / <span id="dTotal">50</span></div><div class="progress"><div class="bar" id="dBar"></div></div></div><div class="divider"></div>
+    <div class="block"><div class="label">Bet Size</div><div class="val mono" id="dBet">£0.40</div></div><div class="divider"></div>
+    <div class="block rtp"><div class="label">RTP</div><div class="val mono" id="dRtp">96.23%</div></div><div class="divider"></div>
+    <div class="block vol"><div class="label">Volatility</div><div class="val" id="dVol">High</div></div>
+  </div>
+  <div class="edit-hint">EDIT MODE — E hide • drag brand/covers • ↑/↓ spins • B bonus flash</div>
+  <div class="toast" id="toast"></div>
+  <div class="edit-panel">
+    <h2>Spin-The-Wheel Slot Lab — v5 Unified</h2>
+    <div class="small" id="syncLine">Loading…</div>
+    <div class="tabs"><button class="tab active" data-tab="live">Live Overlay</button><button class="tab" data-tab="wheel">Wheel Picker</button><button class="tab" data-tab="bar">Spin Bar</button><button class="tab" data-tab="manual">Manual Pick</button><button class="tab" data-tab="db">DB / Session</button></div>
+    <div class="tab-panel active" id="tab-live">
+      <label>Game Name</label><input id="eGame">
+      <label>Feature / Stop Rule</label><input id="eFeature">
+      <div class="row"><div><label>Spins Remaining</label><input type="number" id="eRemain"></div><div><label>Spins Total</label><input type="number" id="eTotal"></div></div>
+      <div class="row"><div><label>Bet Size</label><input id="eBet"></div><div><label>RTP</label><input id="eRtp"></div><div><label>Volatility</label><select id="eVol"><option value="">—</option><option>Low</option><option>Medium</option><option>Medium-High</option><option>High</option><option>Very High</option><option>Unknown</option></select></div></div>
+      <div class="row"><div><label>Wheel Letter</label><input id="eLetter"></div><div><label>Spin #</label><input id="eSpinNo"></div></div>
+      <div class="row" style="margin-top:10px"><button class="primary" id="saveLive">Save / Push Live</button><button id="minusSpin">−1 Spin</button><button id="bonusBtn">Bonus Flash</button></div>
+      <label>Import / Export State</label><textarea id="stateBox" placeholder="JSON state appears here"></textarea><div class="row" style="margin-top:8px"><button id="copyState">Copy State</button><button id="applyState">Apply Import</button><button id="resetState">Reset</button></div>
+      <p class="small">Best setup: run <b>start_server.bat</b>, use <b>http://localhost:8000/overlay.html</b> in OBS, and <b>http://localhost:8000/controller.html</b> as your dock. If you do not run the server, use OBS “Interact → E” because file:// storage can be isolated.</p>
+    </div>
+    <div class="tab-panel" id="tab-wheel">
+      <div class="steps"><span class="step" id="st1">1 Letter</span><span class="step" id="st2">2 Game</span><span class="step" id="st3">3 Spins</span><span class="step" id="st4">4 Bet</span></div><div class="promo-neon"></div><div class="spin-preview" id="spinPreview">—</div>
+      <div class="wheel-layout">
+        <div>
+          <label id="wheelTitle">Wheel 1 — Pick a Letter</label>
+          <div class="wheel-box"><div class="pointer"></div><canvas id="wheelCanvas" width="900" height="900"></canvas></div>
+          <div class="wheel-result" id="wheelResult">—</div>
+          <div class="row" style="justify-content:center"><button class="primary" id="spinWheel">SPIN</button><button id="shuffleWheel">Shuffle</button><button id="nextWheel" disabled>Next Wheel →</button><button id="rerollWheel" disabled>Reset Pick</button></div>
+          <p class="small" style="text-align:center">Space = spin • Enter = next • Shuffle refreshes/randomizes the board • Sound plays on spin click.</p>
+        </div>
+        <div>
+          <label>Current Pick</label><div style="font-size:18px;font-weight:950;line-height:1.35">Letter: <span style="color:var(--orange)" id="pLetter">—</span><br>Game: <span style="color:var(--gold)" id="pGame">—</span><br>Spins: <span id="pSpins">—</span><br>Bet: <span id="pBet">—</span></div><div class="small" id="pMeta">RTP — • Vol —</div>
+          <div class="row"><div><label>RTP %</label><input id="metaRtp" placeholder="96.23%"></div><div><label>Volatility</label><select id="metaVol"><option value="">Vol ?</option><option>Low</option><option>Medium</option><option>Medium-High</option><option>High</option><option>Very High</option><option>Unknown</option></select></div><div style="align-self:end"><button id="saveMeta">Save to DB</button></div></div>
+          <div class="row" style="margin:10px 0"><button class="gold" id="sendOverlay" disabled>Send to Overlay</button><button id="resetPick">Reset Pick</button></div>
+          <label>Game pool for “<span id="poolLetter">—</span>” (<span id="poolCount">0</span>) — click to pick manually</label><div class="small" style="color:#ffbf2a;font-weight:950;margin:3px 0 6px"></div><input id="poolSearch" placeholder="Filter games…"><div class="list" id="poolList">Pick a letter first.</div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-panel" id="tab-bar">
+      <div class="steps"><span class="step" id="bst1">1 Letter</span><span class="step" id="bst2">2 Game</span><span class="step" id="bst3">3 Spins</span><span class="step" id="bst4">4 Bet</span></div>
+      <div class="promo-neon"></div>
+      <div class="spin-preview" id="barPreview">Spin bar uses the same pick flow as the wheel.</div>
+      <label id="barTitle">Spin Bar — Pick a Letter</label>
+      <div class="bar-machine"><div class="bar-window"><div class="bar-pointer"></div><div class="bar-reel" id="barReel"></div></div></div>
+      <div class="wheel-result" id="barResult">—</div>
+      <div class="row" style="justify-content:center"><button class="primary" id="barSpin">SPIN BAR</button><button id="barShuffle">Shuffle</button><button id="barNext" disabled>Next →</button><button id="barReset">Reset Pick</button></div>
+      <p class="small" style="text-align:center">Casino bonus-style vertical spin. It shares the same letter/game/spins/bet selection as Wheel Picker.</p>
+    </div>
+    <div class="tab-panel" id="tab-manual">
+      <div class="promo-neon"></div>
+      <p class="small">Use this when a viewer requests a game, or when you want to skip the random wheels. Manual bet is always £0.20.</p>
+      <label>1. Pick Letter</label>
+      <select id="mLetter"><option value="">Choose letter / number…</option></select>
+      <label>2. Pick Game</label>
+      <select id="mGame" disabled><option value="">Choose a letter first…</option></select>
+      <label>3. Type Spins, then press Enter or Send</label>
+      <input id="mSpins" type="number" min="1" placeholder="Example: 100">
+      <div class="row" style="margin-top:10px"><div><label>Manual Bet</label><input value="£0.20" disabled></div><div style="align-self:end"><button class="gold" id="mSend">Send Manual Pick to Overlay</button></div></div>
+      <div class="small" id="mMeta" style="margin-top:8px">RTP — • Vol —</div>
+    </div>
+    <div class="tab-panel" id="tab-db">
+      <label>Session logger — <span id="logCount">0</span> picks</label><div class="row"><button id="exportCsv">Export CSV</button><button id="clearLog">Clear Log</button></div><div style="max-height:210px;overflow:auto;margin-top:8px"><table><thead><tr><th>#</th><th>Time</th><th>Letter</th><th>Game</th><th>Spins</th><th>Bet</th><th>RTP</th><th>Vol</th></tr></thead><tbody id="logBody"></tbody></table></div>
+      <label>Slot database — <span id="dbCount">0</span> games</label><div class="small">RTP/Vol edits save in browser storage. Export JSON occasionally as backup.</div><div class="row" style="margin-top:8px"><button id="exportDb">Export DB JSON</button><button id="importTextBtn">Merge Text Below</button></div><textarea id="dbText" placeholder="Paste one per line: Game Name | RTP | Volatility"></textarea>
+    </div>
+  </div>
+</div>
+<script>
+(()=>{
+const KEY='slotlab_state_v5', DBKEY='slotlab_slots_v5', LOGKEY='slotlab_log_v5';
+const qs=new URLSearchParams(location.search); const isDock=qs.has('dock'); const forceEdit=qs.has('edit'); const isCompact=qs.has('compact');
+if(isDock) document.body.classList.add('dock-mode'); if(isCompact) document.body.classList.add('compact-mode'); if(forceEdit||isDock) document.body.classList.add('edit-mode');
+const $=id=>document.getElementById(id); const q=(s,root=document)=>root.querySelector(s); const qa=s=>Array.from(document.querySelectorAll(s));
+let channel=null; try{channel=new BroadcastChannel('slotlab_v5')}catch(e){}
+const SERVER_SYNC = location.protocol === 'http:' || location.protocol === 'https:';
+let lastStateJson = '';
+let applyingServerState = false;
+function serverPush(){
+  if(!SERVER_SYNC || applyingServerState) return;
+  const body = JSON.stringify(state);
+  lastStateJson = body;
+  fetch('state.json', {method:'POST', headers:{'Content-Type':'application/json'}, body}).catch(()=>{});
+}
+function serverPoll(){
+  if(!SERVER_SYNC) return;
+  fetch('state.json?ts='+Date.now(), {cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{
+    if(!data || typeof data !== 'object' || !Object.keys(data).length) return;
+    const body = JSON.stringify(data);
+    if(body === lastStateJson) return;
+    applyingServerState = true;
+    Object.assign(state, data);
+    saveJSON(KEY,state);
+    lastStateJson = body;
+    render();
+    applyingServerState = false;
+  }).catch(()=>{});
+}
+
+function postSpinEvent(mode,targetIndex,duration,extra={}){
+  if(!SERVER_SYNC) return;
+  const payload={id:Date.now()+Math.random(),mode,step,targetIndex,duration,segs:wheelSegs.map(x=>({v:x.v,w:Number(x.w)||1})),createdAt:Date.now(),...extra};
+  fetch('spin-event.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
+}
+
+function defaultOverlayState(){return {gameName:'Waiting to pick a game...',featureName:'N/A',spinsRemaining:'N/A',spinsTotal:'N/A',betSize:'N/A',rtp:'N/A',vol:'N/A',wheelLetter:'N/A',spinNo:'1',sessionStarted:false,bonusAt:0,promoMain:false};}
+function postResetEvent(){
+  if(!SERVER_SYNC) return;
+  fetch('spin-event.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:Date.now()+Math.random(),mode:'reset',createdAt:Date.now()})}).catch(()=>{});
+}
+function postHideEvent(){
+  if(!SERVER_SYNC) return;
+  fetch('spin-event.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:Date.now()+Math.random(),mode:'hide',createdAt:Date.now()})}).catch(()=>{});
+}
+function resetAllPickState(){
+  pick={letter:'',game:'',spins:'',bet:'',rtp:'',vol:''};
+  pickedLetters=[];
+  recentGames=[];
+  try{localStorage.removeItem(RECENTKEY)}catch(e){}
+  Object.assign(state,defaultOverlayState());
+  persist();
+  render();
+  setStep(1);
+  renderBar();
+  postResetEvent();
+  toast('Pick reset • overlay waiting • transparent sources reset');
+}
+let state={gameName:'Waiting to pick a game...',featureName:'N/A',spinsRemaining:'N/A',spinsTotal:'N/A',betSize:'N/A',rtp:'N/A',vol:'N/A',wheelLetter:'N/A',spinNo:'1',sessionStarted:false,bonusAt:0};
+let lastBonusAt=0;
+function loadJSON(k,f){try{return JSON.parse(localStorage.getItem(k)||'')||f}catch(e){return f}}
+function saveJSON(k,v){localStorage.setItem(k,JSON.stringify(v))}
+Object.assign(state, loadJSON(KEY,{}));
+let slots=[]; try{if(Array.isArray(SLOT_DATA)) slots=SLOT_DATA.map(x=>({name:String(x.name||x),rtp:x.rtp||'',vol:x.vol||''}))}catch(e){}
+const savedSlots=loadJSON(DBKEY,null); if(savedSlots&&savedSlots.length){const m=new Map(slots.map(s=>[s.name.toLowerCase(),s])); savedSlots.forEach(s=>{const key=s.name.toLowerCase(); const base=m.get(key)||{}; m.set(key,{...base,...s,rtp:(s.rtp||base.rtp||''),vol:(s.vol||base.vol||'')});}); slots=[...m.values()]}
+slots=slots.filter(s=>s.name).sort((a,b)=>a.name.localeCompare(b.name));
+let log=loadJSON(LOGKEY,[]);
+function normPct(v){v=String(v||'').trim(); if(!v) return ''; return /%$/.test(v)?v:v+'%'}
+function toast(t){$('toast').textContent=t;$('toast').classList.remove('show');void $('toast').offsetWidth;$('toast').classList.add('show')}
+function persist(broadcast=true){saveJSON(KEY,state);$('stateBox').value=JSON.stringify(state,null,2); if(broadcast&&channel) channel.postMessage({type:'state',state}); serverPush();}
+function render(){
+ $('dGame').textContent=state.gameName||'Waiting to pick a game...'; $('dFeature').textContent=state.featureName||'N/A'; $('dRemain').textContent=state.spinsRemaining??'N/A'; $('dTotal').textContent=state.spinsTotal??'N/A'; $('dBet').textContent=state.betSize||'N/A'; $('dRtp').textContent=state.rtp||'N/A'; $('dVol').textContent=state.vol||'N/A'; const hasPick=state.gameName&&state.gameName!=='Waiting to pick a game...'&&state.wheelLetter&&state.wheelLetter!=='N/A'; $('dWheel').textContent=hasPick?((state.wheelLetter||'—')+' → '+(state.gameName||'—')):'N/A'; $('dSpinNo').textContent=state.spinNo?('Session #'+state.spinNo):'Session #1';
+ const total=Number(state.spinsTotal)||0, rem=Number(state.spinsRemaining)||0; $('dBar').style.width=total?Math.max(0,Math.min(100,rem/total*100))+'%':'0%';
+ ['Game','Feature','Remain','Total','Bet','Rtp','Vol','Letter','SpinNo'].forEach(n=>{const el=$('e'+n); if(!el)return; const k={Game:'gameName',Feature:'featureName',Remain:'spinsRemaining',Total:'spinsTotal',Bet:'betSize',Rtp:'rtp',Vol:'vol',Letter:'wheelLetter',SpinNo:'spinNo'}[n]; if(document.activeElement!==el) el.value=state[k]??''});
+ $('syncLine').textContent=(location.protocol==='file:'?'file:// mode: Interact → E is safest.':'server mode: dock/wheel/overlay sync enabled.')+' • '+slots.length.toLocaleString()+' games loaded';
+ $('stateBox').value=JSON.stringify(state,null,2);
+ if(state.bonusAt && state.bonusAt!==lastBonusAt){lastBonusAt=state.bonusAt;triggerBonus(false)}
+ document.body.classList.toggle('show-main-promo', !!state.promoMain)
+}
+function updateFromInputs(){state.gameName=$('eGame').value.trim();state.featureName=$('eFeature').value.trim();state.spinsRemaining=$('eRemain').value.trim()||'N/A';state.spinsTotal=$('eTotal').value.trim()||'N/A';state.betSize=$('eBet').value.trim();state.rtp=normPct($('eRtp').value);state.vol=$('eVol').value;state.wheelLetter=$('eLetter').value.trim().toUpperCase();state.spinNo=$('eSpinNo').value.trim();persist();render();}
+$('saveLive').onclick=()=>{updateFromInputs();toast('Overlay updated')}; ['eGame','eFeature','eRemain','eTotal','eBet','eRtp','eVol','eLetter','eSpinNo'].forEach(id=>$(id).addEventListener('change',updateFromInputs));
+$('minusSpin').onclick=()=>{state.spinsRemaining=Math.max(0,(Number(state.spinsRemaining)||0)-1);persist();render()}; $('bonusBtn').onclick=()=>{state.bonusAt=Date.now();lastBonusAt=state.bonusAt;persist();triggerBonus(true)};
+$('copyState').onclick=async()=>{persist(false); try{await navigator.clipboard.writeText($('stateBox').value);toast('State copied')}catch(e){$('stateBox').select();document.execCommand('copy');toast('State selected/copied')}}; $('applyState').onclick=()=>{try{Object.assign(state,JSON.parse($('stateBox').value));persist();render();toast('Imported')}catch(e){alert('Invalid JSON')}}; $('resetState').onclick=()=>{if(confirm('Reset overlay state?')){localStorage.removeItem(KEY);location.reload()}};
+qa('.tab').forEach(btn=>btn.onclick=()=>{qa('.tab').forEach(b=>b.classList.remove('active'));qa('.tab-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');$('tab-'+btn.dataset.tab).classList.add('active'); if(btn.dataset.tab==='wheel') drawWheel(); if(btn.dataset.tab==='bar') renderBar();}); if(new URLSearchParams(location.search).has('wheel')) q('[data-tab="wheel"]').click();
+function drag(el,key){const pos=loadJSON(key,null); if(pos){el.style.left=pos.x+'px';el.style.top=pos.y+'px'} let down=false,dx=0,dy=0; el.addEventListener('pointerdown',e=>{down=true;dx=e.clientX-el.offsetLeft;dy=e.clientY-el.offsetTop;el.setPointerCapture(e.pointerId)}); el.addEventListener('pointermove',e=>{if(!down)return; const x=Math.max(0,Math.min(1920-el.offsetWidth,e.clientX-dx)), y=Math.max(0,Math.min(1080-el.offsetHeight,e.clientY-dy)); el.style.left=x+'px';el.style.top=y+'px'}); el.addEventListener('pointerup',()=>{down=false;saveJSON(key,{x:el.offsetLeft,y:el.offsetTop})})} drag($('brand'),'slotlab_brand_pos_v5'); drag($('cover'),'slotlab_cover_pos_v5');
+document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return; if(e.key.toLowerCase()==='e'&&!isDock){document.body.classList.toggle('edit-mode')} if(e.key==='ArrowDown')$('minusSpin').click(); if(e.key.toLowerCase()==='b')$('bonusBtn').click(); if(q('#tab-wheel.active')){ if(e.code==='Space'){e.preventDefault();$('spinWheel').click()} if(e.key==='Enter'&&!$('nextWheel').disabled){$('nextWheel').click()} } else if(q('#tab-bar.active')){ if(e.code==='Space'){e.preventDefault();$('barSpin').click()} if(e.key==='Enter'&&!$('barNext').disabled){$('barNext').click()} } else { if(e.code==='Space'){e.preventDefault();$('minusSpin').click()} }});
+if(channel) channel.onmessage=e=>{if(e.data&&e.data.type==='state'){Object.assign(state,e.data.state);saveJSON(KEY,state);lastStateJson=JSON.stringify(state);render()}}; window.addEventListener('storage',e=>{if(e.key===KEY){Object.assign(state,loadJSON(KEY,{}));lastStateJson=JSON.stringify(state);render()}});
+setInterval(serverPoll, 700); setTimeout(serverPoll, 150);
+// Wheel
+const RECENTKEY='slotlab_recent_games_v5';
+const repeat=(arr,n)=>arr.flatMap(v=>Array(n).fill(v));
+const SPIN_AGAIN='Spin Again';
+const spinsW=[
+  {v:'75',w:15},{v:'100',w:75},{v:'125',w:5},{v:'150',w:2.5},{v:'175',w:1.25},
+  {v:'200',w:.8},{v:'250',w:.28},{v:'300',w:.1},{v:'400',w:.05},{v:'500',w:.01}
+];
+const betsW=[
+  {v:'£0.10',w:20},{v:'£0.20',w:65},{v:'£0.40',w:10},{v:'£0.60',w:2.5},
+  {v:'£0.80',w:1.4},{v:'£1.00',w:.8},{v:'£2.00',w:.3}
+];
+const sliceColors=['#ff2b0a','#ff6a00','#ffbf2a','#ff3d7f','#9b5cff','#00c2ff','#00d084','#ff8a1a','#e31bff','#ff4545','#ffc400','#40ff9c'];
+let recentGames=[]; try{localStorage.removeItem(RECENTKEY)}catch(e){}
+let pickedLetters=[];
+let step=1, items=[], wheelSegs=[], angle=0, pick={letter:'',game:'',spins:'',bet:'',rtp:'',vol:''}, spinning=false, barSpinning=false, poolFilter='', selectedIndex=0, audioCtx=null, lastTick=0, lastPreviewIndex=-1; const canvas=$('wheelCanvas'), ctx=canvas.getContext('2d');
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a;}
+function weightedIndex(arr){const t=arr.reduce((s,x)=>s+(Number(x.w)||1),0);let r=Math.random()*t;for(let i=0;i<arr.length;i++){r-=Number(arr[i].w)||1;if(r<=0)return i;}return arr.length-1;}
+function uniqueLettersAll(){return [...new Set(slots.map(s=>(s.name.trim()[0]||'').toUpperCase()).filter(c=>/[0-9A-Z]/.test(c)))].sort((a,b)=>/[0-9]/.test(a)&&/[A-Z]/.test(b)?-1:a.localeCompare(b))}
+function availableLetters(){const blocked=new Set(pickedLetters.map(x=>x.toUpperCase()));let arr=uniqueLettersAll().filter(c=>!blocked.has(c));return arr.length?arr:uniqueLettersAll();}
+function games(l){const recent=new Set(recentGames.map(x=>x.toLowerCase())); return slots.filter(s=>s.name.toUpperCase().startsWith(l) && !recent.has(s.name.toLowerCase()))}
+function allGamesForLetter(l){return slots.filter(s=>s.name.toUpperCase().startsWith(l))}
+function buildGameBoard(){const pool=games(pick.letter);const board=shuffleArray(pool.slice()).slice(0,25).map(g=>g.name);while(board.length<25)board.push(SPIN_AGAIN);shuffleArray(board);return board;}
+function colorFor(it,i){if(it.v===SPIN_AGAIN)return '#3a3f4b';return sliceColors[i%sliceColors.length];}
+function shortenGameLabel(name,limit=25){
+  const txt=String(name||'');
+  if(txt.length<=limit) return txt;
+  const words=txt.split(/\s+/).filter(Boolean);
+  let out='';
+  for(const w of words){
+    const cand=out?out+' '+w:w;
+    if(cand.length>limit) break;
+    out=cand;
+  }
+  return (out||txt.slice(0,limit)).replace(/[\s.,:-]+$/,'')+'...';
+}
+function ensureAudio(){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended')audioCtx.resume();}catch(e){}}
+function beep(freq=680,dur=.025,gain=.045,type='square'){if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(gain,audioCtx.currentTime+.004);g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+dur);o.connect(g).connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur+.01)}
+function finishSound(){beep(880,.08,.055,'sine');setTimeout(()=>beep(1320,.09,.045,'sine'),80)}
+function demonicLaugh(){ensureAudio();let t=0;[180,135,95,120,80].forEach((f,i)=>setTimeout(()=>beep(f,.16,.08,i%2?'sawtooth':'square'),t+=130))}
+function playBonusVoice(){ensureAudio();try{if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('Bonus time');u.rate=.62;u.pitch=.35;u.volume=1;speechSynthesis.speak(u);setTimeout(demonicLaugh,950)}else demonicLaugh()}catch(e){demonicLaugh()}}
+function triggerBonus(withSound){document.body.classList.add('bonus');if(withSound)playBonusVoice();setTimeout(()=>document.body.classList.remove('bonus'),3400)}
+function normAng(a){a%=Math.PI*2;if(a<0)a+=Math.PI*2;return a;}
+function pointerIndex(rot){const segs=wheelSegs.length?wheelSegs:items.map(v=>({v,w:1}));const total=segs.reduce((s,x)=>s+(Number(x.w)||1),0)||1;const pos=normAng(-rot);let acc=0;for(let i=0;i<segs.length;i++){const arc=2*Math.PI*(Number(segs[i].w)||1)/total;if(pos>=acc&&pos<acc+arc)return i;acc+=arc;}return segs.length-1;}
+function setStep(n){step=n; for(let i=1;i<=4;i++){const el=$('st'+i);if(el)el.className='step '+(i<n?'done':i===n?'active':'');const bel=$('bst'+i);if(bel)bel.className='step '+(i<n?'done':i===n?'active':'')} if(n===1){const lets=availableLetters();items=shuffleArray(lets.slice());wheelSegs=items.map(v=>({v,w:1}));$('wheelTitle').textContent=`Wheel 1 — Pick a Letter / Number (${lets.length}/${uniqueLettersAll().length} remaining; picked letters removed until Reset Pick)`;renderPool()} if(n===2){items=buildGameBoard();wheelSegs=items.map(v=>({v,w:1}));$('wheelTitle').textContent=`Wheel 2 — 25 random games for “${pick.letter}” (${games(pick.letter).length}/${allGamesForLetter(pick.letter).length} available). Shuffle = new random board.`;renderPool()} if(n===3){items=spinsW.map(x=>x.v);wheelSegs=spinsW.map(x=>({...x}));$('wheelTitle').textContent='Wheel 3 — Spins odds: 100=75% • 75=15% • 125=5% • 150=2.5% • 175+=rare'} if(n===4){items=betsW.map(x=>x.v);wheelSegs=betsW.map(x=>({...x}));$('wheelTitle').textContent='Wheel 4 — Bet odds: £0.20=65% • £0.10=20% • £0.40=10% • higher bets share 5%'} if($('barTitle'))$('barTitle').textContent=$('wheelTitle').textContent.replace('Wheel','Spin Bar');$('wheelResult').textContent='—';if($('barResult'))$('barResult').textContent='—';$('nextWheel').disabled=true;$('rerollWheel').disabled=true;$('spinWheel').disabled=!items.length;selectedIndex=0;lastPreviewIndex=-1;drawWheel();renderBar();updatePick()}
+function drawWheel(highlight){const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,R=405;ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(cx,cy);ctx.rotate(angle);let segs=wheelSegs.length?wheelSegs:items.map(v=>({v,w:1}));const total=segs.reduce((s,x)=>s+(Number(x.w)||1),0)||1;let start=-Math.PI/2;segs.forEach((it,i)=>{const arc=2*Math.PI*(Number(it.w)||1)/total;ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,R,start,start+arc);ctx.closePath();const grad=ctx.createRadialGradient(0,0,60,0,0,R);grad.addColorStop(0,'#2a0503');grad.addColorStop(.55,colorFor(it,i));grad.addColorStop(1,i%2?'#831b08':'#b62109');ctx.fillStyle=(i===selectedIndex&&it.v===highlight)?'#ffffff':grad;ctx.fill();ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=segs.length>160?0.45:1.6;ctx.stroke(); if(segs.length<=120){ctx.save();const mid=start+arc/2;ctx.rotate(mid);ctx.fillStyle=(i===selectedIndex&&it.v===highlight)?'#180400':'#fff';ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=5;ctx.textAlign='center';ctx.textBaseline='middle';let txt=String(it.v); if(step===2){txt=shortenGameLabel(txt,25);ctx.font='900 18px Arial';ctx.textAlign='left';ctx.translate(R*.26,0);ctx.fillText(txt,0,0,R*.66);}else{ctx.translate(R*.74,0);ctx.rotate(Math.PI/2);ctx.font=(segs.length>80?'bold 12px Arial':segs.length>45?'bold 15px Arial':segs.length>25?'bold 20px Arial':'bold 30px Arial'); if(txt.length>20)txt=txt.slice(0,19)+'…';ctx.fillText(txt,0,0);}ctx.restore()} start+=arc});ctx.beginPath();ctx.arc(0,0,94,0,Math.PI*2);ctx.fillStyle='#120303';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle='#fff';ctx.stroke();ctx.fillStyle='#ffbf2a';ctx.font='900 25px Arial';ctx.textAlign='center';ctx.shadowColor='rgba(255,191,42,.7)';ctx.shadowBlur=12;ctx.fillText('SPIN',0,8);ctx.restore();}
+function spin(){if(spinning)return; if(step===1){items=shuffleArray(availableLetters().slice());wheelSegs=items.map(v=>({v,w:1}));} if(!wheelSegs.length)return; ensureAudio(); spinning=true;$('spinWheel').disabled=true;$('nextWheel').disabled=true; const targetIndex=(step===3||step===4)?weightedIndex(wheelSegs):Math.floor(Math.random()*wheelSegs.length); const result=wheelSegs[targetIndex].v; const total=wheelSegs.reduce((s,x)=>s+(Number(x.w)||1),0)||1; let startAng=-Math.PI/2, center=-Math.PI/2; for(let i=0;i<wheelSegs.length;i++){const arc=2*Math.PI*(Number(wheelSegs[i].w)||1)/total;if(i===targetIndex){center=startAng+arc/2;break;}startAng+=arc;} const target=-Math.PI/2-center; const turns=7+Math.floor(Math.random()*4); const start=angle, end=target+Math.PI*2*turns; const t0=performance.now(), duration=5000+Math.random()*3000; postSpinEvent('wheel',targetIndex,duration,{turns}); lastTick=0; lastPreviewIndex=-1; function anim(t){const p=Math.min(1,(t-t0)/duration),ease=Math.sin(p*Math.PI/2); angle=start+(end-start)*ease; const pi=pointerIndex(angle); selectedIndex=pi; const pv=wheelSegs[pi]?.v||''; if(pi!==lastPreviewIndex){$('wheelResult').textContent=pv; if($('spinPreview'))$('spinPreview').textContent=pv; if($('barPreview'))$('barPreview').textContent=pv; if(t-lastTick>28){beep(520+Math.min(360,p*500),.018,.032,'square');lastTick=t;} lastPreviewIndex=pi;} drawWheel(pv); if(p<1)requestAnimationFrame(anim); else{angle=target;selectedIndex=targetIndex;drawWheel(result);$('wheelResult').textContent=result;if($('spinPreview'))$('spinPreview').textContent=result;if($('barPreview'))$('barPreview').textContent=result;finish(result);finishSound();spinning=false;$('spinWheel').disabled=false;$('nextWheel').disabled=(step===2&&result===SPIN_AGAIN);$('rerollWheel').disabled=false;}} requestAnimationFrame(anim)}
+function finish(r){if(step===1){pick.letter=r;pick.game='';pick.spins='';pick.bet='';if(!pickedLetters.includes(r))pickedLetters.push(r);} if(step===2){if(r===SPIN_AGAIN){$('wheelResult').textContent='Spin Again — new board loaded';items=buildGameBoard();wheelSegs=items.map(v=>({v,w:1}));drawWheel();$('nextWheel').disabled=true;toast('Spin Again! New random board loaded.');return;} const g=slots.find(s=>s.name===r);pick.game=r;pick.rtp=g?.rtp||'';pick.vol=g?.vol||''} if(step===3)pick.spins=r; if(step===4)pick.bet=r; $('wheelResult').textContent=r; updatePick(); if(step===4)sendToOverlay();}
+function updatePick(){$('pLetter').textContent=pick.letter||'—';$('pGame').textContent=pick.game||'—';$('pSpins').textContent=pick.spins||'—';$('pBet').textContent=pick.bet||'—';$('pMeta').textContent='RTP '+(pick.rtp||'—')+' • Vol '+(pick.vol||'—')+' • Picked letters this round: '+pickedLetters.length+' • Blocked games: '+recentGames.length+'/10';$('metaRtp').value=pick.rtp||'';$('metaVol').value=pick.vol||'';$('sendOverlay').disabled=!(pick.game&&pick.spins&&pick.bet);$('poolLetter').textContent=pick.letter||'—'; if($('spinPreview')&&!spinning)$('spinPreview').textContent=pick.game||pick.letter||'—'; if($('barPreview')&&!barSpinning)$('barPreview').textContent=pick.game||pick.letter||'—';}
+function renderPool(){
+  if(step===1){
+    const all=availableLetters();
+    const filtered=all.filter(l=>!poolFilter||l.toLowerCase().includes(poolFilter.toLowerCase()));
+    $('poolLetter').textContent='letters'; $('poolCount').textContent=filtered.length;
+    $('poolList').innerHTML=filtered.map(l=>`<div data-letter="${l}">${l}</div>`).join('')||'No letters available';
+    qa('#poolList div').forEach(d=>d.onclick=()=>{pick.letter=d.dataset.letter;pick.game='';pick.spins='';pick.bet='';$('wheelResult').textContent=pick.letter;if($('spinPreview'))$('spinPreview').textContent=pick.letter;$('nextWheel').disabled=false;if($('barNext'))$('barNext').disabled=false;updatePick();});
+    return;
+  }
+  const arr=pick.letter?games(pick.letter):[]; const all=pick.letter?allGamesForLetter(pick.letter):[];
+  const filtered=arr.filter(g=>!poolFilter||g.name.toLowerCase().includes(poolFilter.toLowerCase()));
+  $('poolCount').textContent=`${arr.length}/${all.length}`;
+  $('poolList').innerHTML=filtered.slice(0,700).map(g=>`<div data-game="${g.name.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}">${g.name}</div>`).join('')||(pick.letter?'No available games for this letter after last-10 game block':'Pick a letter first');
+  qa('#poolList div').forEach(d=>d.onclick=()=>{const g=slots.find(s=>s.name===d.dataset.game);pick.game=g.name;pick.rtp=g.rtp||'';pick.vol=g.vol||'';$('wheelResult').textContent=g.name;if($('spinPreview'))$('spinPreview').textContent=g.name;$('nextWheel').disabled=false;if($('barNext'))$('barNext').disabled=false;updatePick();});
+}
+function recordRecentGame(name){if(!name)return; recentGames=[name,...recentGames.filter(g=>g.toLowerCase()!==name.toLowerCase())].slice(0,10);saveJSON(RECENTKEY,recentGames);}
+function sendToOverlay(){const newGame=pick.game&&pick.game!==state.gameName;if(!state.sessionStarted){state.spinNo='1';state.sessionStarted=true}else if(newGame){state.spinNo=String((parseInt(state.spinNo,10)||1)+1)}state.gameName=pick.game;state.wheelLetter=pick.letter;state.spinsTotal=Number(pick.spins)||state.spinsTotal;state.spinsRemaining=Number(pick.spins)||state.spinsRemaining;state.betSize=pick.bet;state.rtp=normPct(pick.rtp);state.vol=pick.vol||'';state.featureName=`${pick.spins} Spins • Stop on Bonus / +£5 / -£10`;state.promoMain=true;persist();render();postHideEvent();recordRecentGame(pick.game);log.unshift({time:new Date().toLocaleString(),letter:pick.letter,game:pick.game,spins:pick.spins,bet:pick.bet,rtp:state.rtp,vol:state.vol});log=log.slice(0,500);saveJSON(LOGKEY,log);renderLog();toast('Sent to overlay • game blocked from next 10 picks')}
+function renderBar(){const reel=$('barReel');if(!reel)return;const segs=wheelSegs.length?wheelSegs:items.map(v=>({v,w:1}));const visual=[];for(let r=0;r<4;r++)segs.forEach(x=>visual.push(x.v));reel.innerHTML=visual.map(v=>`<div class="bar-item">${String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>`).join('')||'<div class="bar-item">—</div>';reel.style.transform='translateY(0px)';if($('barSpin'))$('barSpin').disabled=!segs.length;if($('barNext'))$('barNext').disabled=true;}
+function spinBar(){if(barSpinning)return; if(step===1){items=shuffleArray(availableLetters().slice());wheelSegs=items.map(v=>({v,w:1}));renderBar();} if(!wheelSegs.length)return; ensureAudio();barSpinning=true;const targetIndex=(step===3||step===4)?weightedIndex(wheelSegs):Math.floor(Math.random()*wheelSegs.length);const result=wheelSegs[targetIndex].v;const reel=$('barReel');const loops=5+Math.floor(Math.random()*3), finalIndex=loops*wheelSegs.length+targetIndex;const visual=[];for(let r=0;r<loops+3;r++)wheelSegs.forEach(x=>visual.push(x.v));reel.innerHTML=visual.map(v=>`<div class="bar-item">${String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>`).join('');const firstItem=reel.querySelector('.bar-item');const itemH=firstItem?firstItem.getBoundingClientRect().height:54;const win=$('barReel').parentElement;const offset=(win?win.clientHeight:260)/2-itemH/2;$('barSpin').disabled=true;$('barNext').disabled=true;let t0=performance.now(),duration=5000+Math.random()*3000,last=-1,lastBt=0;postSpinEvent('bar',targetIndex,duration,{itemH,loops});function anim(t){const p=Math.min(1,(t-t0)/duration),ease=1-Math.pow(1-p,4);const y=(offset-finalIndex*itemH)*ease;reel.style.transform=`translateY(${y}px)`;const cur=Math.max(0,Math.round((offset-y)/itemH)%wheelSegs.length);const pv=wheelSegs[cur]?.v||'';if(cur!==last){$('barResult').textContent=pv;$('barPreview').textContent=pv;if(t-lastBt>32){beep(470+Math.min(400,p*520),.018,.03,'square');lastBt=t}last=cur}if(p<1)requestAnimationFrame(anim);else{reel.style.transform=`translateY(${offset-finalIndex*itemH}px)`;$('barResult').textContent=result;$('barPreview').textContent=result;finish(result);finishSound();barSpinning=false;$('barSpin').disabled=false;$('barNext').disabled=(step===2&&result===SPIN_AGAIN);}}requestAnimationFrame(anim)}
+$('spinWheel').onclick=spin; $('shuffleWheel').onclick=()=>{if(step===2&&pick.letter){items=buildGameBoard();wheelSegs=items.map(v=>({v,w:1}));}else if(step===1){items=shuffleArray(availableLetters().slice());wheelSegs=items.map(v=>({v,w:1}));}else if(wheelSegs.length){shuffleArray(wheelSegs);items=wheelSegs.map(x=>x.v);}angle=0;lastPreviewIndex=-1;drawWheel();renderBar();toast(step===2?'New random game board loaded':'Wheel shuffled')}; $('rerollWheel').onclick=resetAllPickState; $('nextWheel').onclick=()=>{if(step<4)setStep(step+1);}; $('resetPick').onclick=resetAllPickState; $('sendOverlay').onclick=sendToOverlay; $('poolSearch').oninput=e=>{poolFilter=e.target.value;renderPool()}; $('saveMeta').onclick=()=>{if(!pick.game)return; const g=slots.find(s=>s.name===pick.game); if(g){g.rtp=normPct($('metaRtp').value);g.vol=$('metaVol').value;pick.rtp=g.rtp;pick.vol=g.vol;saveJSON(DBKEY,slots);updatePick();toast('RTP/Vol saved')}}; if($('barSpin'))$('barSpin').onclick=spinBar; if($('barShuffle'))$('barShuffle').onclick=()=>{$('shuffleWheel').click();renderBar()}; if($('barNext'))$('barNext').onclick=()=>{if(step<4)setStep(step+1)}; if($('barReset'))$('barReset').onclick=resetAllPickState;
+function initManualPick(){
+  if(!$('mLetter')) return;
+  const opts=uniqueLettersAll().map(l=>`<option value="${l}">${l}</option>`).join('');
+  $('mLetter').innerHTML='<option value="">Choose letter / number…</option>'+opts;
+  $('mLetter').onchange=()=>{
+    const l=$('mLetter').value;
+    $('mGame').disabled=!l;
+    if(!l){$('mGame').innerHTML='<option value="">Choose a letter first…</option>';return;}
+    const gs=allGamesForLetter(l);
+    $('mGame').innerHTML='<option value="">Choose game…</option>'+gs.map(g=>`<option value="${g.name.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${g.name}</option>`).join('');
+    $('mMeta').textContent=`${gs.length} games for ${l}`;
+  };
+  $('mGame').onchange=()=>{const g=slots.find(s=>s.name===$('mGame').value);$('mMeta').textContent=g?`RTP ${g.rtp||'N/A'} • Vol ${g.vol||'N/A'}`:'RTP — • Vol —'; if(g)$('mSpins').focus();};
+  $('mSpins').addEventListener('keydown',e=>{if(e.key==='Enter')sendManualPick();});
+  $('mSend').onclick=sendManualPick;
+}
+function sendManualPick(){
+  const l=$('mLetter')?.value, gn=$('mGame')?.value, sp=$('mSpins')?.value;
+  if(!l||!gn||!sp){toast('Manual pick needs letter, game, and spins');return;}
+  const g=slots.find(s=>s.name===gn);
+  pick={letter:l,game:gn,spins:String(sp),bet:'£0.20',rtp:g?.rtp||'',vol:g?.vol||''};
+  sendToOverlay();
+  toast('Manual pick sent to overlay');
+}
+function renderLog(){saveJSON(LOGKEY,log);$('logCount').textContent=log.length;$('logBody').innerHTML=log.length?log.map((r,i)=>`<tr><td>${i+1}</td><td>${r.time}</td><td>${r.letter}</td><td>${r.game}</td><td>${r.spins}</td><td>${r.bet}</td><td>${r.rtp||''}</td><td>${r.vol||''}</td></tr>`).join(''):'<tr><td colspan="8" style="color:#a77">—</td></tr>'}
+$('exportCsv').onclick=()=>download('slot-lab-session.csv','Time,Letter,Game,Spins,Bet,RTP,Vol\n'+log.map(r=>[r.time,r.letter,r.game,r.spins,r.bet,r.rtp,r.vol].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n'));
+$('clearLog').onclick=()=>{if(confirm('Clear session log?')){log=[];renderLog()}}; $('dbCount').textContent=slots.length.toLocaleString(); $('exportDb').onclick=()=>download('slot-lab-db.json',JSON.stringify(slots,null,2)); $('importTextBtn').onclick=()=>{const rows=$('dbText').value.split(/\n+/).map(l=>l.trim()).filter(Boolean);const m=new Map(slots.map(s=>[s.name.toLowerCase(),s]));rows.forEach(l=>{const p=l.split('|').map(x=>x.trim()); if(p[0])m.set(p[0].toLowerCase(),{...(m.get(p[0].toLowerCase())||{}),name:p[0],rtp:normPct(p[1]||''),vol:p[2]||''})}); slots=[...m.values()].sort((a,b)=>a.name.localeCompare(b.name));saveJSON(DBKEY,slots);$('dbCount').textContent=slots.length.toLocaleString();toast('DB merged')}; function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+render(); renderLog(); setStep(1); initManualPick();
+})();
+</script>
+</body>
+</html>
